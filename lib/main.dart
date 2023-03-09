@@ -56,6 +56,7 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String title = "Nimble";
     return Scaffold(
       appBar: AppBar(
         title: FutureBuilder<PackageInfo>(
@@ -80,7 +81,7 @@ class HomeScreen extends StatelessWidget {
             const SizedBox(height: 24),
             Text(AppLocalizations.of(context)!.hello),
             Text(
-              FlutterConfig.get('SECRET'),
+              title,
               style: const TextStyle(color: Colors.black, fontSize: 24),
             ),
             const SizedBox(height: 24),
