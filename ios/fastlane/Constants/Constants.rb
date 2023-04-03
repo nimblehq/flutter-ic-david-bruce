@@ -17,12 +17,12 @@ class Constants
 
   # bundle ID for Staging app
   def self.BUNDLE_ID_STAGING
-    'co.nimblehq.flutter.template.staging'
+    'co.nimblehq.davidbruce.survey.staging'
   end
 
   # bundle ID for Production app
   def self.BUNDLE_ID_PRODUCTION
-    'co.nimblehq.flutter.template'
+    'co.nimblehq.davidbruce.survey'
   end
 
   #################
