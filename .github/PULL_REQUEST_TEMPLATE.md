@@ -11,3 +11,5 @@ Describe in detail why this solution is the most appropriate, which solution you
 ## Proof Of Work 📹
 
 Show us the implementation: screenshots, GIFs, etc.
+
+<img src="URL_GOES_HERE" width=200 />
