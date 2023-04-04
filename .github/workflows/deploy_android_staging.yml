@@ -5,6 +5,7 @@ on:
     branches:
       - develop
       - 'release/**'
+      - chore/4-set-up-CI-CD-GHA-fastlane-firebase # TODO: Remove this later after test successfully
 
 jobs:
   build_and_deploy_android:
@@ -22,7 +23,7 @@ jobs:
     - name: Set up Flutter version
       uses: subosito/flutter-action@v1
       with:
-        flutter-version: '3.3.8'
+        flutter-version: '3.7.8'
 
     - name: Setup .env.staging
       env:
@@ -43,5 +44,3 @@ jobs:
       with:
         name: Android-Staging-Build
         path: build/app/outputs/flutter-apk/app-staging-debug.apk
-    
-    # TODO: Add Firebase later
