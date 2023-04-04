@@ -10,7 +10,7 @@ on:
     branches:
       - develop
       - 'release/**'
-      - chore/4-set-up-CI-CD-GHA-fastlane-firebase # TODO: Remove this later after test successfully
+      - chore/4-set-up-CI-CD # TODO: Remove this later after test successfully
 
 jobs:
   build_and_upload_to_testflight:
