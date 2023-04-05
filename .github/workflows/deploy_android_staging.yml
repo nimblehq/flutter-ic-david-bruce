@@ -42,5 +42,4 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: Android-Staging-Build
-        path: build/app/outputs/flutter-apk/app-staging-debug.apk        
-        
+        path: build/app/outputs/flutter-apk/app-staging-debug.apk
