@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:survey_flutter_ic/gen/assets.gen.dart';
 import 'package:survey_flutter_ic/ui/login/login_screen.dart';
+import 'package:survey_flutter_ic/views/forgot_password/forgot_password_view.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -13,7 +14,7 @@ void main() async {
 }
 
 const routePathRootScreen = '/';
-const routePathSecondScreen = 'second';
+const routePathSecondScreen = '/forgotPassword';
 
 class MyApp extends StatelessWidget {
   MyApp({Key? key}) : super(key: key);
@@ -26,7 +27,8 @@ class MyApp extends StatelessWidget {
         routes: [
           GoRoute(
             path: routePathSecondScreen,
-            builder: (_, __) => const SecondScreen(),
+            builder: (BuildContext context, GoRouterState state) =>
+                const ForgotPasswordView(),
           ),
         ],
       ),
@@ -90,21 +92,6 @@ class HomeScreen extends StatelessWidget {
             ),
           ],
         ),
-      ),
-    );
-  }
-}
-
-class SecondScreen extends StatelessWidget {
-  const SecondScreen({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Second Screen"),
       ),
     );
   }
