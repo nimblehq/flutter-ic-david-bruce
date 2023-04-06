@@ -5,7 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:survey_flutter_ic/gen/assets.gen.dart';
 import 'package:survey_flutter_ic/ui/login/login_screen.dart';
-import 'package:survey_flutter_ic/views/forgot_password/forgot_password_view.dart';
+import 'package:survey_flutter_ic/ui/forgot_password/forgot_password_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
           GoRoute(
             path: routePathSecondScreen,
             builder: (BuildContext context, GoRouterState state) =>
-                const ForgotPasswordView(),
+                const ForgotPasswordScreen(),
           ),
         ],
       ),
