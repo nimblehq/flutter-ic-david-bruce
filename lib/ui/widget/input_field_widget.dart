@@ -41,14 +41,12 @@ class InputFieldWidget extends StatelessWidget {
               ? Padding(
                   padding: const EdgeInsets.only(right: Dimensions.paddingSmallest),
                   child: TextButton(
-                      onPressed: textSuffixButtonCallback != null
-                          ? () => textSuffixButtonCallback!()
-                          : () {},
+                      onPressed: textSuffixButtonCallback != null ? () => textSuffixButtonCallback!() : () {},
                       child: Text(textSuffixButton!,
-                          style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                              color: Colors.white.withOpacity(0.5),
-                              fontWeight: FontWeight.w400,
-                              fontSize: 15))))
+                          style: Theme.of(context)
+                              .textTheme
+                              .labelMedium
+                              ?.copyWith(color: Colors.white.withOpacity(0.5), fontWeight: FontWeight.w400, fontSize: 15))))
               : null),
       keyboardType: keyboardType,
       obscureText: isPassword,
