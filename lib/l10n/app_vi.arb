@@ -1,3 +1,9 @@
 {
-  "hello": "Xin chào!"
+  "forgotPasswordInstruction": "Nhập email của bạn để nhận hướng dẫn đặt lại mật khẩu.",
+  "forgotPasswordResetButton": "Đặt lại",
+  "hello": "Xin chào!",
+  "loginEmail": "Email",
+  "loginPassword": "Mật khẩu",
+  "loginForgotPassword": "Quên?",
+  "login": "Đăng nhập"
 }

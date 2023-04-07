@@ -1,6 +1,9 @@
 {
-  "email": "Email",
-  "hello": "Hello!",
   "forgotPasswordInstruction": "Enter your email to receive instructions for resetting your password.",
-  "forgotPasswordResetButton": "Reset"
+  "forgotPasswordResetButton": "Reset",
+  "hello": "Hello!",
+  "loginEmail": "Email",
+  "loginPassword": "Password",
+  "loginForgotPassword": "Forgot?",
+  "login": "Log In"
 }

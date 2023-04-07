@@ -7,6 +7,8 @@ class InputFieldWidget extends StatelessWidget {
     this.keyboardType = TextInputType.text,
     this.textInputAction = TextInputAction.done,
     this.isPassword = false,
+    this.textSuffixButton,
+    this.textSuffixButtonCallback,
     super.key,
   });
 
@@ -14,29 +16,40 @@ class InputFieldWidget extends StatelessWidget {
   final TextInputAction textInputAction;
   final String textHint;
   final bool isPassword;
+  final String? textSuffixButton;
+  final VoidCallback? textSuffixButtonCallback;
 
   @override
   Widget build(BuildContext context) {
     return TextField(
-      style: const TextStyle(
-        color: Colors.white
-      ),
+      style: const TextStyle(color: Colors.white),
       decoration: InputDecoration(
-        border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(Dimensions.radiusNormal)),
-        hintText: textHint,
-        filled: true,
-        fillColor: Colors.white.withOpacity(0.18),
-        contentPadding: const EdgeInsets.only(
-          top: Dimensions.paddingNormal,
-          bottom: Dimensions.paddingNormal,
-          left: Dimensions.paddingSmall,
-          right: Dimensions.paddingSmall,
-        ),
-        hintStyle: const TextStyle(
-          color: Colors.white30,
-        ),
-      ),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(Dimensions.radiusNormal)),
+          hintText: textHint,
+          filled: true,
+          fillColor: Colors.white.withOpacity(0.18),
+          contentPadding: const EdgeInsets.only(
+            top: Dimensions.paddingNormal,
+            bottom: Dimensions.paddingNormal,
+            left: Dimensions.paddingSmall,
+            right: Dimensions.paddingSmall,
+          ),
+          hintStyle: const TextStyle(
+            color: Colors.white30,
+          ),
+          suffixIcon: textSuffixButton != null
+              ? Padding(
+                  padding: const EdgeInsets.only(right: Dimensions.paddingSmallest),
+                  child: TextButton(
+                      onPressed: textSuffixButtonCallback != null
+                          ? () => textSuffixButtonCallback!()
+                          : () {},
+                      child: Text(textSuffixButton!,
+                          style: Theme.of(context).textTheme.labelMedium?.copyWith(
+                              color: Colors.white.withOpacity(0.5),
+                              fontWeight: FontWeight.w400,
+                              fontSize: 15))))
+              : null),
       keyboardType: keyboardType,
       obscureText: isPassword,
       cursorColor: Colors.white,

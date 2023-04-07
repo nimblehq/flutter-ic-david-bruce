@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
       GoRoute(
         path: routePathRootScreen,
         builder: (BuildContext context, GoRouterState state) =>
-            const ForgotPasswordScreen(),
+            const LoginScreen(),
         routes: [
           GoRoute(
             path: routePathSecondScreen,
