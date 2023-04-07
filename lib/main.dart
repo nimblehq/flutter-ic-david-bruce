@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_config/flutter_config.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:survey_flutter_ic/gen/assets.gen.dart';
 import 'package:go_router/go_router.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:survey_flutter_ic/gen/assets.gen.dart';
 import 'package:survey_flutter_ic/ui/login/login_screen.dart';
 
 void main() async {
@@ -22,11 +22,13 @@ class MyApp extends StatelessWidget {
     routes: <GoRoute>[
       GoRoute(
         path: routePathRootScreen,
-        builder: (BuildContext context, GoRouterState state) => const LoginScreen(),
+        builder: (BuildContext context, GoRouterState state) =>
+            const LoginScreen(),
         routes: [
           GoRoute(
             path: routePathSecondScreen,
-            builder: (BuildContext context, GoRouterState state) => const SecondScreen(),
+            builder: (BuildContext context, GoRouterState state) =>
+                const SecondScreen(),
           ),
         ],
       ),
@@ -61,7 +63,9 @@ class HomeScreen extends StatelessWidget {
         title: FutureBuilder<PackageInfo>(
             future: PackageInfo.fromPlatform(),
             builder: (context, snapshot) {
-              return snapshot.hasData ? Text(snapshot.data?.appName ?? "") : const SizedBox.shrink();
+              return snapshot.hasData
+                  ? Text(snapshot.data?.appName ?? "")
+                  : const SizedBox.shrink();
             }),
       ),
       body: Center(

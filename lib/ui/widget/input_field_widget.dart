@@ -24,7 +24,8 @@ class InputFieldWidget extends StatelessWidget {
     return TextField(
       style: const TextStyle(color: Colors.white),
       decoration: InputDecoration(
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(Dimensions.radiusNormal)),
+          border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(Dimensions.radiusNormal)),
           hintText: textHint,
           filled: true,
           fillColor: Colors.white.withOpacity(0.18),
@@ -39,14 +40,20 @@ class InputFieldWidget extends StatelessWidget {
           ),
           suffixIcon: textSuffixButton != null
               ? Padding(
-                  padding: const EdgeInsets.only(right: Dimensions.paddingSmallest),
+                  padding:
+                      const EdgeInsets.only(right: Dimensions.paddingSmallest),
                   child: TextButton(
-                      onPressed: textSuffixButtonCallback != null ? () => textSuffixButtonCallback!() : () {},
+                      onPressed: textSuffixButtonCallback != null
+                          ? () => textSuffixButtonCallback!()
+                          : () {},
                       child: Text(textSuffixButton!,
                           style: Theme.of(context)
                               .textTheme
                               .labelMedium
-                              ?.copyWith(color: Colors.white.withOpacity(0.5), fontWeight: FontWeight.w400, fontSize: 15))))
+                              ?.copyWith(
+                                  color: Colors.white.withOpacity(0.5),
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 15))))
               : null),
       keyboardType: keyboardType,
       obscureText: isPassword,
