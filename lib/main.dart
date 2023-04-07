@@ -22,13 +22,11 @@ class MyApp extends StatelessWidget {
     routes: <GoRoute>[
       GoRoute(
         path: routePathRootScreen,
-        builder: (BuildContext context, GoRouterState state) =>
-            const LoginScreen(),
+        builder: (BuildContext context, GoRouterState state) => const LoginScreen(),
         routes: [
           GoRoute(
             path: routePathSecondScreen,
-            builder: (BuildContext context, GoRouterState state) =>
-                const SecondScreen(),
+            builder: (BuildContext context, GoRouterState state) => const SecondScreen(),
           ),
         ],
       ),

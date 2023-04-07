@@ -1,3 +1,7 @@
 {
-  "hello": "Hello!"
+  "hello": "Hello!",
+  "loginEmail": "Email",
+  "loginPassword": "Password",
+  "loginForgotPassword": "Forgot?",
+  "login": "Log In"
 }

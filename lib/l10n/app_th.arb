@@ -1,3 +1,7 @@
 {
-  "hello": "สวัสดี"
+  "hello": "สวัสดี",
+  "loginEmail": "อีเมลล์",
+  "loginPassword": "รหัสผ่าน",
+  "loginForgotPassword": "ลืมรหัสผ่าน?",
+  "login": "เข้าสู่ระบบ"
 }
