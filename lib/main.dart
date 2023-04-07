@@ -64,9 +64,7 @@ class HomeScreen extends StatelessWidget {
         title: FutureBuilder<PackageInfo>(
             future: PackageInfo.fromPlatform(),
             builder: (context, snapshot) {
-              return snapshot.hasData
-                  ? Text(snapshot.data?.appName ?? "")
-                  : const SizedBox.shrink();
+              return snapshot.hasData ? Text(snapshot.data?.appName ?? "") : const SizedBox.shrink();
             }),
       ),
       body: Center(
