@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_config/flutter_config.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:survey_flutter_ic/gen/assets.gen.dart';
 import 'package:go_router/go_router.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:survey_flutter_ic/gen/assets.gen.dart';
 import 'package:survey_flutter_ic/ui/login/login_screen.dart';
 import 'package:survey_flutter_ic/ui/forgot_password/forgot_password_screen.dart';
 
@@ -64,7 +64,9 @@ class HomeScreen extends StatelessWidget {
         title: FutureBuilder<PackageInfo>(
             future: PackageInfo.fromPlatform(),
             builder: (context, snapshot) {
-              return snapshot.hasData ? Text(snapshot.data?.appName ?? "") : const SizedBox.shrink();
+              return snapshot.hasData
+                  ? Text(snapshot.data?.appName ?? "")
+                  : const SizedBox.shrink();
             }),
       ),
       body: Center(
