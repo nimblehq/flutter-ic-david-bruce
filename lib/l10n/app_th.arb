@@ -1,4 +1,6 @@
 {
+  "forgotPasswordInstruction": "ป้อนอีเมลเพื่อรับคำแนะนำในการรีเซ็ตรหัสผ่าน",
+  "forgotPasswordResetButton": "รีเซ็ต",
   "hello": "สวัสดี",
   "loginEmail": "อีเมลล์",
   "loginPassword": "รหัสผ่าน",

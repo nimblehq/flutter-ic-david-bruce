@@ -37,9 +37,8 @@ class ForgotPasswordScreen extends StatelessWidget {
                         ),
                         const SizedBox(height: 24.0),
                         Text(
-                          AppLocalizations.of(context)
-                                  ?.forgotPasswordInstruction ??
-                              '',
+                          AppLocalizations.of(context)!
+                              .forgotPasswordInstruction,
                           style: Theme.of(context)
                               .textTheme
                               .bodyLarge
@@ -69,8 +68,7 @@ class ForgotPasswordScreen extends StatelessWidget {
                       ),
                     ),
                     child: Text(
-                      AppLocalizations.of(context)?.forgotPasswordResetButton ??
-                          '',
+                      AppLocalizations.of(context)!.forgotPasswordResetButton,
                       style: Theme.of(context)
                           .textTheme
                           .titleSmall
@@ -84,30 +82,3 @@ class ForgotPasswordScreen extends StatelessWidget {
         ));
   }
 }
-
-
-
-//   Widget _buildForgotPasswordView() {
-//     return Stack(
-//       children: [
-//         Image(
-//           image: Assets.images.nimbleBackground.image().image,
-//           fit: BoxFit.cover,
-//           width: double.infinity,
-//           height: double.infinity,
-//         ),
-//         Scaffold(
-//           backgroundColor: Colors.transparent,
-//           body: SafeArea(
-//             child: Container(
-//               padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 24),
-//               child: Column(
-//                 children: [],
-//               ),
-//             ),
-//           ),
-//         ),
-//       ],
-//     );
-//   }
-// }
