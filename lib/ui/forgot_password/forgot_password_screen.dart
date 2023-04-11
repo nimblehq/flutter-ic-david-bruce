@@ -30,32 +30,13 @@ class ForgotPasswordScreen extends StatelessWidget {
                   Column(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        Image(
-                          image: Assets.images.icNimbleWhiteLogo.image().image,
-                          width: 168.0,
-                          height: 40.0,
-                        ),
+                        _nimbleLogo,
                         const SizedBox(height: 24.0),
-                        Text(
-                          AppLocalizations.of(context)!
-                              .forgotPasswordInstruction,
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyLarge
-                              ?.copyWith(color: Colors.white70),
-                          textAlign: TextAlign.center,
-                        ),
+                        _forgotPasswordInstruction(context),
                         const SizedBox(height: 100.0),
                       ]),
-                  const Padding(
-                      padding:
-                          EdgeInsets.only(bottom: Dimensions.paddingMedium),
-                      child: InputFieldWidget(
-                        key: Key('login_email'),
-                        textHint: 'Email',
-                        keyboardType: TextInputType.emailAddress,
-                        textInputAction: TextInputAction.next,
-                      )),
+                  _emailTextField,
+                  const SizedBox(height: Dimensions.paddingMedium),
                   ElevatedButton(
                     onPressed: () {},
                     style: ElevatedButton.styleFrom(
@@ -81,4 +62,26 @@ class ForgotPasswordScreen extends StatelessWidget {
           ),
         ));
   }
+
+  Widget _forgotPasswordInstruction(BuildContext context) => Text(
+        AppLocalizations.of(context)!.forgotPasswordInstruction,
+        style: Theme.of(context)
+            .textTheme
+            .bodyLarge
+            ?.copyWith(color: Colors.white70),
+        textAlign: TextAlign.center,
+      );
+
+  Widget get _nimbleLogo => Image(
+        image: Assets.images.icNimbleWhiteLogo.image().image,
+        width: 168.0,
+        height: 40.0,
+      );
+
+  Widget get _emailTextField => const InputFieldWidget(
+        key: Key('login_email'),
+        textHint: 'Email',
+        keyboardType: TextInputType.emailAddress,
+        textInputAction: TextInputAction.next,
+      );
 }
