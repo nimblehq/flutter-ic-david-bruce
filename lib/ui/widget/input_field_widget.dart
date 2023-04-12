@@ -29,11 +29,9 @@ class InputFieldWidget extends StatelessWidget {
           hintText: textHint,
           filled: true,
           fillColor: Colors.white.withOpacity(0.18),
-          contentPadding: const EdgeInsets.only(
-            top: Dimensions.paddingNormal,
-            bottom: Dimensions.paddingNormal,
-            left: Dimensions.paddingSmall,
-            right: Dimensions.paddingSmall,
+          contentPadding: const EdgeInsets.symmetric(
+            vertical: Dimensions.paddingNormal,
+            horizontal: Dimensions.paddingSmall,
           ),
           hintStyle: const TextStyle(
             color: Colors.white30,
@@ -43,17 +41,19 @@ class InputFieldWidget extends StatelessWidget {
                   padding:
                       const EdgeInsets.only(right: Dimensions.paddingSmallest),
                   child: TextButton(
-                      onPressed: textSuffixButtonCallback != null
-                          ? () => textSuffixButtonCallback!()
-                          : () {},
-                      child: Text(textSuffixButton!,
-                          style: Theme.of(context)
-                              .textTheme
-                              .labelMedium
-                              ?.copyWith(
-                                  color: Colors.white.withOpacity(0.5),
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: 15))))
+                    onPressed: textSuffixButtonCallback != null
+                        ? () => textSuffixButtonCallback!()
+                        : () {},
+                    child: Text(
+                      textSuffixButton!,
+                      style: Theme.of(context).textTheme.labelMedium?.copyWith(
+                            color: Colors.white.withOpacity(0.5),
+                            fontWeight: FontWeight.w400,
+                            fontSize: 15.0,
+                          ),
+                    ),
+                  ),
+                )
               : null),
       keyboardType: keyboardType,
       obscureText: isPassword,
