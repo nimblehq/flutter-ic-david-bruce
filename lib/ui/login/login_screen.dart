@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:survey_flutter_ic/gen/assets.gen.dart';
 import 'package:survey_flutter_ic/ui/widget/input_field_widget.dart';
+import 'package:survey_flutter_ic/utils/context_ext.dart';
 import 'package:survey_flutter_ic/utils/dimension.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -22,17 +22,17 @@ class LoginState extends State<LoginScreen> {
 
   InputFieldWidget get _emailInputField => InputFieldWidget(
         key: const Key('login_email'),
-        textHint: AppLocalizations.of(context)!.loginEmail,
+        textHint: context.localization.loginEmail,
         keyboardType: TextInputType.emailAddress,
         textInputAction: TextInputAction.next,
       );
 
   InputFieldWidget get _passwordInputField => InputFieldWidget(
       key: const Key('login_password'),
-      textHint: AppLocalizations.of(context)!.loginPassword,
+      textHint: context.localization.loginPassword,
       keyboardType: TextInputType.visiblePassword,
       isPassword: true,
-      textSuffixButton: AppLocalizations.of(context)!.loginForgotPassword,
+      textSuffixButton: context.localization.loginForgotPassword,
       textSuffixButtonCallback: null);
 
   ElevatedButton get _loginButton => ElevatedButton(
@@ -45,11 +45,8 @@ class LoginState extends State<LoginScreen> {
           ),
         ),
         child: Text(
-          AppLocalizations.of(context)!.login,
-          style: Theme.of(context)
-              .textTheme
-              .titleSmall
-              ?.copyWith(color: Colors.black),
+          context.localization.login,
+          style: context.textTheme.titleSmall?.copyWith(color: Colors.black),
         ),
       );
 

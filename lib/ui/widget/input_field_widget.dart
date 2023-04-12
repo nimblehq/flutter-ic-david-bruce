@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:survey_flutter_ic/utils/context_ext.dart';
 import 'package:survey_flutter_ic/utils/dimension.dart';
 
 class InputFieldWidget extends StatelessWidget {
@@ -46,11 +47,11 @@ class InputFieldWidget extends StatelessWidget {
                         : () {},
                     child: Text(
                       textSuffixButton!,
-                      style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                            color: Colors.white.withOpacity(0.5),
-                            fontWeight: FontWeight.w400,
-                            fontSize: 15.0,
-                          ),
+                      style: context.textTheme.labelMedium?.copyWith(
+                        color: Colors.white.withOpacity(0.5),
+                        fontWeight: FontWeight.w400,
+                        fontSize: 15.0,
+                      ),
                     ),
                   ),
                 )
