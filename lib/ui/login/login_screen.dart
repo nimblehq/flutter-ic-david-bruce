@@ -20,7 +20,7 @@ class LoginState extends State<LoginScreen> {
       );
 
   Padding get _nimbleLogoImage => Padding(
-      padding: const EdgeInsets.only(left: 104.0, right: 104.0),
+      padding: const EdgeInsets.symmetric(horizontal: 104.0),
       child: Image.asset(
         Assets.images.icNimbleWhiteLogo.path,
         fit: BoxFit.fitWidth,

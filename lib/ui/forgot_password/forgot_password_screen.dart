@@ -30,7 +30,7 @@ class ForgotPasswordState extends State<ForgotPasswordScreen> {
       ));
 
   Widget get _nimbleLogo => Padding(
-      padding: const EdgeInsets.only(left: 104.0, right: 104.0),
+      padding: const EdgeInsets.symmetric(horizontal: 104.0),
       child: Image.asset(
         Assets.images.icNimbleWhiteLogo.path,
         fit: BoxFit.fitWidth,
