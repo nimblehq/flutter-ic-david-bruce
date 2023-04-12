@@ -37,10 +37,7 @@ class ForgotPasswordState extends State<ForgotPasswordScreen> {
 
   Widget _forgotPasswordInstruction(BuildContext context) => Text(
         context.localization.forgotPasswordInstruction,
-        style: Theme.of(context)
-            .textTheme
-            .bodyLarge
-            ?.copyWith(color: Colors.white70),
+        style: context.textTheme.bodyLarge?.copyWith(color: Colors.white70),
         textAlign: TextAlign.center,
       );
 
