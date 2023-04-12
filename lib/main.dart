@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:survey_flutter_ic/gen/assets.gen.dart';
 import 'package:survey_flutter_ic/ui/login/login_screen.dart';
 import 'package:survey_flutter_ic/ui/forgot_password/forgot_password_screen.dart';
+import 'package:survey_flutter_ic/utils/themes.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -42,6 +43,12 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         brightness: Brightness.light,
         fontFamily: Assets.fonts.neuzeit,
+        appBarTheme: Themes.appBarTheme,
+        textTheme: Themes.textTheme,
+        buttonTheme: Themes.buttonTheme,
+        elevatedButtonTheme: Themes.elevatedButtonThemeData,
+        textButtonTheme: Themes.textButtonThemeData,
+        inputDecorationTheme: Themes.inputDecorationTheme,
       ),
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
