@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:survey_flutter_ic/gen/assets.gen.dart';
 import 'package:survey_flutter_ic/ui/widget/input_field_widget.dart';
 import 'package:survey_flutter_ic/utils/context_ext.dart';

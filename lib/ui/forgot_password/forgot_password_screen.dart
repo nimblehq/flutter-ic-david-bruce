@@ -3,6 +3,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
 import 'package:survey_flutter_ic/gen/assets.gen.dart';
 import 'package:survey_flutter_ic/ui/widget/input_field_widget.dart';
+import 'package:survey_flutter_ic/utils/context_ext.dart';
 import 'package:survey_flutter_ic/utils/dimension.dart';
 import 'package:survey_flutter_ic/utils/custom_app_bar.dart';
 
@@ -36,7 +37,7 @@ class ForgotPasswordState extends State<ForgotPasswordScreen> {
       ));
 
   Widget _forgotPasswordInstruction(BuildContext context) => Text(
-        AppLocalizations.of(context)!.forgotPasswordInstruction,
+        context.localization.forgotPasswordInstruction,
         style: Theme.of(context)
             .textTheme
             .bodyLarge
@@ -46,7 +47,7 @@ class ForgotPasswordState extends State<ForgotPasswordScreen> {
 
   InputFieldWidget get _emailTextField => InputFieldWidget(
         key: const Key('forgot_password_email'),
-        textHint: AppLocalizations.of(context)!.loginEmail,
+        textHint: context.localization.loginEmail,
         keyboardType: TextInputType.emailAddress,
         textInputAction: TextInputAction.next,
       );
@@ -60,7 +61,7 @@ class ForgotPasswordState extends State<ForgotPasswordScreen> {
             borderRadius: BorderRadius.circular(Dimensions.radiusNormal),
           ),
         ),
-        child: Text(AppLocalizations.of(context)!.forgotPasswordResetButton),
+        child: Text(context.localization.forgotPasswordResetButton),
       );
 
   @override
