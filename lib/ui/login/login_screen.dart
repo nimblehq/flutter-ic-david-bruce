@@ -17,6 +17,7 @@ class LoginState extends State<LoginScreen> {
       padding: const EdgeInsets.only(left: 104.0, right: 104.0),
       child: Image.asset(
         Assets.images.icNimbleWhiteLogo.path,
+        fit: BoxFit.fitWidth,
       ));
 
   InputFieldWidget get _emailInputField => InputFieldWidget(
