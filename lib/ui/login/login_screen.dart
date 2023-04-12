@@ -13,6 +13,11 @@ class LoginScreen extends StatefulWidget {
 }
 
 class LoginState extends State<LoginScreen> {
+  Image get _backgroundImage => Image(
+        image: AssetImage(Assets.images.bgLoginOverlay.path),
+        fit: BoxFit.fill,
+      );
+
   Padding get _nimbleLogoImage => Padding(
       padding: const EdgeInsets.only(left: 104.0, right: 104.0),
       child: Image.asset(
@@ -56,19 +61,16 @@ class LoginState extends State<LoginScreen> {
         statusBarColor: Colors.transparent,
         statusBarIconBrightness: Brightness.light,
         statusBarBrightness: Brightness.dark));
-    return Scaffold(
-        backgroundColor: Colors.transparent,
-        body: Container(
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage(Assets.images.bgLoginOverlay.path),
-              fit: BoxFit.cover,
-            ),
-          ),
-          child: Padding(
-            padding:
-                const EdgeInsets.symmetric(horizontal: Dimensions.paddingLarge),
-            child: Center(
+    return Stack(
+      fit: StackFit.expand,
+      children: [
+        _backgroundImage,
+        Scaffold(
+          backgroundColor: Colors.transparent,
+          body: SafeArea(
+            child: Container(
+              padding: const EdgeInsets.symmetric(
+                  horizontal: Dimensions.paddingLarge),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -83,6 +85,8 @@ class LoginState extends State<LoginScreen> {
               ),
             ),
           ),
-        ));
+        ),
+      ],
+    );
   }
 }
