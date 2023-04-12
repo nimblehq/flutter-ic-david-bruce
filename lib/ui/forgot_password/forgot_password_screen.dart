@@ -28,11 +28,12 @@ class ForgotPasswordState extends State<ForgotPasswordScreen> {
         alignment: Alignment.center,
       ));
 
-  Widget get _nimbleLogo => Image(
-        image: Assets.images.icNimbleWhiteLogo.image().image,
-        width: 168.0,
-        height: 40.0,
-      );
+  Widget get _nimbleLogo => Padding(
+      padding: const EdgeInsets.only(left: 104.0, right: 104.0),
+      child: Image.asset(
+        Assets.images.icNimbleWhiteLogo.path,
+        fit: BoxFit.fitWidth,
+      ));
 
   Widget _forgotPasswordInstruction(BuildContext context) => Text(
         AppLocalizations.of(context)!.forgotPasswordInstruction,
@@ -43,9 +44,9 @@ class ForgotPasswordState extends State<ForgotPasswordScreen> {
         textAlign: TextAlign.center,
       );
 
-  Widget get _emailTextField => const InputFieldWidget(
-        key: Key('login_email'),
-        textHint: 'Email',
+  InputFieldWidget get _emailTextField => InputFieldWidget(
+        key: const Key('forgot_password_email'),
+        textHint: AppLocalizations.of(context)!.loginEmail,
         keyboardType: TextInputType.emailAddress,
         textInputAction: TextInputAction.next,
       );
@@ -77,9 +78,9 @@ class ForgotPasswordState extends State<ForgotPasswordScreen> {
                 children: [
                   const SizedBox(height: 60),
                   _nimbleLogo,
-                  const SizedBox(height: 20),
+                  const SizedBox(height: Dimensions.paddingLarge),
                   _forgotPasswordInstruction(context),
-                  const SizedBox(height: 100),
+                  const SizedBox(height: 96.0),
                   _emailTextField,
                   const SizedBox(height: Dimensions.paddingMedium),
                   _resetButton
