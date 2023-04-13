@@ -8,8 +8,8 @@ const String defaultContentType = 'application/json; charset=utf-8';
 class DioProvider {
   Dio? _dio;
 
-  Dio getDio() {
-    _dio ??= _createDio();
+  Dio getDio({required bool requireAuthenticate}) {
+    _dio ??= _createDio(requireAuthenticate: requireAuthenticate);
     return _dio!;
   }
 

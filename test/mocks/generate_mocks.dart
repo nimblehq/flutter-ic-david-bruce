@@ -1,9 +1,9 @@
 import 'package:dio/dio.dart';
-import 'package:survey_flutter_ic/api/api_service.dart';
 import 'package:mockito/annotations.dart';
+import 'package:survey_flutter_ic/api/auth_api_service.dart';
 
 @GenerateMocks([
-  ApiService,
+  AuthApiService,
   DioError,
 ])
 main() {
