@@ -5,7 +5,7 @@ import 'package:survey_flutter_ic/env.dart';
 
 @module
 abstract class NetworkModule {
-  @singleton
+  @Singleton()
   AuthApiService provideAuthApiService(DioProvider dioProvider) {
     return AuthApiService(
       dioProvider.getDio(requireAuthenticate: false),

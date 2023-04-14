@@ -12,7 +12,7 @@ abstract class AuthRepository {
   });
 }
 
-@Singleton(as: AuthRepository)
+@LazySingleton(as: AuthRepository)
 class AuthRepositoryImpl extends AuthRepository {
   final AuthApiService _authApiService;
 
@@ -33,12 +33,7 @@ class AuthRepositoryImpl extends AuthRepository {
           grantType: passwordGrantType,
         ),
       );
-      return LoginModel(
-        id: response.id,
-        accessToken: response.accessToken,
-        expiresIn: response.expiresIn,
-        refreshToken: response.refreshToken,
-      );
+      return response.toModel();
     } catch (exception) {
       throw NetworkExceptions.fromDioException(exception);
     }

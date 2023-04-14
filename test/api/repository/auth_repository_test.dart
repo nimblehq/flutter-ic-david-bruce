@@ -1,37 +1,56 @@
+import 'package:flutter_config/flutter_config.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mockito/mockito.dart';
+import 'package:survey_flutter_ic/api/exception/network_exceptions.dart';
 import 'package:survey_flutter_ic/api/repository/auth_repository.dart';
+import 'package:survey_flutter_ic/model/response/login_response.dart';
 
 import '../../mocks/generate_mocks.mocks.dart';
 
 void main() {
-  group('CredentialRepository', () {
-    MockAuthApiService mockApiService = MockAuthApiService();
-    late AuthRepository repository;
+  FlutterConfig.loadValueForTesting({
+    'CLIENT_ID': 'CLIENT_ID',
+    'CLIENT_SECRET': 'CLIENT_SECRET',
+  });
+
+  group('AuthApiRepositoryImplTest', () {
+    late MockAuthApiService mockAuthApiService;
+    late AuthRepositoryImpl authRepository;
+
+    const email = "email";
+    const password = "password";
 
     setUp(() {
-      repository = AuthRepositoryImpl(mockApiService);
+      mockAuthApiService = MockAuthApiService();
+      authRepository = AuthRepositoryImpl(mockAuthApiService);
     });
-    // test(
-    //     "When getting user list successfully, it emits corresponding user list",
-    //     () async {
-    //   when(mockApiService.getUsers()).thenAnswer((_) async => [
-    //         UserResponse('test@email.com', 'test_user'),
-    //       ]);
-    //
-    //   final result = await repository.getUsers();
-    //   expect(result.length, 1);
-    //   expect(result[0].email, 'test@email.com');
-    //   expect(result[0].username, 'test_user');
-    // });
 
-    // test("When getting user list failed, it returns NetworkExceptions error",
-    //     () async {
-    //   when(mockApiService.getUsers()).thenThrow(MockDioError());
-    //
-    //   expect(
-    //     () => repository.getUsers(),
-    //     throwsA(isA<NetworkExceptions>()),
-    //   );
-    // });
+    test('When login successfully, it returns success model', () async {
+      final loginResponse = LoginResponse(
+        id: "",
+        type: "",
+        accessToken: "",
+        tokenType: "",
+        expiresIn: 0,
+        refreshToken: "",
+        createdAt: 0,
+      );
+
+      when(mockAuthApiService.login(any))
+          .thenAnswer((_) async => loginResponse);
+
+      final result =
+          await authRepository.login(email: email, password: password);
+
+      expect(result, loginResponse.toModel());
+    });
+
+    test('When login unsuccessfully, it returns failed exception', () async {
+      when(mockAuthApiService.login(any)).thenThrow(Exception());
+
+      final result = authRepository.login(email: email, password: password);
+
+      expect(result, throwsA(isA<NetworkExceptions>()));
+    });
   });
 }
