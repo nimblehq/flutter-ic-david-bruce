@@ -5,7 +5,7 @@ import '../../mocks/generate_mocks.mocks.dart';
 
 void main() {
   group('CredentialRepository', () {
-    MockApiService mockApiService = MockApiService();
+    MockAuthApiService mockApiService = MockAuthApiService();
     late AuthRepository repository;
 
     setUp(() {
