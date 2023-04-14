@@ -5,4 +5,7 @@ extension BuildContextExtension on BuildContext {
   AppLocalizations get localization => AppLocalizations.of(this)!;
 
   TextTheme get textTheme => Theme.of(this).textTheme;
+
+  void showMessageSnackBar({required String message}) =>
+      ScaffoldMessenger.of(this).showSnackBar(SnackBar(content: Text(message)));
 }
