@@ -6,25 +6,12 @@ part 'login_response.g.dart';
 
 @JsonSerializable()
 class LoginResponse {
-  @JsonKey(name: 'id')
   final String id;
-
-  @JsonKey(name: 'type')
   final String type;
-
-  @JsonKey(name: 'access_token')
   final String accessToken;
-
-  @JsonKey(name: 'token_type')
   final String tokenType;
-
-  @JsonKey(name: 'expires_in')
   final double expiresIn;
-
-  @JsonKey(name: 'refresh_token')
   final String refreshToken;
-
-  @JsonKey(name: 'created_at')
   final double createdAt;
 
   LoginResponse({
