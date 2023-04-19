@@ -1,23 +1,31 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:survey_flutter_ic/api/storage/storage.dart';
+
+const headerAuthorization = 'Authorization';
+const retryLimit = 3;
 
 class AppInterceptor extends Interceptor {
   final bool _requireAuthenticate;
   final Dio _dio;
+  final Storage _storage;
 
-  AppInterceptor(
-    this._requireAuthenticate,
-    this._dio,
-  );
+  AppInterceptor(this._requireAuthenticate, this._dio, this._storage);
+
+  Future<String> get _accessTokens async {
+    final tokenType = await _storage.tokenType;
+    final accessToken = await _storage.accessToken;
+    if (tokenType == null || accessToken == null) return '';
+    return '$tokenType $accessToken';
+  }
 
   @override
   Future onRequest(
       RequestOptions options, RequestInterceptorHandler handler) async {
     if (_requireAuthenticate) {
-      // TODO header authorization here
-      // options.headers
-      //     .putIfAbsent(HEADER_AUTHORIZATION, () => "");
+      String accessTokens = await _accessTokens;
+      options.headers.putIfAbsent(headerAuthorization, () => accessTokens);
     }
     return super.onRequest(options, handler);
   }
