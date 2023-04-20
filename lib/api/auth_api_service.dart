@@ -16,7 +16,7 @@ abstract class AuthApiService {
     @Body() LoginRequest body,
   );
 
-  @POST('/oauth/token')
+  @POST('/passwords')
   Future<ForgotPasswordResponse> forgotPassword(
     @Body() ForgotPasswordRequest body,
   );

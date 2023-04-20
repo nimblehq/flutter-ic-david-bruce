@@ -16,7 +16,7 @@ class ForgotPasswordUseCase
   @override
   Future<Result<ForgotPasswordModel>> call(ForgotPasswordParams params) async {
     try {
-      final result = await _repository.forgotPassword(email: params.email);
+      final result = await _repository.forgotPassword(email: params.user.email);
       return Success(result);
     } catch (exception) {
       return Failed(UseCaseException(exception));
