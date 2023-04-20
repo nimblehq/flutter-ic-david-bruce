@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:survey_flutter_ic/di/di.dart';
 import 'package:survey_flutter_ic/gen/assets.gen.dart';
 import 'package:survey_flutter_ic/ui/forgot_password/forgot_password_screen.dart';
+import 'package:survey_flutter_ic/ui/home/home_screen.dart';
 import 'package:survey_flutter_ic/ui/login/login_screen.dart';
 import 'package:survey_flutter_ic/utils/themes.dart';
 
@@ -17,7 +18,8 @@ void main() async {
 }
 
 const routePathRootScreen = '/';
-const routePathForgotPasswordScreen = 'forgotPasword';
+const routePathForgotPasswordScreen = 'forgotPassword';
+const routePathHomeScreen = 'home';
 
 class MyApp extends StatelessWidget {
   MyApp({Key? key}) : super(key: key);
@@ -31,6 +33,10 @@ class MyApp extends StatelessWidget {
           GoRoute(
             path: routePathForgotPasswordScreen,
             builder: (_, __) => const ForgotPasswordScreen(),
+          ),
+          GoRoute(
+            path: routePathHomeScreen,
+            builder: (_, __) => const HomeScreen(),
           ),
         ],
       ),

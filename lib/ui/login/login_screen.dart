@@ -53,7 +53,7 @@ class LoginScreenState extends ConsumerState<LoginScreen> {
         keyboardType: TextInputType.visiblePassword,
         isPassword: true,
         textSuffixButton: context.localization.loginForgotPassword,
-        textSuffixButtonCallback: () => context.go('/forgotPasword'),
+        textSuffixButtonCallback: () => context.go('/forgotPassword'),
         controller: _passwordInputController,
       );
 
@@ -115,16 +115,19 @@ class LoginScreenState extends ConsumerState<LoginScreen> {
 
   void _registerStateListener() {
     ref.listen<LoginState>(loginViewModelProvider, (_, state) {
+      context.displayLoadingIndicator(
+        showOrHide: state == const LoginState.loading(),
+      );
       state.maybeWhen(
-        success: () => context.showMessageSnackBar(message: 'Login Success'),
-        error: (message) => context.showMessageSnackBar(
-          message: 'Login Failed: $message',
+        success: () => context.go('/home'),
+        error: (errorMessage) => context.showMessageSnackBar(
+          message: errorMessage,
         ),
         errorEmailInput: () => context.showMessageSnackBar(
-          message: 'Login Failed: Email incorrect',
+          message: context.localization.messageEmailInvalid,
         ),
         errorPasswordInput: () => context.showMessageSnackBar(
-          message: 'Login Failed: Password incorrect',
+          message: context.localization.messagePasswordInvalid,
         ),
         orElse: () {},
       );

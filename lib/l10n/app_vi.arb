@@ -5,5 +5,7 @@
   "loginEmail": "Email",
   "loginPassword": "Mật khẩu",
   "loginForgotPassword": "Quên?",
-  "login": "Đăng nhập"
+  "login": "Đăng nhập",
+  "messageEmailInvalid": "Email sai, vui lòng thử lại",
+  "messagePasswordInvalid": "Mật khẩu không được trống, vui lòng thử lại"
 }
