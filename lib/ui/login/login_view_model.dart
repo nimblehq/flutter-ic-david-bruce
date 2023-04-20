@@ -12,12 +12,12 @@ class LoginViewModel extends StateNotifier<LoginState> {
   final LoginUseCase _loginUseCase;
 
   void login(String email, String password) async {
-    state = const LoginState.loading();
     if (!email.validateEmail()) {
       state = const LoginState.errorEmailInput();
     } else if (!password.validatePassword()) {
       state = const LoginState.errorPasswordInput();
     } else {
+      state = const LoginState.loading();
       Result<void> result = await _loginUseCase.call(
         LoginParams(
           email: email,

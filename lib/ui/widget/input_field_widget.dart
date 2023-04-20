@@ -26,8 +26,10 @@ class InputFieldWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextField(
       controller: controller,
-      style:
-          const TextStyle(color: Colors.white, fontWeight: FontWeight.normal),
+      style: const TextStyle(
+        color: Colors.white,
+        fontWeight: FontWeight.normal,
+      ),
       decoration: InputDecoration(
           border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(Dimensions.radiusNormal)),

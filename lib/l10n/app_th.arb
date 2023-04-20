@@ -7,5 +7,5 @@
   "loginForgotPassword": "ลืมรหัสผ่าน?",
   "login": "เข้าสู่ระบบ",
   "messageEmailInvalid": "อีเมลไม่ถูกต้อง กรุณาตรวจสอบอีกครั้ง",
-  "messagePasswordInvalid": "รหัสผ่านไม่ถูกต้อง กรุณาตรวจสอบอีกครั้ง"
+  "messagePasswordInvalid": "รหัสผ่านต้องไม่ว่างเปล่า โปรดตรวจสอบอีกครั้ง"
 }

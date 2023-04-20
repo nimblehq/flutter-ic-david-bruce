@@ -115,7 +115,7 @@ class LoginScreenState extends ConsumerState<LoginScreen> {
 
   void _registerStateListener() {
     ref.listen<LoginState>(loginViewModelProvider, (_, state) {
-      context.displayLoadingIndicator(
+      context.displayLoadingDialog(
         showOrHide: state == const LoginState.loading(),
       );
       state.maybeWhen(

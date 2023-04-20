@@ -10,7 +10,7 @@ extension BuildContextExtension on BuildContext {
   void showMessageSnackBar({required String message}) =>
       ScaffoldMessenger.of(this).showSnackBar(SnackBar(content: Text(message)));
 
-  void displayLoadingIndicator({bool showOrHide = false}) {
+  void displayLoadingDialog({bool showOrHide = false}) {
     if (showOrHide) {
       showDialog(
         context: this,
