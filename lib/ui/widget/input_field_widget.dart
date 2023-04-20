@@ -10,6 +10,7 @@ class InputFieldWidget extends StatelessWidget {
     this.isPassword = false,
     this.textSuffixButton,
     this.textSuffixButtonCallback,
+    this.controller,
     super.key,
   });
 
@@ -19,11 +20,14 @@ class InputFieldWidget extends StatelessWidget {
   final bool isPassword;
   final String? textSuffixButton;
   final VoidCallback? textSuffixButtonCallback;
+  final TextEditingController? controller;
 
   @override
   Widget build(BuildContext context) {
     return TextField(
-      style: const TextStyle(color: Colors.white),
+      controller: controller,
+      style:
+          const TextStyle(color: Colors.white, fontWeight: FontWeight.normal),
       decoration: InputDecoration(
           border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(Dimensions.radiusNormal)),
@@ -49,7 +53,7 @@ class InputFieldWidget extends StatelessWidget {
                       textSuffixButton!,
                       style: context.textTheme.labelMedium?.copyWith(
                         color: Colors.white.withOpacity(0.5),
-                        fontWeight: FontWeight.w400,
+                        fontWeight: FontWeight.normal,
                         fontSize: 15.0,
                       ),
                     ),
