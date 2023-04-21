@@ -2,14 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_config/flutter_config.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
+import 'package:survey_flutter_ic/di/di.dart';
 import 'package:survey_flutter_ic/gen/assets.gen.dart';
-import 'package:survey_flutter_ic/ui/login/login_screen.dart';
 import 'package:survey_flutter_ic/ui/forgot_password/forgot_password_screen.dart';
+import 'package:survey_flutter_ic/ui/login/login_screen.dart';
 import 'package:survey_flutter_ic/utils/themes.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await FlutterConfig.loadEnvVariables();
+  await configureDependencies();
   runApp(MyApp());
 }
 
