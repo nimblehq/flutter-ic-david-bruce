@@ -4,7 +4,7 @@ import 'package:mockito/mockito.dart';
 import 'package:survey_flutter_ic/api/exception/network_exceptions.dart';
 import 'package:survey_flutter_ic/api/repository/auth_repository.dart';
 import 'package:survey_flutter_ic/model/response/login_response.dart';
-
+import 'package:survey_flutter_ic/model/response/forgot_password_response.dart';
 import '../../mocks/generate_mocks.mocks.dart';
 
 void main() {
@@ -25,7 +25,7 @@ void main() {
       authRepository = AuthRepositoryImpl(mockAuthApiService);
     });
 
-    test('When login successfully, it returns success model', () async {
+    test('When login is successful, it returns a LoginModel', () async {
       final loginResponse = LoginResponse(
         id: "",
         type: "",
@@ -45,12 +45,34 @@ void main() {
       expect(result, loginResponse.toModel());
     });
 
-    test('When login unsuccessfully, it returns failed exception', () async {
+    test('When login fails, it throws a NetworkExceptions', () async {
       when(mockAuthApiService.login(any)).thenThrow(Exception());
 
       final result = authRepository.login(email: email, password: password);
 
       expect(result, throwsA(isA<NetworkExceptions>()));
+    });
+
+    test('When forgotPassword is successful, it returns a ForgotPasswordModel',
+        () async {
+      final forgotPasswordResponse = ForgotPasswordResponse(
+        message: 'success',
+      );
+      when(mockAuthApiService.forgotPassword(any))
+          .thenAnswer((_) async => forgotPasswordResponse);
+
+      final result = await authRepository.forgotPassword(email: email);
+
+      expect(result, forgotPasswordResponse.toModel());
+      expect(result.message, equals(forgotPasswordResponse.message));
+    });
+
+    test('When forgotPassword fails, it throws a NetworkExceptions', () async {
+      when(mockAuthApiService.forgotPassword(any)).thenThrow(Exception());
+
+      final call = authRepository.forgotPassword(email: email);
+
+      expect(call, throwsA(isA<NetworkExceptions>()));
     });
   });
 }
