@@ -27,8 +27,7 @@ void main() {
       final result = await useCase.call(email);
 
       expect(result, isA<Success<String>>());
-      expect(
-          (result as Success<String>).value, message);
+      expect((result as Success<String>).value, message);
       verify(mockAuthRepository.forgotPassword(email: email)).called(1);
     });
 
