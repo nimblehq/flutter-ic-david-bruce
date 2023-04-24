@@ -10,6 +10,7 @@ import 'package:survey_flutter_ic/ui/widget/input_field_widget.dart';
 import 'package:survey_flutter_ic/usecases/login_use_case.dart';
 import 'package:survey_flutter_ic/utils/context_ext.dart';
 import 'package:survey_flutter_ic/utils/dimension.dart';
+import 'package:survey_flutter_ic/utils/route_path.dart';
 
 final loginViewModelProvider =
     StateNotifierProvider.autoDispose<LoginViewModel, LoginState>(
@@ -53,7 +54,8 @@ class LoginScreenState extends ConsumerState<LoginScreen> {
         keyboardType: TextInputType.visiblePassword,
         isPassword: true,
         textSuffixButton: context.localization.loginForgotPassword,
-        textSuffixButtonCallback: () => context.go('/forgotPassword'),
+        textSuffixButtonCallback: () =>
+            context.goNamed(RoutePath.forgotPassword.name),
         controller: _passwordInputController,
       );
 
@@ -119,7 +121,7 @@ class LoginScreenState extends ConsumerState<LoginScreen> {
         showOrHide: state == const LoginState.loading(),
       );
       state.maybeWhen(
-        success: () => context.go('/home'),
+        success: () => context.goNamed(RoutePath.home.name),
         error: (errorMessage) => context.showMessageSnackBar(
           message: errorMessage,
         ),
