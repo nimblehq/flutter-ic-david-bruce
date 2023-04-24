@@ -12,10 +12,10 @@ class ForgotPasswordViewModel extends StateNotifier<ForgotPasswordState> {
   final ForgotPasswordUseCase _forgotPasswordUseCase;
 
   void forgotPassword(String email) async {
+    state = const ForgotPasswordState.loading();
     if (!email.validateEmail()) {
       state = const ForgotPasswordState.errorEmailInput();
     } else {
-      state = const ForgotPasswordState.loading();
       Result<void> result = await _forgotPasswordUseCase.call(email);
       if (result is Success) {
         state = ForgotPasswordState.success(result.value);

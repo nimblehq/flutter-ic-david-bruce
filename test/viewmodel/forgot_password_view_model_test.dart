@@ -89,7 +89,10 @@ void main() {
           container.read(forgotPasswordViewModelProvider.notifier).stream;
       expect(
         stateStream,
-        emitsInOrder([const ForgotPasswordState.errorEmailInput()]),
+        emitsInOrder([
+          const ForgotPasswordState.loading(),
+          const ForgotPasswordState.errorEmailInput()
+        ]),
       );
       container
           .read(forgotPasswordViewModelProvider.notifier)
