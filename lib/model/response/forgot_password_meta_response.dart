@@ -13,4 +13,6 @@ class ForgotPasswordMetaResponse {
 
   factory ForgotPasswordMetaResponse.fromJson(Map<String, dynamic> json) =>
       _$ForgotPasswordMetaResponseFromJson(mapDataJson(json));
+
+  Map<String, dynamic> toJson() => _$ForgotPasswordMetaResponseToJson(this);
 }

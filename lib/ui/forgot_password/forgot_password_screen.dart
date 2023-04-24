@@ -28,7 +28,7 @@ class ForgotPasswordScreenState extends ConsumerState<ForgotPasswordScreen> {
 
   AppBar get _appBar => CustomAppBar.backButton(
         context: context,
-        onPressed: () => context.go('/'),
+        onPressed: () => context.pop(),
       );
 
   Widget get _background => SizedBox(
