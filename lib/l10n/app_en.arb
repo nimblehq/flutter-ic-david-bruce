@@ -5,5 +5,7 @@
   "loginEmail": "Email",
   "loginPassword": "Password",
   "loginForgotPassword": "Forgot?",
-  "login": "Log In"
+  "login": "Log In",
+  "messageEmailInvalid": "Email is invalid, please check again",
+  "messagePasswordInvalid": "Password cannot be empty, please check again"
 }
