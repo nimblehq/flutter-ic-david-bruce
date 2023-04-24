@@ -4,7 +4,7 @@ import 'package:survey_flutter_ic/model/response/converter/response_converter.da
 
 part 'forgot_password_response.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(explicitToJson: true)
 class ForgotPasswordResponse {
   final ForgotPasswordMetaResponse meta;
 
