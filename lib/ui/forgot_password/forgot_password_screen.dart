@@ -5,6 +5,7 @@ import 'package:survey_flutter_ic/ui/widget/input_field_widget.dart';
 import 'package:survey_flutter_ic/utils/context_ext.dart';
 import 'package:survey_flutter_ic/utils/dimension.dart';
 import 'package:survey_flutter_ic/utils/custom_app_bar.dart';
+import 'package:survey_flutter_ic/utils/route_path.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:survey_flutter_ic/di/di.dart';
 import 'package:survey_flutter_ic/ui/forgot_password/forgot_password_state.dart';
@@ -29,7 +30,7 @@ class ForgotPasswordScreenState extends ConsumerState<ForgotPasswordScreen> {
 
   AppBar get _appBar => CustomAppBar.backButton(
         context: context,
-        onPressed: () => context.pop(),
+        onPressed: () => context.goNamed(RoutePath.login.name),
       );
 
   Widget get _background => SizedBox(
