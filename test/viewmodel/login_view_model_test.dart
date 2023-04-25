@@ -89,7 +89,10 @@ void main() {
           container.read(loginViewModelProvider.notifier).stream;
       expect(
         stateStream,
-        emitsInOrder([const LoginState.errorEmailInput()]),
+        emitsInOrder([
+          const LoginState.loading(),
+          const LoginState.errorEmailInput(),
+        ]),
       );
       container
           .read(loginViewModelProvider.notifier)
@@ -103,7 +106,10 @@ void main() {
           container.read(loginViewModelProvider.notifier).stream;
       expect(
         stateStream,
-        emitsInOrder([const LoginState.errorPasswordInput()]),
+        emitsInOrder([
+          const LoginState.loading(),
+          const LoginState.errorPasswordInput()
+        ]),
       );
       container
           .read(loginViewModelProvider.notifier)
