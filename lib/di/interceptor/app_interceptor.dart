@@ -1,9 +1,11 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:survey_flutter_ic/di/di.dart';
 import 'package:survey_flutter_ic/api/storage/storage.dart';
 import 'package:survey_flutter_ic/model/refresh_token_model.dart';
 import 'package:survey_flutter_ic/usecases/base/base_use_case.dart';
+import 'package:survey_flutter_ic/usecases/refresh_token_use_case.dart';
 
 const headerAuthorization = 'Authorization';
 const retryLimit = 3;
@@ -49,25 +51,21 @@ class AppInterceptor extends Interceptor {
     ErrorInterceptorHandler handler,
   ) async {
     try {
-      // TODO Request new token
-
-      // if (result is Success) {
-      // TODO Update new token header
-      // err.requestOptions.headers[_headerAuthorization] = newToken;
-
-      // Create request with new access token
-      final options = Options(
-          method: err.requestOptions.method,
-          headers: err.requestOptions.headers);
-      final newRequest = await _dio.request(
-          "${err.requestOptions.baseUrl}${err.requestOptions.path}",
-          options: options,
-          data: err.requestOptions.data,
-          queryParameters: err.requestOptions.queryParameters);
-      handler.resolve(newRequest);
-      //  } else {
-      //    handler.next(err);
-      //  }
+      final result = await _requestNewTokens();
+      if (result is Success<RefreshTokenModel>) {
+        err.requestOptions.headers[headerAuthorization] = _tokens;
+        final options = Options(
+            method: err.requestOptions.method,
+            headers: err.requestOptions.headers);
+        final newRequest = await _dio.request(
+            "${err.requestOptions.baseUrl}${err.requestOptions.path}",
+            options: options,
+            data: err.requestOptions.data,
+            queryParameters: err.requestOptions.queryParameters);
+        handler.resolve(newRequest);
+      } else {
+        handler.next(err);
+      }
     } catch (exception) {
       if (exception is DioError) {
         handler.next(exception);
@@ -75,5 +73,17 @@ class AppInterceptor extends Interceptor {
         handler.next(err);
       }
     }
+  }
+
+  Future<String> get _tokens async {
+    final tokenType = await _storage.tokenType;
+    final accessToken = await _storage.accessToken;
+    if (tokenType == null || accessToken == null) return '';
+    return '$tokenType $accessToken';
+  }
+
+  Future<Result<RefreshTokenModel>> _requestNewTokens() {
+    final refreshTokenUseCase = getIt<RefreshTokenUseCase>();
+    return refreshTokenUseCase.call();
   }
 }
