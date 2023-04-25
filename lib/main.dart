@@ -5,11 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:survey_flutter_ic/di/di.dart';
 import 'package:survey_flutter_ic/gen/assets.gen.dart';
-import 'package:survey_flutter_ic/ui/forgot_password/forgot_password_screen.dart';
-import 'package:survey_flutter_ic/ui/home/home_screen.dart';
-import 'package:survey_flutter_ic/ui/login/login_screen.dart';
 import 'package:survey_flutter_ic/utils/app_route.dart';
-import 'package:survey_flutter_ic/utils/route_path.dart';
 import 'package:survey_flutter_ic/utils/themes.dart';
 
 void main() async {
