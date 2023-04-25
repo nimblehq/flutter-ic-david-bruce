@@ -20,7 +20,8 @@ class ForgotPasswordScreen extends ConsumerStatefulWidget {
   const ForgotPasswordScreen({super.key});
 
   @override
-  ConsumerState createState() => ForgotPasswordScreenState();
+  ConsumerState<ForgotPasswordScreen> createState() =>
+      ForgotPasswordScreenState();
 }
 
 class ForgotPasswordScreenState extends ConsumerState<ForgotPasswordScreen> {
