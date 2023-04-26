@@ -5,18 +5,31 @@ import 'package:survey_flutter_ic/ui/widget/input_field_widget.dart';
 import 'package:survey_flutter_ic/utils/context_ext.dart';
 import 'package:survey_flutter_ic/utils/dimension.dart';
 import 'package:survey_flutter_ic/utils/custom_app_bar.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:survey_flutter_ic/di/di.dart';
+import 'package:survey_flutter_ic/ui/forgot_password/forgot_password_state.dart';
+import 'package:survey_flutter_ic/ui/forgot_password/forgot_password_view_model.dart';
+import 'package:survey_flutter_ic/usecases/forgot_password_use_case.dart';
 
-class ForgotPasswordScreen extends StatefulWidget {
+final forgotPasswordViewModelProvider = StateNotifierProvider.autoDispose<
+    ForgotPasswordViewModel, ForgotPasswordState>(
+  (_) => ForgotPasswordViewModel(getIt.get<ForgotPasswordUseCase>()),
+);
+
+class ForgotPasswordScreen extends ConsumerStatefulWidget {
   const ForgotPasswordScreen({super.key});
 
   @override
-  ForgotPasswordState createState() => ForgotPasswordState();
+  ConsumerState<ForgotPasswordScreen> createState() =>
+      ForgotPasswordScreenState();
 }
 
-class ForgotPasswordState extends State<ForgotPasswordScreen> {
+class ForgotPasswordScreenState extends ConsumerState<ForgotPasswordScreen> {
+  final _emailInputController = TextEditingController();
+
   AppBar get _appBar => CustomAppBar.backButton(
         context: context,
-        onPressed: () => context.go('/'),
+        onPressed: () => context.pop(),
       );
 
   Widget get _background => SizedBox(
@@ -41,15 +54,20 @@ class ForgotPasswordState extends State<ForgotPasswordScreen> {
         textAlign: TextAlign.center,
       );
 
-  InputFieldWidget get _emailTextField => InputFieldWidget(
+  InputFieldWidget get _emailInputField => InputFieldWidget(
         key: const Key('forgot_password_email'),
         textHint: context.localization.loginEmail,
         keyboardType: TextInputType.emailAddress,
         textInputAction: TextInputAction.next,
+        controller: _emailInputController,
       );
 
   ElevatedButton get _resetButton => ElevatedButton(
-        onPressed: () {},
+        onPressed: () {
+          ref.read(forgotPasswordViewModelProvider.notifier).forgotPassword(
+                _emailInputController.text,
+              );
+        },
         style: ElevatedButton.styleFrom(
           minimumSize: const Size.fromHeight(Dimensions.buttonHeight),
           backgroundColor: Colors.white,
@@ -62,6 +80,7 @@ class ForgotPasswordState extends State<ForgotPasswordScreen> {
 
   @override
   Widget build(BuildContext context) {
+    _registerStateListener();
     return Stack(
       children: [
         _background,
@@ -78,7 +97,7 @@ class ForgotPasswordState extends State<ForgotPasswordScreen> {
                   const SizedBox(height: Dimensions.paddingLarge),
                   _forgotPasswordInstruction(context),
                   const SizedBox(height: 96.0),
-                  _emailTextField,
+                  _emailInputField,
                   const SizedBox(height: Dimensions.paddingMedium),
                   _resetButton
                 ],
@@ -88,5 +107,32 @@ class ForgotPasswordState extends State<ForgotPasswordScreen> {
         ),
       ],
     );
+  }
+
+  void _registerStateListener() {
+    ref.listen<ForgotPasswordState>(forgotPasswordViewModelProvider,
+        (_, state) {
+      context.displayLoadingDialog(
+        showOrHide: state == const ForgotPasswordState.loading(),
+      );
+      state.maybeWhen(
+        success: (message) => context.showMessageSnackBar(
+          message: message,
+        ),
+        error: (errorMessage) => context.showMessageSnackBar(
+          message: errorMessage,
+        ),
+        errorEmailInput: () => context.showMessageSnackBar(
+          message: context.localization.messageEmailInvalid,
+        ),
+        orElse: () {},
+      );
+    });
+  }
+
+  @override
+  void dispose() {
+    _emailInputController.dispose();
+    super.dispose();
   }
 }

@@ -1,6 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
-import 'package:survey_flutter_ic/model/forgot_password_model.dart';
 import 'package:survey_flutter_ic/usecases/base/base_use_case.dart';
 import 'package:survey_flutter_ic/usecases/forgot_password_use_case.dart';
 import '../mocks/generate_mocks.mocks.dart';
@@ -20,16 +19,15 @@ void main() {
     test(
         'should return success result with forgot password model on successful forgot password',
         () async {
-      const forgotPasswordModel = ForgotPasswordModel(message: '');
+      const message = '';
       when(mockAuthRepository.forgotPassword(
         email: email,
-      )).thenAnswer((_) async => forgotPasswordModel);
+      )).thenAnswer((_) async => message);
 
       final result = await useCase.call(email);
 
-      expect(result, isA<Success<ForgotPasswordModel>>());
-      expect(
-          (result as Success<ForgotPasswordModel>).value, forgotPasswordModel);
+      expect(result, isA<Success<String>>());
+      expect((result as Success<String>).value, message);
       verify(mockAuthRepository.forgotPassword(email: email)).called(1);
     });
 
@@ -41,7 +39,7 @@ void main() {
 
       final result = await useCase.call(email);
 
-      expect(result, isA<Failed<ForgotPasswordModel>>());
+      expect(result, isA<Failed<String>>());
       verify(mockAuthRepository.forgotPassword(email: email)).called(1);
     });
   });

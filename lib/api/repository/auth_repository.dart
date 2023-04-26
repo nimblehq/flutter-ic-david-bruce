@@ -2,7 +2,6 @@ import 'package:injectable/injectable.dart';
 import 'package:survey_flutter_ic/api/auth_api_service.dart';
 import 'package:survey_flutter_ic/api/exception/network_exceptions.dart';
 import 'package:survey_flutter_ic/env.dart';
-import 'package:survey_flutter_ic/model/forgot_password_model.dart';
 import 'package:survey_flutter_ic/model/login_model.dart';
 import 'package:survey_flutter_ic/model/request/forgot_password_request.dart';
 import 'package:survey_flutter_ic/model/request/forgot_password_user_request.dart';
@@ -14,7 +13,7 @@ abstract class AuthRepository {
     required String password,
   });
 
-  Future<ForgotPasswordModel> forgotPassword({
+  Future<String> forgotPassword({
     required String email,
   });
 }
@@ -47,7 +46,7 @@ class AuthRepositoryImpl extends AuthRepository {
   }
 
   @override
-  Future<ForgotPasswordModel> forgotPassword({required String email}) async {
+  Future<String> forgotPassword({required String email}) async {
     try {
       final response = await _authApiService.forgotPassword(
         ForgotPasswordRequest(
@@ -56,7 +55,7 @@ class AuthRepositoryImpl extends AuthRepository {
           clientSecret: Env.clientSecret,
         ),
       );
-      return response.toModel();
+      return response.meta.message;
     } catch (exception) {
       throw NetworkExceptions.fromDioException(exception);
     }
