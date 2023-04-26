@@ -49,7 +49,7 @@ class HomeScreen extends StatelessWidget {
                     ),
                     ListTile(
                       title: Text(
-                        'Logout',
+                        context.localization.logout,
                         style: context.textTheme.bodyLarge
                             ?.copyWith(color: Colors.white70),
                       ),
