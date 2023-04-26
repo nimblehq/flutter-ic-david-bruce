@@ -179,7 +179,7 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
                     ),
                     ListTile(
                       title: Text(
-                        'Logout',
+                        context.localization.logout,
                         style: context.textTheme.bodyLarge
                             ?.copyWith(color: Colors.white70),
                       ),
