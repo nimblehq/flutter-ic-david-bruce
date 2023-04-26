@@ -137,6 +137,9 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
   Widget build(BuildContext context) {
     _setupStateListener();
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('Home Screen'),
+      ),
       endDrawer: Drawer(
           backgroundColor: const Color(0xFF1E1E1E),
           child: Column(
