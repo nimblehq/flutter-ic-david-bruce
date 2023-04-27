@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:survey_flutter_ic/ui/home/loading/home_loading_text.dart';
 
 class HomeLoading extends StatelessWidget {
   const HomeLoading({super.key});
@@ -29,8 +30,17 @@ class HomeLoading extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: const [
-            SizedBox(
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.max,
+              children: const [
+                HomeLoadingText(width: 120.0),
+                SizedBox(height: 4.0),
+                HomeLoadingText(width: 100.0),
+              ],
+            ),
+            const SizedBox(
               width: 40,
               height: 40,
               child: CircleAvatar(
@@ -46,9 +56,17 @@ class HomeLoading extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.max,
-          children: const [
-            SizedBox(height: 16.0),
-            SizedBox(height: 16.0),
+          children: [
+            const HomeLoadingText(width: 40.0),
+            const SizedBox(height: 16.0),
+            HomeLoadingText(width: MediaQuery.of(context).size.width - 102.0),
+            const SizedBox(height: 4.0),
+            HomeLoadingText(width: MediaQuery.of(context).size.width - 240.0),
+            const SizedBox(height: 16.0),
+            HomeLoadingText(width: MediaQuery.of(context).size.width - 36.0),
+            const SizedBox(height: 4.0),
+            HomeLoadingText(width: MediaQuery.of(context).size.width - 140.0),
+            const SizedBox(height: 16.0)
           ],
         ),
       );
