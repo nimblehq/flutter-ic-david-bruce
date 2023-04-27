@@ -11,7 +11,6 @@ import 'package:survey_flutter_ic/ui/home/loading/home_loading.dart';
 import 'package:survey_flutter_ic/utils/context_ext.dart';
 
 import '../../di/di.dart';
-import '../../gen/assets.gen.dart';
 import '../../usecases/get_surveys_use_case.dart';
 import '../../utils/route_path.dart';
 
