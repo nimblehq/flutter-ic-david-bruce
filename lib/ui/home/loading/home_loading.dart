@@ -13,14 +13,14 @@ class HomeLoading extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          _buildTopSkeleton(),
-          _buildBottomSkeleton(context),
+          _buildHeaderLoading(),
+          _buildBodyLoading(context),
         ],
       ),
     );
   }
 
-  Widget _buildTopSkeleton() => Container(
+  Widget _buildHeaderLoading() => Container(
         padding: const EdgeInsets.only(
           top: 10,
           right: 20,
@@ -41,7 +41,7 @@ class HomeLoading extends StatelessWidget {
         ),
       );
 
-  Widget _buildBottomSkeleton(BuildContext context) => Padding(
+  Widget _buildBodyLoading(BuildContext context) => Padding(
         padding: const EdgeInsets.only(bottom: 40),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
