@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:survey_flutter_ic/model/response/survey_question_response.dart';
 import 'package:survey_flutter_ic/model/survey_model.dart';
 
 import 'converter/response_converter.dart';
@@ -18,6 +19,7 @@ class SurveyResponse {
   final String? activeAt;
   final String? inactiveAt;
   final String? surveyType;
+  final List<SurveyQuestionResponse>? questions;
 
   SurveyResponse({
     required this.id,
@@ -31,6 +33,7 @@ class SurveyResponse {
     required this.activeAt,
     required this.inactiveAt,
     required this.surveyType,
+    required this.questions,
   });
 
   factory SurveyResponse.fromJson(Map<String, dynamic> json) =>
@@ -48,5 +51,8 @@ class SurveyResponse {
         activeAt: activeAt ?? '',
         inactiveAt: inactiveAt ?? '',
         surveyType: surveyType ?? '',
+        questions: (questions ?? [])
+            .map((question) => question.toSurveyQuestionModel())
+            .toList(),
       );
 }

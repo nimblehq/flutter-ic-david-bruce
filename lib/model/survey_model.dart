@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:survey_flutter_ic/model/survey_question_model.dart';
 
 class SurveyModel extends Equatable {
   final String id;
@@ -12,6 +13,7 @@ class SurveyModel extends Equatable {
   final String activeAt;
   final String inactiveAt;
   final String surveyType;
+  final List<SurveyQuestionModel> questions;
 
   const SurveyModel({
     required this.id,
@@ -25,6 +27,7 @@ class SurveyModel extends Equatable {
     required this.activeAt,
     required this.inactiveAt,
     required this.surveyType,
+    required this.questions,
   });
 
   const SurveyModel.empty()
@@ -40,6 +43,7 @@ class SurveyModel extends Equatable {
           activeAt: '',
           inactiveAt: '',
           surveyType: '',
+          questions: const [],
         );
 
   @override
