@@ -6,6 +6,8 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:survey_flutter_ic/model/survey_model.dart';
 import 'package:survey_flutter_ic/ui/home/home_state.dart';
 import 'package:survey_flutter_ic/ui/home/home_view_model.dart';
+import 'package:survey_flutter_ic/gen/assets.gen.dart';
+import 'package:survey_flutter_ic/ui/home/loading/home_loading.dart';
 import 'package:survey_flutter_ic/utils/context_ext.dart';
 
 import '../../di/di.dart';
@@ -421,19 +423,95 @@ class SurveyPageIndicator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
-      child: SmoothPageIndicator(
-        controller: controller,
-        count: count,
-        effect: const ScrollingDotsEffect(
-          dotWidth: 8,
-          dotHeight: 8,
-          radius: 8,
-          spacing: 10,
-          dotColor: Colors.white30,
-          activeDotColor: Colors.white,
-        ),
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        child: SmoothPageIndicator(
+          controller: controller,
+          count: count,
+          effect: const ScrollingDotsEffect(
+            dotWidth: 8,
+            dotHeight: 8,
+            radius: 8,
+            spacing: 10,
+            dotColor: Colors.white30,
+            activeDotColor: Colors.white,
+          ),
+        ));
+  }
+
+  SizedBox _backgroundImage(BuildContext context) {
+    return SizedBox(
+      width: MediaQuery.of(context).size.width,
+      height: MediaQuery.of(context).size.height,
+      child: Image(
+        image: AssetImage(Assets.images.bgHomeOverlay.path),
+        fit: BoxFit.cover,
+        alignment: Alignment.center,
       ),
     );
+  }
+
+  Drawer _buildMenu(BuildContext context) {
+    return Drawer(
+        backgroundColor: const Color(0xFF1E1E1E),
+        child: Column(
+          children: [
+            Expanded(
+              child: ListView(
+                padding: EdgeInsets.zero,
+                children: [
+                  DrawerHeader(
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            'Mai',
+                            style: context.textTheme.headlineLarge?.copyWith(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                        const CircleAvatar(
+                          backgroundColor: Colors.grey,
+                          child: Icon(
+                            Icons.person,
+                            size: 36.0,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 16.0),
+                    child: Divider(
+                      color: Colors.white70,
+                    ),
+                  ),
+                  ListTile(
+                    title: Text(
+                      context.localization.logout,
+                      style: context.textTheme.bodyLarge
+                          ?.copyWith(color: Colors.white70),
+                    ),
+                    onTap: () {},
+                  ),
+                ],
+              ),
+            ),
+            Positioned(
+              bottom: 0,
+              left: 0,
+              right: 0,
+              child: ListTile(
+                title: Text(
+                  'Version 1.0',
+                  style: context.textTheme.bodySmall
+                      ?.copyWith(color: Colors.white70),
+                ),
+              ),
+            ),
+          ],
+        ));
   }
 }

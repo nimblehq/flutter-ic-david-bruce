@@ -42,6 +42,7 @@ dependencies:
   japx: ^2.0.5
   flutter_riverpod: ^2.3.5
   smooth_page_indicator: ^1.1.0
+  shimmer: ^2.0.0
 
 dev_dependencies:
   build_runner: ^2.1.11
