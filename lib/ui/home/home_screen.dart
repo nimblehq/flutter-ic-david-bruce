@@ -118,7 +118,9 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
   Widget _body(BuildContext context) => Consumer(
         builder: (_, ref, __) {
           final surveys = ref.watch(surveysStream).value ?? [];
-          return SafeArea(child: _mainBody(context));
+          return surveys.isNotEmpty
+              ? SafeArea(child: _mainBody(context))
+              : const SafeArea(child: HomeLoading());
         },
       );
 
