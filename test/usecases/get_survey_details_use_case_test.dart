@@ -3,7 +3,6 @@ import 'package:mockito/mockito.dart';
 import 'package:survey_flutter_ic/model/survey_model.dart';
 import 'package:survey_flutter_ic/usecases/base/base_use_case.dart';
 import 'package:survey_flutter_ic/usecases/get_survey_details_use_case.dart';
-import 'package:survey_flutter_ic/usecases/params/surveys_params.dart';
 
 import '../mocks/generate_mocks.mocks.dart';
 
