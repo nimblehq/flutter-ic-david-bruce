@@ -4,6 +4,7 @@ import 'package:survey_flutter_ic/api/storage/storage.dart';
 import 'package:survey_flutter_ic/ui/forgot_password/forgot_password_screen.dart';
 import 'package:survey_flutter_ic/ui/home/home_screen.dart';
 import 'package:survey_flutter_ic/ui/login/login_screen.dart';
+import 'package:survey_flutter_ic/ui/survey_details/survey_details_screen.dart';
 import 'package:survey_flutter_ic/utils/route_path.dart';
 
 @Singleton()
@@ -31,6 +32,11 @@ class AppRouter {
             name: RoutePath.forgotPassword.name,
             builder: (context, state) => const ForgotPasswordScreen(),
           ),
+          GoRoute(
+            path: RoutePath.surveyDetails.screen,
+            name: RoutePath.surveyDetails.name,
+            builder: (context, state) => const SurveyDetailsScreen(),
+          ),
         ],
         redirect: (context, state) async {
           final subLocation = state.subloc;
@@ -38,7 +44,7 @@ class AppRouter {
           if (!isLogin &&
               subLocation != RoutePath.forgotPassword.path &&
               subLocation != RoutePath.login.path) {
-            return RoutePath.login.path;
+            return RoutePath.surveyDetails.path;
           }
           return null;
         },
