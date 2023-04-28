@@ -3,9 +3,11 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:survey_flutter_ic/model/survey_model.dart';
+import 'package:survey_flutter_ic/ui/home/home_footer_widget.dart';
 import 'package:survey_flutter_ic/ui/home/home_header_widget.dart';
 import 'package:survey_flutter_ic/ui/home/home_state.dart';
 import 'package:survey_flutter_ic/ui/home/home_view_model.dart';
+import 'package:survey_flutter_ic/utils/dimension.dart';
 
 import '../../di/di.dart';
 import '../../gen/assets.gen.dart';
@@ -38,7 +40,7 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
         ),
       );
 
-  Widget _background(SurveyModel surveyModel) => Container(
+  Widget _imageBackground(SurveyModel surveyModel) => Container(
         decoration: BoxDecoration(
           image: DecorationImage(
             image: FadeInImage.assetNetwork(
@@ -63,19 +65,22 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
     if (surveys == null || surveys.isEmpty) {
       return [_emptyBackground];
     } else {
-      return surveys.map((item) => _background(item)).toList();
+      return surveys.map((item) => _imageBackground(item)).toList();
     }
   }
 
   Widget _homeHeaderWidget({
     required BuildContext context,
     required VoidCallback openSideMenuCallback,
-  }) =>
-      HomeHeaderWidget(
-        profileImgUrl:
-            'https://secure.gravatar.com/avatar/6733d09432e89459dba795de8312ac2d',
-        profileImgClickCallback: openSideMenuCallback,
-      );
+  }) {
+    return HomeHeaderWidget(
+      profileImgUrl:
+          'https://secure.gravatar.com/avatar/6733d09432e89459dba795de8312ac2d',
+      profileImgClickCallback: openSideMenuCallback,
+    );
+  }
+
+  Widget _homeFooterWidget(SurveyModel? survey) => HomeFooterWidget(survey);
 
   // Widget _surveyList(List<SurveyModel> surveys) => Container(
   //       margin: const EdgeInsets.only(top: 120),
@@ -89,17 +94,18 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
   //       ),
   //     );
   //
-  // Widget _pageIndicatorSection(BuildContext context, int length) => Column(
-  //       crossAxisAlignment: CrossAxisAlignment.start,
-  //       children: [
-  //         const Spacer(),
-  //         SurveyPageIndicator(
-  //           controller: _pageController,
-  //           count: length,
-  //         ),
-  //         SizedBox(height: 230.0 - MediaQuery.of(context).padding.bottom),
-  //       ],
-  //     );
+  Widget _pageIndicatorWidget(BuildContext context, int length) =>
+      SmoothPageIndicator(
+        controller: _pageController,
+        count: length,
+        effect: const ScrollingDotsEffect(
+          dotColor: Colors.white24,
+          activeDotColor: Colors.white,
+          dotHeight: 8,
+          dotWidth: 8,
+        ),
+      );
+
   //
   // Widget _mainBody(BuildContext context) => Consumer(
   //       builder: (_, ref, __) {
@@ -157,7 +163,7 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
+    final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
       statusBarIconBrightness: Brightness.light,
@@ -165,7 +171,7 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
     ));
     _setupStateListener();
     return Scaffold(
-      key: _scaffoldKey,
+      key: scaffoldKey,
       endDrawer: _sideMenu,
       body: Stack(
         children: [
@@ -175,17 +181,36 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
             children: _homeBackground(ref.watch(surveysStream).value),
           ),
           SafeArea(
-            child: _homeHeaderWidget(
-              context: context,
-              openSideMenuCallback: () {
-                _scaffoldKey.currentState?.openEndDrawer();
-              },
+            child: Container(
+              padding: const EdgeInsets.all(Dimensions.paddingMedium),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _homeHeaderWidget(
+                    context: context,
+                    openSideMenuCallback: () {
+                      scaffoldKey.currentState?.openEndDrawer();
+                    },
+                  ),
+                  const Spacer(),
+                  _pageIndicatorWidget(
+                    context,
+                    ref.watch(surveysStream).value?.length ?? 0,
+                  ),
+                  const SizedBox(height: Dimensions.paddingLarge),
+                  _homeFooterWidget(
+                    ref
+                        .watch(surveysStream)
+                        .value
+                        ?.elementAt(_currentPageIndex.value),
+                  )
+                ],
+              ),
             ),
-          )
+          ),
         ],
       ),
-      // floatingActionButton: _takeSurveyButton,
-      // floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
     );
   }
 
@@ -207,132 +232,57 @@ enum RefreshStyle {
   pullDownToRefresh,
 }
 
-class SurveyList extends StatelessWidget {
-  final RefreshStyle refreshStyle;
-  final List<SurveyModel> surveys;
-  final PageController itemController;
-  final ValueNotifier<int> onItemChange;
-  final Future<void> Function() onRefresh;
-  final Future<void> Function() onLoadMore;
-
-  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
-      GlobalKey<RefreshIndicatorState>();
-  bool _isLoading = false;
-
-  SurveyList({
-    super.key,
-    required this.refreshStyle,
-    required this.surveys,
-    required this.itemController,
-    required this.onItemChange,
-    required this.onRefresh,
-    required this.onLoadMore,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    _isLoading = false;
-    return _buildSwipeRightToRefreshPageView(context);
-  }
-
-  Widget _buildSwipeRightToRefreshPageView(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
-    itemController.addListener(() {
-      if (itemController.offset < -10) {
-        _refreshIndicatorKey.currentState?.show();
-      }
-
-      if (itemController.offset > screenWidth * (surveys.length - 1) + 10 &&
-          !_isLoading) {
-        _isLoading = true;
-        onLoadMore();
-      }
-    });
-    return RefreshIndicator(
-      key: _refreshIndicatorKey,
-      onRefresh: onRefresh,
-      child: PageView.builder(
-        scrollDirection: Axis.horizontal,
-        controller: itemController,
-        onPageChanged: (index) => onItemChange.value = index,
-        itemCount: surveys.length,
-        itemBuilder: (context, index) => SurveyCell(surveys[index]),
-      ),
-    );
-  }
-}
-
-class SurveyCell extends StatelessWidget {
-  final SurveyModel _survey;
-
-  const SurveyCell(this._survey, {super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(20),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Spacer(),
-          SizedBox(
-            height: 120,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                FittedBox(
-                  fit: BoxFit.scaleDown,
-                  child: Text(
-                    _survey.title,
-                    style: Theme.of(context).textTheme.displayMedium,
-                    maxLines: 2,
-                  ),
-                ),
-                const SizedBox(height: 16),
-                FittedBox(
-                  fit: BoxFit.scaleDown,
-                  child: Text(
-                    _survey.description,
-                    style: Theme.of(context).textTheme.bodyMedium,
-                    maxLines: 2,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class SurveyPageIndicator extends StatelessWidget {
-  final PageController controller;
-  final int count;
-
-  const SurveyPageIndicator({
-    super.key,
-    required this.controller,
-    required this.count,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
-      child: SmoothPageIndicator(
-        controller: controller,
-        count: count,
-        effect: const ScrollingDotsEffect(
-          dotWidth: 8,
-          dotHeight: 8,
-          radius: 8,
-          spacing: 10,
-          dotColor: Colors.white30,
-          activeDotColor: Colors.white,
-        ),
-      ),
-    );
-  }
-}
+// class SurveyList extends StatelessWidget {
+//   final RefreshStyle refreshStyle;
+//   final List<SurveyModel> surveys;
+//   final PageController itemController;
+//   final ValueNotifier<int> onItemChange;
+//   final Future<void> Function() onRefresh;
+//   final Future<void> Function() onLoadMore;
+//
+//   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
+//       GlobalKey<RefreshIndicatorState>();
+//   bool _isLoading = false;
+//
+//   SurveyList({
+//     super.key,
+//     required this.refreshStyle,
+//     required this.surveys,
+//     required this.itemController,
+//     required this.onItemChange,
+//     required this.onRefresh,
+//     required this.onLoadMore,
+//   });
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     _isLoading = false;
+//     return _buildSwipeRightToRefreshPageView(context);
+//   }
+//
+//   Widget _buildSwipeRightToRefreshPageView(BuildContext context) {
+//     final screenWidth = MediaQuery.of(context).size.width;
+//     itemController.addListener(() {
+//       if (itemController.offset < -10) {
+//         _refreshIndicatorKey.currentState?.show();
+//       }
+//
+//       if (itemController.offset > screenWidth * (surveys.length - 1) + 10 &&
+//           !_isLoading) {
+//         _isLoading = true;
+//         onLoadMore();
+//       }
+//     });
+//     return RefreshIndicator(
+//       key: _refreshIndicatorKey,
+//       onRefresh: onRefresh,
+//       child: PageView.builder(
+//         scrollDirection: Axis.horizontal,
+//         controller: itemController,
+//         onPageChanged: (index) => onItemChange.value = index,
+//         itemCount: surveys.length,
+//         itemBuilder: (context, index) => SurveyCell(surveys[index]),
+//       ),
+//     );
+//   }
+// }

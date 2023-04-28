@@ -55,23 +55,20 @@ class HomeHeaderWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(Dimensions.paddingMedium),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _dateTodayText(context),
-          const SizedBox(height: Dimensions.paddingTiny),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _todayText(context),
-              _profilePictureWidget(context),
-            ],
-          ),
-        ],
-      ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _dateTodayText(context),
+        const SizedBox(height: Dimensions.paddingTiny),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _todayText(context),
+            _profilePictureWidget(context),
+          ],
+        ),
+      ],
     );
   }
 }
