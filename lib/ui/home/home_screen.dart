@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:survey_flutter_ic/utils/dimension.dart';
+import 'package:survey_flutter_ic/ui/home/home_side_menu.dart';
+import 'package:survey_flutter_ic/ui/home/home_side_menu_ui_model.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -7,17 +8,17 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
-      body: SafeArea(
-        child: Container(
-          padding: const EdgeInsets.symmetric(
-            horizontal: Dimensions.paddingLarge,
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: const [Text('Home screen')],
-          ),
+      appBar: AppBar(
+        title: const Text('Home Screen'),
+      ),
+      endDrawer: SideMenu(
+        sideMenuUIModel: SideMenuUIModel(
+          name: 'Mai',
+          version: 'v0.1.0 (1562903885)',
         ),
+      ),
+      body: const Center(
+        child: Text('Welcome to Home Screen!'),
       ),
     );
   }
