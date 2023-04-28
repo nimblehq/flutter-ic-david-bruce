@@ -1,6 +1,6 @@
 import 'package:injectable/injectable.dart';
-import 'package:survey_flutter_ic/api/auth_api_service.dart';
 import 'package:survey_flutter_ic/api/exception/network_exceptions.dart';
+import 'package:survey_flutter_ic/api/service/auth_api_service.dart';
 import 'package:survey_flutter_ic/env.dart';
 import 'package:survey_flutter_ic/model/login_model.dart';
 import 'package:survey_flutter_ic/model/refresh_token_model.dart';
