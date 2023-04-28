@@ -38,7 +38,7 @@ class AppRouter {
           if (!isLogin &&
               subLocation != RoutePath.forgotPassword.path &&
               subLocation != RoutePath.login.path) {
-            return RoutePath.login.path;
+            return RoutePath.home.path;
           }
           return null;
         },
