@@ -30,7 +30,7 @@ class ForgotPasswordScreenState extends ConsumerState<ForgotPasswordScreen> {
 
   AppBar get _appBar => CustomAppBar.backButton(
         context: context,
-        onPressed: () => context.goNamed(RoutePath.login.name),
+        onPressed: null,
       );
 
   Widget get _background => SizedBox(
