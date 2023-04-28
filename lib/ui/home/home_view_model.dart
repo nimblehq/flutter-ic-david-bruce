@@ -22,13 +22,11 @@ const _pageDefault = 1;
 const _pageSizeDefault = 5;
 
 class HomeViewModel extends StateNotifier<HomeState> {
-  final StreamController<String> _profileImageUrlStream = StreamController();
   final StreamController<List<SurveyModel>> _surveysStream = StreamController();
   final StreamController<int> _focusedItemIndexStream = StreamController();
 
   final GetSurveysUseCase getSurveysUseCase;
 
-  int _focusedItemIndex = 0;
   LoadMoreDataSet _loadMoreDataSet = LoadMoreDataSet();
 
   HomeViewModel({required this.getSurveysUseCase})
@@ -58,7 +56,6 @@ class HomeViewModel extends StateNotifier<HomeState> {
   }
 
   void changeFocusedItem({required int index}) {
-    _focusedItemIndex = index;
     _focusedItemIndexStream.add(index);
   }
 

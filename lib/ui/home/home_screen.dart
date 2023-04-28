@@ -80,20 +80,12 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
     );
   }
 
-  Widget _homeFooterWidget(SurveyModel? survey) => HomeFooterWidget(survey);
+  Widget _homeFooterWidget() => Consumer(builder: (_, ref, __) {
+        final surveys = ref.watch(surveysStream).value ?? [];
+        final index = ref.watch(focusedItemIndexStream).value ?? 0;
+        return HomeFooterWidget(surveys[index]);
+      });
 
-  // Widget _surveyList(List<SurveyModel> surveys) => Container(
-  //       margin: const EdgeInsets.only(top: 120),
-  //       child: SurveyList(
-  //         refreshStyle: RefreshStyle.pullDownToRefresh,
-  //         surveys: surveys,
-  //         itemController: _pageController,
-  //         onItemChange: _currentPageIndex,
-  //         onRefresh: () => _fetchSurveys(isRefresh: true),
-  //         onLoadMore: () => _fetchSurveys(isRefresh: false),
-  //       ),
-  //     );
-  //
   Widget _pageIndicatorWidget(BuildContext context, int length) =>
       SmoothPageIndicator(
         controller: _pageController,
@@ -105,49 +97,6 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
           dotWidth: 8,
         ),
       );
-
-  //
-  // Widget _mainBody(BuildContext context) => Consumer(
-  //       builder: (_, ref, __) {
-  //         final surveys = ref.watch(surveysStream).value ?? [];
-  //         if (_pageController.positions.isNotEmpty) {
-  //           Future.delayed(
-  //             const Duration(milliseconds: 50),
-  //             () {
-  //               final index = ref.read(focusedItemIndexStream).value ?? 0;
-  //               _pageController.jumpToPage(index);
-  //             },
-  //           );
-  //         }
-  //         return Stack(
-  //           children: [
-  //             _homeHeader,
-  //             _pageIndicatorSection(context, surveys.length),
-  //             _surveyList(surveys),
-  //           ],
-  //         );
-  //       },
-  //     );
-  //
-  // Widget get _takeSurveyButton => Padding(
-  //       padding: const EdgeInsets.all(8.0),
-  //       child: FloatingActionButton(
-  //           key: const Key('take survey button'),
-  //           foregroundColor: Colors.black,
-  //           backgroundColor: Colors.white,
-  //           child: const Icon(Icons.navigate_next),
-  //           onPressed: () {}),
-  //     );
-  //
-  // Widget _body(BuildContext context) =>
-  //     Consumer(
-  //       builder: (_, ref, __) {
-  //         final surveys = ref
-  //             .watch(surveysStream)
-  //             .value ?? [];
-  //         return SafeArea(child: _mainBody(context));
-  //       },
-  //     );
 
   @override
   void initState() {
@@ -199,12 +148,7 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
                     ref.watch(surveysStream).value?.length ?? 0,
                   ),
                   const SizedBox(height: Dimensions.paddingLarge),
-                  _homeFooterWidget(
-                    ref
-                        .watch(surveysStream)
-                        .value
-                        ?.elementAt(_currentPageIndex.value),
-                  )
+                  _homeFooterWidget()
                 ],
               ),
             ),
@@ -221,68 +165,4 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
           .changeFocusedItem(index: _currentPageIndex.value);
     });
   }
-
-  Future<void> _fetchSurveys({required bool isRefresh}) async {
-    ref.read(homeViewModelProvider.notifier).getSurveys(isRefresh: isRefresh);
-  }
 }
-
-enum RefreshStyle {
-  swipeRightToRefresh,
-  pullDownToRefresh,
-}
-
-// class SurveyList extends StatelessWidget {
-//   final RefreshStyle refreshStyle;
-//   final List<SurveyModel> surveys;
-//   final PageController itemController;
-//   final ValueNotifier<int> onItemChange;
-//   final Future<void> Function() onRefresh;
-//   final Future<void> Function() onLoadMore;
-//
-//   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
-//       GlobalKey<RefreshIndicatorState>();
-//   bool _isLoading = false;
-//
-//   SurveyList({
-//     super.key,
-//     required this.refreshStyle,
-//     required this.surveys,
-//     required this.itemController,
-//     required this.onItemChange,
-//     required this.onRefresh,
-//     required this.onLoadMore,
-//   });
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     _isLoading = false;
-//     return _buildSwipeRightToRefreshPageView(context);
-//   }
-//
-//   Widget _buildSwipeRightToRefreshPageView(BuildContext context) {
-//     final screenWidth = MediaQuery.of(context).size.width;
-//     itemController.addListener(() {
-//       if (itemController.offset < -10) {
-//         _refreshIndicatorKey.currentState?.show();
-//       }
-//
-//       if (itemController.offset > screenWidth * (surveys.length - 1) + 10 &&
-//           !_isLoading) {
-//         _isLoading = true;
-//         onLoadMore();
-//       }
-//     });
-//     return RefreshIndicator(
-//       key: _refreshIndicatorKey,
-//       onRefresh: onRefresh,
-//       child: PageView.builder(
-//         scrollDirection: Axis.horizontal,
-//         controller: itemController,
-//         onPageChanged: (index) => onItemChange.value = index,
-//         itemCount: surveys.length,
-//         itemBuilder: (context, index) => SurveyCell(surveys[index]),
-//       ),
-//     );
-//   }
-// }
