@@ -15,7 +15,7 @@ class HomeScreen extends StatelessWidget {
       endDrawer: SideMenu(
         sideMenuUIModel: SideMenuUIModel(
           name: 'Mai',
-          version: '',
+          version: 'v0.1.0 (1562903885)',
         ),
       ),
       body: const Center(
