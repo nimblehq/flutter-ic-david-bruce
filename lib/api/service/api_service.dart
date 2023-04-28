@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:retrofit/http.dart';
 
+import '../../model/response/survey_response.dart';
 import '../../model/response/surveys_response.dart';
 
 part 'api_service.g.dart';
@@ -13,5 +14,10 @@ abstract class ApiService {
   Future<SurveysResponse> getSurveys(
     @Path('page_number') int pageNumber,
     @Path('page_size') int pageSize,
+  );
+
+  @GET('/surveys/{survey_id}')
+  Future<SurveyResponse> getSurveyDetails(
+    @Path('survey_id') String surveyId,
   );
 }
