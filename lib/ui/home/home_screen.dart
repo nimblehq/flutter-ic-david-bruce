@@ -14,6 +14,7 @@ import '../../gen/assets.gen.dart';
 import '../../usecases/get_surveys_use_case.dart';
 import 'home_side_menu.dart';
 import 'home_side_menu_ui_model.dart';
+import 'loading/home_loading.dart';
 
 final homeViewModelProvider =
     StateNotifierProvider.autoDispose<HomeViewModel, HomeState>(
@@ -81,9 +82,9 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
   }
 
   Widget _homeFooterWidget() => Consumer(builder: (_, ref, __) {
-        final surveys = ref.watch(surveysStream).value ?? [];
+        final surveys = ref.watch(surveysStream).value;
         final index = ref.watch(focusedItemIndexStream).value ?? 0;
-        return HomeFooterWidget(surveys[index]);
+        return HomeFooterWidget(surveys?.elementAt(index));
       });
 
   Widget _pageIndicatorWidget(BuildContext context, int length) =>
@@ -98,27 +99,8 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
         ),
       );
 
-  @override
-  void initState() {
-    super.initState();
-    ref.read(homeViewModelProvider.notifier).getSurveys();
-  }
-
-  @override
-  void dispose() {
-    _currentPageIndex.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
-    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-      statusBarColor: Colors.transparent,
-      statusBarIconBrightness: Brightness.light,
-      statusBarBrightness: Brightness.dark,
-    ));
-    _setupStateListener();
+  Widget _homeWidget(BuildContext context) {
+    GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
     return Scaffold(
       key: scaffoldKey,
       endDrawer: _sideMenu,
@@ -156,6 +138,32 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
         ],
       ),
     );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    ref.read(homeViewModelProvider.notifier).getSurveys();
+  }
+
+  @override
+  void dispose() {
+    _currentPageIndex.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent,
+      statusBarIconBrightness: Brightness.light,
+      statusBarBrightness: Brightness.dark,
+    ));
+    _setupStateListener();
+    final surveys = ref.watch(surveysStream).value ?? [];
+    return surveys.isNotEmpty
+        ? _homeWidget(context)
+        : const SafeArea(child: HomeLoading());
   }
 
   void _setupStateListener() {
