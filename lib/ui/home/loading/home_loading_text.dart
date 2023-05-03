@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:survey_flutter_ic/utils/dimension.dart';
 
 class HomeLoadingText extends StatelessWidget {
   final double width;
@@ -11,7 +12,7 @@ class HomeLoadingText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+      padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingNormal),
       child: ClipRRect(
         borderRadius: const BorderRadius.all(Radius.circular(6.0)),
         child: Container(

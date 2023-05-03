@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:survey_flutter_ic/ui/home/loading/home_loading_text.dart';
+import 'package:survey_flutter_ic/utils/dimension.dart';
 
 class HomeLoading extends StatelessWidget {
   const HomeLoading({super.key});
@@ -23,9 +24,9 @@ class HomeLoading extends StatelessWidget {
 
   Widget _buildHeaderLoading() => Container(
         padding: const EdgeInsets.only(
-          top: 10,
-          right: 20,
-          bottom: 10,
+          top: Dimensions.paddingSmall,
+          right: Dimensions.paddingMedium,
+          bottom: Dimensions.paddingSmall,
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -36,7 +37,7 @@ class HomeLoading extends StatelessWidget {
               mainAxisSize: MainAxisSize.max,
               children: const [
                 HomeLoadingText(width: 120.0),
-                SizedBox(height: 4.0),
+                SizedBox(height: Dimensions.paddingDefault),
                 HomeLoadingText(width: 100.0),
               ],
             ),
@@ -58,15 +59,15 @@ class HomeLoading extends StatelessWidget {
           mainAxisSize: MainAxisSize.max,
           children: [
             const HomeLoadingText(width: 40.0),
-            const SizedBox(height: 16.0),
+            const SizedBox(height: Dimensions.paddingNormal),
             HomeLoadingText(width: MediaQuery.of(context).size.width - 102.0),
-            const SizedBox(height: 4.0),
+            const SizedBox(height: Dimensions.paddingDefault),
             HomeLoadingText(width: MediaQuery.of(context).size.width - 240.0),
-            const SizedBox(height: 16.0),
+            const SizedBox(height: Dimensions.paddingNormal),
             HomeLoadingText(width: MediaQuery.of(context).size.width - 36.0),
-            const SizedBox(height: 4.0),
+            const SizedBox(height: Dimensions.paddingDefault),
             HomeLoadingText(width: MediaQuery.of(context).size.width - 140.0),
-            const SizedBox(height: 16.0)
+            const SizedBox(height: Dimensions.paddingNormal)
           ],
         ),
       );
