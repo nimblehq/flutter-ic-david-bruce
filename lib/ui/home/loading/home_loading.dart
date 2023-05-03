@@ -42,8 +42,8 @@ class HomeLoading extends StatelessWidget {
               ],
             ),
             const SizedBox(
-              width: 40,
-              height: 40,
+              width: 40.0,
+              height: 40.0,
               child: CircleAvatar(
                 backgroundColor: Colors.white,
               ),
@@ -53,7 +53,7 @@ class HomeLoading extends StatelessWidget {
       );
 
   Widget _buildBodyLoading(BuildContext context) => Padding(
-        padding: const EdgeInsets.only(bottom: 40),
+        padding: const EdgeInsets.only(bottom: 40.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.max,
