@@ -1,19 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:survey_flutter_ic/di/di.dart';
 import 'package:survey_flutter_ic/gen/assets.gen.dart';
+import 'package:survey_flutter_ic/ui/login/login_state.dart';
+import 'package:survey_flutter_ic/ui/login/login_view_model.dart';
 import 'package:survey_flutter_ic/ui/widget/input_field_widget.dart';
+import 'package:survey_flutter_ic/usecases/login_use_case.dart';
 import 'package:survey_flutter_ic/utils/context_ext.dart';
 import 'package:survey_flutter_ic/utils/dimension.dart';
+import 'package:survey_flutter_ic/utils/route_path.dart';
 
-class LoginScreen extends StatefulWidget {
+final loginViewModelProvider =
+    StateNotifierProvider.autoDispose<LoginViewModel, LoginState>(
+  (_) => LoginViewModel(getIt.get<LoginUseCase>()),
+);
+
+class LoginScreen extends ConsumerStatefulWidget {
   const LoginScreen({super.key});
 
   @override
-  LoginState createState() => LoginState();
+  ConsumerState createState() => LoginScreenState();
 }
 
-class LoginState extends State<LoginScreen> {
+class LoginScreenState extends ConsumerState<LoginScreen> {
+  final _emailInputController = TextEditingController();
+  final _passwordInputController = TextEditingController();
+
   Image get _backgroundImage => Image(
         image: AssetImage(Assets.images.bgLoginOverlay.path),
         fit: BoxFit.fill,
@@ -31,18 +45,27 @@ class LoginState extends State<LoginScreen> {
         textHint: context.localization.loginEmail,
         keyboardType: TextInputType.emailAddress,
         textInputAction: TextInputAction.next,
+        controller: _emailInputController,
       );
 
   InputFieldWidget get _passwordInputField => InputFieldWidget(
-      key: const Key('login_password'),
-      textHint: context.localization.loginPassword,
-      keyboardType: TextInputType.visiblePassword,
-      isPassword: true,
-      textSuffixButton: context.localization.loginForgotPassword,
-      textSuffixButtonCallback: () => context.go('/forgotPasword'));
+        key: const Key('login_password'),
+        textHint: context.localization.loginPassword,
+        keyboardType: TextInputType.visiblePassword,
+        isPassword: true,
+        textSuffixButton: context.localization.loginForgotPassword,
+        textSuffixButtonCallback: () =>
+            context.goNamed(RoutePath.forgotPassword.name),
+        controller: _passwordInputController,
+      );
 
   ElevatedButton get _loginButton => ElevatedButton(
-        onPressed: () {},
+        onPressed: () {
+          ref.read(loginViewModelProvider.notifier).login(
+                _emailInputController.text,
+                _passwordInputController.text,
+              );
+        },
         style: ElevatedButton.styleFrom(
           minimumSize: const Size.fromHeight(Dimensions.buttonHeight),
           backgroundColor: Colors.white,
@@ -62,6 +85,7 @@ class LoginState extends State<LoginScreen> {
         statusBarColor: Colors.transparent,
         statusBarIconBrightness: Brightness.light,
         statusBarBrightness: Brightness.dark));
+    _registerStateListener();
     return Stack(
       fit: StackFit.expand,
       children: [
@@ -89,5 +113,33 @@ class LoginState extends State<LoginScreen> {
         ),
       ],
     );
+  }
+
+  void _registerStateListener() {
+    ref.listen<LoginState>(loginViewModelProvider, (_, state) {
+      context.displayLoadingDialog(
+        showOrHide: state == const LoginState.loading(),
+      );
+      state.maybeWhen(
+        success: () => context.goNamed(RoutePath.home.name),
+        error: (errorMessage) => context.showMessageSnackBar(
+          message: errorMessage,
+        ),
+        errorEmailInput: () => context.showMessageSnackBar(
+          message: context.localization.messageEmailInvalid,
+        ),
+        errorPasswordInput: () => context.showMessageSnackBar(
+          message: context.localization.messagePasswordInvalid,
+        ),
+        orElse: () {},
+      );
+    });
+  }
+
+  @override
+  void dispose() {
+    _emailInputController.dispose();
+    _passwordInputController.dispose();
+    super.dispose();
   }
 }

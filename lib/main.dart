@@ -1,43 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_config/flutter_config.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:survey_flutter_ic/di/di.dart';
 import 'package:survey_flutter_ic/gen/assets.gen.dart';
-import 'package:survey_flutter_ic/ui/forgot_password/forgot_password_screen.dart';
-import 'package:survey_flutter_ic/ui/login/login_screen.dart';
+import 'package:survey_flutter_ic/utils/app_route.dart';
 import 'package:survey_flutter_ic/utils/themes.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await FlutterConfig.loadEnvVariables();
   await configureDependencies();
-  runApp(MyApp());
+  runApp(const ProviderScope(child: MyApp()));
 }
 
-const routePathRootScreen = '/';
-const routePathForgotPasswordScreen = 'forgotPasword';
+class MyApp extends StatefulWidget {
+  const MyApp({super.key});
 
-class MyApp extends StatelessWidget {
-  MyApp({Key? key}) : super(key: key);
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
 
-  final GoRouter _router = GoRouter(
-    routes: <GoRoute>[
-      GoRoute(
-        path: routePathRootScreen,
-        builder: (_, __) => const LoginScreen(),
-        routes: [
-          GoRoute(
-            path: routePathForgotPasswordScreen,
-            builder: (_, __) => const ForgotPasswordScreen(),
-          ),
-        ],
-      ),
-    ],
-  );
+class _MyAppState extends State<MyApp> {
+  late GoRouter _router;
 
   @override
   Widget build(BuildContext context) {
+    _router = getIt.get<AppRouter>().router(null);
     return MaterialApp.router(
       theme: ThemeData(
         primarySwatch: Colors.blue,

@@ -5,5 +5,8 @@
   "loginEmail": "อีเมลล์",
   "loginPassword": "รหัสผ่าน",
   "loginForgotPassword": "ลืมรหัสผ่าน?",
-  "login": "เข้าสู่ระบบ"
+  "login": "เข้าสู่ระบบ",
+  "logout": "ออกจากระบบ",
+  "messageEmailInvalid": "อีเมลไม่ถูกต้อง กรุณาตรวจสอบอีกครั้ง",
+  "messagePasswordInvalid": "รหัสผ่านต้องไม่ว่างเปล่า โปรดตรวจสอบอีกครั้ง"
 }

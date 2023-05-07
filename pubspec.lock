@@ -296,6 +296,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_riverpod:
+    dependency: "direct main"
+    description:
+      name: flutter_riverpod
+      sha256: "9692634c2c00d2a1a5e96bbde0b79a7c6f0f266aa266d76cd52841f791949a89"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.3.5"
   flutter_secure_storage:
     dependency: "direct main"
     description:
@@ -403,10 +411,10 @@ packages:
     dependency: "direct main"
     description:
       name: go_router
-      sha256: aec1999abe8b2f131eda46d4c9629048fb1befed2b65e90b73f9193a300ce489
+      sha256: "4d141302e68dcdec0949ac798b5a8cf307eb6f79c70830ef1a2aec9b31827c28"
       url: "https://pub.dev"
     source: hosted
-    version: "4.5.1"
+    version: "6.5.8"
   graphs:
     dependency: transitive
     description:
@@ -716,6 +724,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.2.0"
+  riverpod:
+    dependency: transitive
+    description:
+      name: riverpod
+      sha256: ec5641067d111681ef825754d1327565c987985c7cb52e09bc867b78248854b2
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.3.5"
   shelf:
     dependency: transitive
     description:
@@ -769,6 +785,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.11.0"
+  state_notifier:
+    dependency: transitive
+    description:
+      name: state_notifier
+      sha256: "8fe42610f179b843b12371e40db58c9444f8757f8b69d181c97e50787caed289"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.7.2+1"
   stream_channel:
     dependency: transitive
     description:
@@ -915,4 +939,4 @@ packages:
     version: "3.1.1"
 sdks:
   dart: ">=2.19.0 <3.0.0"
-  flutter: ">=3.0.0"
+  flutter: ">=3.3.0"

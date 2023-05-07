@@ -2,10 +2,10 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'login_request.g.dart';
 
-const String passwordGrantType = 'password';
-
 @JsonSerializable()
 class LoginRequest {
+  static const String passwordGrantType = 'password';
+
   final String clientId;
   final String clientSecret;
   final String grantType;

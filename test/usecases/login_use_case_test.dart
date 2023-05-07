@@ -10,6 +10,7 @@ import '../mocks/generate_mocks.mocks.dart';
 void main() {
   group('LoginUseCaseTest', () {
     late MockAuthRepository mockAuthRepository;
+    late MockStorage mockStorage;
     late LoginUseCase useCase;
 
     const email = "email";
@@ -17,15 +18,16 @@ void main() {
 
     setUp(() {
       mockAuthRepository = MockAuthRepository();
-      useCase = LoginUseCase(mockAuthRepository);
+      mockStorage = MockStorage();
+      useCase = LoginUseCase(mockAuthRepository, mockStorage);
     });
 
     test('When login success, it returns success result', () async {
       const loginModel = LoginModel(
-        id: "",
-        accessToken: "",
+        id: "1",
+        accessToken: "2",
         expiresIn: 0,
-        refreshToken: "",
+        refreshToken: "3",
       );
       when(mockAuthRepository.login(
         email: email,
@@ -38,6 +40,22 @@ void main() {
       ));
 
       expect(result, isA<Success<LoginModel>>());
+      expect(
+        verify(mockStorage.saveId(captureAny)).captured.single,
+        '1',
+      );
+      expect(
+        verify(mockStorage.saveAccessToken(captureAny)).captured.single,
+        '2',
+      );
+      expect(
+        verify(mockStorage.saveExpiresIn(captureAny)).captured.single,
+        '0.0',
+      );
+      expect(
+        verify(mockStorage.saveRefreshToken(captureAny)).captured.single,
+        '3',
+      );
     });
 
     test('When login failed, it returns failed result', () async {

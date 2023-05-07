@@ -4,6 +4,7 @@ import 'package:mockito/mockito.dart';
 import 'package:survey_flutter_ic/api/exception/network_exceptions.dart';
 import 'package:survey_flutter_ic/api/repository/auth_repository.dart';
 import 'package:survey_flutter_ic/model/response/login_response.dart';
+import 'package:survey_flutter_ic/model/response/forgot_password_meta_response.dart';
 import 'package:survey_flutter_ic/model/response/forgot_password_response.dart';
 import '../../mocks/generate_mocks.mocks.dart';
 
@@ -56,15 +57,14 @@ void main() {
     test('When forgotPassword is successful, it returns a ForgotPasswordModel',
         () async {
       final forgotPasswordResponse = ForgotPasswordResponse(
-        message: 'success',
+        meta: ForgotPasswordMetaResponse(message: 'success'),
       );
       when(mockAuthApiService.forgotPassword(any))
           .thenAnswer((_) async => forgotPasswordResponse);
 
       final result = await authRepository.forgotPassword(email: email);
 
-      expect(result, forgotPasswordResponse.toModel());
-      expect(result.message, equals(forgotPasswordResponse.message));
+      expect(result, equals(forgotPasswordResponse.meta.message));
     });
 
     test('When forgotPassword fails, it throws a NetworkExceptions', () async {
