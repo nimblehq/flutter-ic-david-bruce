@@ -64,13 +64,21 @@ class SurveyModel extends Equatable {
       ];
 
   SurveyDetailsUIModel toSurveyDetailsUiModel() {
-    final introSection = questions
-        .firstWhere((question) => question.displayType == DisplayType.intro);
-    final description =
-        introSection.text.isEmpty ? this.description : introSection.text;
-    String imageUrl = introSection.imageUrl.isEmpty
-        ? introSection.coverImageUrl
-        : introSection.imageUrl;
+    final introSection = questions.isEmpty
+        ? null
+        : questions.firstWhere(
+            (question) => question.displayType == DisplayType.intro);
+    String description = '';
+    String imageUrl = '';
+
+    if (introSection != null) {
+      description =
+          introSection.text.isEmpty ? this.description : introSection.text;
+      imageUrl = introSection.imageUrl.isEmpty
+          ? introSection.coverImageUrl
+          : introSection.imageUrl;
+    }
+
     imageUrl = imageUrl.isEmpty ? coverImageUrl : imageUrl;
     return SurveyDetailsUIModel(
       title: title,
