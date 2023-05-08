@@ -15,6 +15,8 @@ import '../../di/di.dart';
 import '../../gen/assets.gen.dart';
 import '../../usecases/get_surveys_use_case.dart';
 
+const _maxPageIndicatorDots = 11;
+
 final homeViewModelProvider =
     StateNotifierProvider.autoDispose<HomeViewModel, HomeState>(
   (_) => HomeViewModel(
@@ -91,6 +93,7 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
         effect: const ScrollingDotsEffect(
           dotColor: Colors.white24,
           activeDotColor: Colors.white,
+          maxVisibleDots: _maxPageIndicatorDots,
           dotHeight: 8.0,
           dotWidth: 8.0,
         ),
@@ -134,7 +137,7 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    ref.read(homeViewModelProvider.notifier).getSurveys();
+    ref.read(homeViewModelProvider.notifier).getSurveys(isRefresh: true);
   }
 
   @override
@@ -152,16 +155,25 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
     ));
     _setupStateListener();
     final surveys = ref.watch(surveysStream).value ?? [];
+    if (_pageController.positions.isNotEmpty) {
+      Future.delayed(const Duration(milliseconds: 50), () {
+        _pageController.jumpToPage(_currentPageIndex.value);
+      });
+    }
     return surveys.isNotEmpty
         ? _homeWidget(context)
         : const SafeArea(child: HomeSkeletonLoading());
   }
 
   void _setupStateListener() {
+    final surveys = ref.watch(surveysStream).value ?? [];
     _currentPageIndex.addListener(() {
       ref
           .read(homeViewModelProvider.notifier)
           .changeFocusedItem(index: _currentPageIndex.value);
+      if (_currentPageIndex.value == surveys.length - 2) {
+        ref.read(homeViewModelProvider.notifier).getSurveys(isRefresh: false);
+      }
     });
   }
 }
