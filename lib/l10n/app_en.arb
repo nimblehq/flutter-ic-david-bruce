@@ -10,6 +10,5 @@
   "messageEmailInvalid": "Email is invalid, please check again",
   "messagePasswordInvalid": "Password cannot be empty, please check again",
   "surveyDetailsStartSurvey": "Start Survey",
-  "surveyThanks": "Thanks for taking the survey.",
   "today": "Today"
 }

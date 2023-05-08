@@ -4,8 +4,13 @@ import 'package:survey_flutter_ic/utils/context_ext.dart';
 import 'package:survey_flutter_ic/utils/loading_text.dart';
 import 'package:survey_flutter_ic/utils/dimension.dart';
 
+<<<<<<<< HEAD:lib/ui/home/loading/home_skeleton_loading.dart
 class HomeSkeletonLoading extends StatelessWidget {
   const HomeSkeletonLoading({super.key});
+========
+class LoadingText extends StatelessWidget {
+  const LoadingText({super.key});
+>>>>>>>> e2d4116 ([#19] Create SurveyDetailsComponentId, SurveyDetailsSkeletonLoading):lib/utils/loading_text.dart
 
   @override
   Widget build(BuildContext context) {
