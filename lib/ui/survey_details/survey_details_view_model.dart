@@ -16,7 +16,6 @@ class SurveyDetailsViewModel extends StateNotifier<SurveyDetailsState> {
       const Duration(milliseconds: 100),
       () => state = const SurveyDetailsState.loading(),
     );
-    state = const SurveyDetailsState.loading();
     final result = await _getSurveyDetailsUseCase.call(id);
     if (result is Success<SurveyModel>) {
       _bindData(result.value);

@@ -118,7 +118,6 @@ class SurveyDetailsScreenState extends ConsumerState<SurveyDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    _registerStateListener();
     return Stack(
       children: [
         _background,
@@ -136,21 +135,6 @@ class SurveyDetailsScreenState extends ConsumerState<SurveyDetailsScreen> {
     ref
         .read(surveyDetailsViewModelProvider.notifier)
         .getSurveyDetails(widget.surveyId);
-  }
-
-  void _registerStateListener() {
-    ref.listen<SurveyDetailsState>(surveyDetailsViewModelProvider, (_, state) {
-      context.displayLoadingDialog(
-        showOrHide: state == const SurveyDetailsState.loading(),
-      );
-      state.maybeWhen(
-        success: null,
-        error: (errorMessage) => context.showMessageSnackBar(
-          message: errorMessage,
-        ),
-        orElse: () {},
-      );
-    });
   }
 
   void _startSurvey() {}
