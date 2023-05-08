@@ -21,26 +21,17 @@ class SurveyDetailsSkeletonLoading extends StatelessWidget {
               right: Dimensions.paddingMedium,
               bottom: Dimensions.paddingSmall,
             ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.max,
               children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.max,
-                  children: const [
-                    LoadingText(width: 120.0),
-                    SizedBox(height: Dimensions.paddingDefault),
-                    LoadingText(width: 100.0),
-                  ],
-                ),
-                const SizedBox(
-                  width: 40.0,
-                  height: 40.0,
-                  child: CircleAvatar(
-                    backgroundColor: Colors.white,
-                  ),
-                ),
+                LoadingText(width: MediaQuery.of(context).size.width - 20.0),
+                const SizedBox(height: Dimensions.paddingDefault),
+                const LoadingText(width: 120.0),
+                const SizedBox(height: Dimensions.paddingNormal),
+                LoadingText(width: MediaQuery.of(context).size.width - 20.0),
+                const SizedBox(height: Dimensions.paddingDefault),
+                LoadingText(width: MediaQuery.of(context).size.width - 20.0),
               ],
             ),
           )
