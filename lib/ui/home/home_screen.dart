@@ -94,8 +94,8 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
         effect: const ScrollingDotsEffect(
           dotColor: Colors.white24,
           activeDotColor: Colors.white,
-          dotHeight: 8,
-          dotWidth: 8,
+          dotHeight: 8.0,
+          dotWidth: 8.0,
         ),
       );
 

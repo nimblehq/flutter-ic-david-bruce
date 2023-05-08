@@ -27,14 +27,14 @@ class HomeViewModel extends StateNotifier<HomeState> {
 
   final GetSurveysUseCase getSurveysUseCase;
 
-  LoadMoreDataSet _loadMoreDataSet = LoadMoreDataSet();
+  _LoadMoreDataSet _loadMoreDataSet = _LoadMoreDataSet();
 
   HomeViewModel({required this.getSurveysUseCase})
       : super(const HomeState.init());
 
   void getSurveys({bool isRefresh = false}) async {
     if (isRefresh) {
-      _loadMoreDataSet = LoadMoreDataSet();
+      _loadMoreDataSet = _LoadMoreDataSet();
     }
 
     if (!_loadMoreDataSet.isHasMore || _loadMoreDataSet.isLoading) return;
@@ -68,7 +68,7 @@ class HomeViewModel extends StateNotifier<HomeState> {
   }
 }
 
-class LoadMoreDataSet {
+class _LoadMoreDataSet {
   int page = _pageDefault;
   int pageSize = _pageSizeDefault;
   bool isHasMore = true;

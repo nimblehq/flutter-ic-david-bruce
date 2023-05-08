@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 import 'package:survey_flutter_ic/utils/context_ext.dart';
+import 'package:survey_flutter_ic/utils/date_formatter.dart';
 import 'package:survey_flutter_ic/utils/dimension.dart';
 
 import '../../gen/assets.gen.dart';
@@ -16,14 +16,8 @@ class HomeHeaderWidget extends StatelessWidget {
     required this.profileImgClickCallback,
   });
 
-  String get _todayDate {
-    final today = DateTime.now();
-    return '${DateFormat.EEEE().format(today)}, ${DateFormat.MMMMd().format(today)}'
-        .toUpperCase();
-  }
-
   Text _dateTodayText(BuildContext context) => Text(
-        _todayDate,
+        DateFormatter.todayDate,
         style: context.textTheme.labelMedium,
       );
 
@@ -42,8 +36,8 @@ class HomeHeaderWidget extends StatelessWidget {
           return GestureDetector(
             onTap: profileImgClickCallback,
             child: SizedBox(
-              width: 36,
-              height: 36,
+              width: 36.0,
+              height: 36.0,
               child: CircleAvatar(
                 backgroundColor: Colors.white,
                 backgroundImage: _profileImg.image,

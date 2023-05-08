@@ -37,7 +37,7 @@ class HomeLoading extends StatelessWidget {
               mainAxisSize: MainAxisSize.max,
               children: const [
                 HomeLoadingText(width: 120.0),
-                SizedBox(height: Dimensions.paddingDefault),
+                SizedBox(height: Dimensions.paddingTiny),
                 HomeLoadingText(width: 100.0),
               ],
             ),
@@ -61,11 +61,11 @@ class HomeLoading extends StatelessWidget {
             const HomeLoadingText(width: 40.0),
             const SizedBox(height: Dimensions.paddingNormal),
             HomeLoadingText(width: MediaQuery.of(context).size.width - 102.0),
-            const SizedBox(height: Dimensions.paddingDefault),
+            const SizedBox(height: Dimensions.paddingTiny),
             HomeLoadingText(width: MediaQuery.of(context).size.width - 240.0),
             const SizedBox(height: Dimensions.paddingNormal),
             HomeLoadingText(width: MediaQuery.of(context).size.width - 36.0),
-            const SizedBox(height: Dimensions.paddingDefault),
+            const SizedBox(height: Dimensions.paddingTiny),
             HomeLoadingText(width: MediaQuery.of(context).size.width - 140.0),
             const SizedBox(height: Dimensions.paddingNormal)
           ],
