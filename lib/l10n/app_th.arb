@@ -10,5 +10,6 @@
   "messageEmailInvalid": "อีเมลไม่ถูกต้อง กรุณาตรวจสอบอีกครั้ง",
   "messagePasswordInvalid": "รหัสผ่านต้องไม่ว่างเปล่า โปรดตรวจสอบอีกครั้ง",
   "surveyDetailsStartSurvey": "เริ่มการสำรวจ",
+  "surveyThanks": "ขอขอบคุณที่ทำแบบสำรวจ",
   "today": "วันนี้"
 }

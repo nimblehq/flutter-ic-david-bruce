@@ -10,5 +10,6 @@
   "messageEmailInvalid": "Email sai, vui lòng thử lại",
   "messagePasswordInvalid": "Mật khẩu không được trống, vui lòng thử lại",
   "surveyDetailsStartSurvey": "Bắt đầu khảo sát",
+  "surveyThanks": "Cảm ơn bạn đã thực hiện khảo sát.",
   "today": "Hôm nay"
 }
