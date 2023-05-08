@@ -1,5 +1,4 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:survey_flutter_ic/model/survey_model.dart';
 import 'package:survey_flutter_ic/ui/survey_details/survey_details_ui_model.dart';
 
 part 'survey_details_state.freezed.dart';

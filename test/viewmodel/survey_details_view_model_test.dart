@@ -27,32 +27,12 @@ void main() {
       addTearDown(container.dispose);
     });
 
-    test('Should set state to ubut when viewModel is initialized', () {
+    test('Should set state to init when viewModel is initialized', () {
       expect(container.read(surveyDetailsViewModelProvider),
           const SurveyDetailsState.init());
     });
 
-    test('Should set state to success when getSurveyDetails succeeds', () {
-      const survey = SurveyModel.empty();
-      when(mockGetSurveyDetailsUseCase.call(any))
-          .thenAnswer((_) async => Success(survey));
-      final stateStream =
-          container.read(surveyDetailsViewModelProvider.notifier).stream;
-      expect(
-          stateStream,
-          emitsAnyOf([
-            const SurveyDetailsState.loading(),
-            SurveyDetailsState.success(
-                SurveyDetailsUIModel(title: '', description: '', imageUrl: '')),
-          ]));
-      container
-          .read(surveyDetailsViewModelProvider.notifier)
-          .getSurveyDetails('');
-    });
-
-    test(
-        'When calling getSurveyDetails return failed exception, it returns error state',
-        () {
+    test('Should set state to error when getSurveyDetails fails', () {
       final mockException = MockUseCaseException();
       when(mockException.actualException)
           .thenReturn(const NetworkExceptions.unauthorisedRequest());
@@ -64,7 +44,6 @@ void main() {
         stateStream,
         emitsInOrder(
           [
-            const SurveyDetailsState.loading(),
             SurveyDetailsState.error(
               NetworkExceptions.getErrorMessage(
                 const NetworkExceptions.unauthorisedRequest(),

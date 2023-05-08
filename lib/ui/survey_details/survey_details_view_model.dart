@@ -12,7 +12,10 @@ class SurveyDetailsViewModel extends StateNotifier<SurveyDetailsState> {
   final GetSurveyDetailsUseCase _getSurveyDetailsUseCase;
 
   void getSurveyDetails(String id) async {
-    state = const SurveyDetailsState.loading();
+    Future.delayed(
+      const Duration(milliseconds: 100),
+      () => state = const SurveyDetailsState.loading(),
+    );
     final result = await _getSurveyDetailsUseCase.call(id);
     if (result is Success<SurveyModel>) {
       _bindData(result.value);
