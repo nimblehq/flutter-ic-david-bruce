@@ -2,10 +2,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:survey_flutter_ic/api/exception/network_exceptions.dart';
-import 'package:survey_flutter_ic/model/survey_model.dart';
 import 'package:survey_flutter_ic/ui/survey_details/survey_details_screen.dart';
 import 'package:survey_flutter_ic/ui/survey_details/survey_details_state.dart';
-import 'package:survey_flutter_ic/ui/survey_details/survey_details_ui_model.dart';
 import 'package:survey_flutter_ic/ui/survey_details/survey_details_view_model.dart';
 import 'package:survey_flutter_ic/usecases/base/base_use_case.dart';
 
