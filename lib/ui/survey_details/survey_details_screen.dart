@@ -10,6 +10,7 @@ import 'package:survey_flutter_ic/ui/survey_details/survey_details_state.dart';
 import 'package:survey_flutter_ic/usecases/get_survey_details_use_case.dart';
 import 'package:survey_flutter_ic/utils/context_ext.dart';
 import 'package:survey_flutter_ic/utils/custom_app_bar.dart';
+import 'package:survey_flutter_ic/utils/dimension.dart';
 
 final surveyDetailsViewModelProvider = StateNotifierProvider.autoDispose<
     SurveyDetailsViewModel, SurveyDetailsState>(
@@ -73,17 +74,17 @@ class SurveyDetailsScreenState extends ConsumerState<SurveyDetailsScreen> {
         builder: (_, ref, __) {
           return Container(
             width: MediaQuery.of(context).size.width,
-            padding: const EdgeInsets.all(20),
+            padding: const EdgeInsets.all(Dimensions.paddingMedium),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   uiModel.title,
-                  style: Theme.of(context).textTheme.displayMedium,
+                  style: Theme.of(context).textTheme.displayLarge,
                 ),
                 const SizedBox(
-                  height: 16,
+                  height: Dimensions.paddingNormal,
                 ),
                 Text(
                   uiModel.description,
@@ -97,7 +98,11 @@ class SurveyDetailsScreenState extends ConsumerState<SurveyDetailsScreen> {
                     ElevatedButton(
                       key: SurveyDetailsComponentId.startSurveyButton,
                       style: ElevatedButton.styleFrom(
-                          minimumSize: const Size(140, 56)),
+                        minimumSize: const Size(
+                          Dimensions.buttonWidth,
+                          Dimensions.buttonHeight,
+                        ),
+                      ),
                       onPressed: () => _startSurvey(),
                       child:
                           Text(context.localization.surveyDetailsStartSurvey),

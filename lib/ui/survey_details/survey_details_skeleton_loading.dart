@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:survey_flutter_ic/ui/home/loading/home_loading_text.dart';
 import 'package:survey_flutter_ic/utils/dimension.dart';
+import 'package:survey_flutter_ic/utils/loading_text.dart';
 
 class SurveyDetailsSkeletonLoading extends StatelessWidget {
   const SurveyDetailsSkeletonLoading({super.key});
@@ -29,9 +29,9 @@ class SurveyDetailsSkeletonLoading extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.max,
                   children: const [
-                    HomeLoadingText(width: 120.0),
+                    LoadingText(width: 120.0),
                     SizedBox(height: Dimensions.paddingDefault),
-                    HomeLoadingText(width: 100.0),
+                    LoadingText(width: 100.0),
                   ],
                 ),
                 const SizedBox(

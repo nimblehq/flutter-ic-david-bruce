@@ -1,5 +1,6 @@
 class Dimensions {
   // Button
+  static const double buttonWidth = 140.0;
   static const double buttonHeight = 56.0;
 
   // Padding
