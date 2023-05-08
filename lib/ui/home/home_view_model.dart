@@ -33,9 +33,10 @@ class HomeViewModel extends StateNotifier<HomeState> {
   HomeViewModel({required this.getSurveysUseCase})
       : super(const HomeState.init());
 
-  void getSurveys({bool isRefresh = false}) async {
+  Future<void> getSurveys({bool isRefresh = false}) async {
     if (isRefresh) {
       _loadMoreDataSet = _LoadMoreDataSet();
+      _focusedItemIndexStream.add(0);
       _totalSurveys.clear();
     }
 
