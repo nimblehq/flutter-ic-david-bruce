@@ -3,8 +3,8 @@ import 'package:shimmer/shimmer.dart';
 import 'package:survey_flutter_ic/ui/home/loading/home_loading_text.dart';
 import 'package:survey_flutter_ic/utils/dimension.dart';
 
-class HomeLoading extends StatelessWidget {
-  const HomeLoading({super.key});
+class LoadingText extends StatelessWidget {
+  const LoadingText({super.key});
 
   @override
   Widget build(BuildContext context) {

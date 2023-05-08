@@ -1,9 +1,9 @@
-class SurveyDetailUIModel {
+class SurveyDetailsUIModel {
   String title;
   String description;
   String imageUrl;
 
-  SurveyDetailUIModel({
+  SurveyDetailsUIModel({
     required this.title,
     required this.description,
     required this.imageUrl,

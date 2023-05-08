@@ -33,9 +33,11 @@ class AppRouter {
             builder: (context, state) => const ForgotPasswordScreen(),
           ),
           GoRoute(
-            path: RoutePath.surveyDetails.screen,
+            path: RoutePath.surveyDetails.screenWithPathParams,
             name: RoutePath.surveyDetails.name,
-            builder: (context, state) => const SurveyDetailsScreen(),
+            builder: (context, state) => SurveyDetailsScreen(
+                surveyId:
+                    state.params[RoutePath.surveyDetails.pathParam] ?? ''),
           ),
         ],
         redirect: (context, state) async {

@@ -7,14 +7,14 @@ import 'package:survey_flutter_ic/ui/home/home_footer_widget.dart';
 import 'package:survey_flutter_ic/ui/home/home_header_widget.dart';
 import 'package:survey_flutter_ic/ui/home/home_state.dart';
 import 'package:survey_flutter_ic/ui/home/home_view_model.dart';
+import 'package:survey_flutter_ic/ui/home/loading/home_loading_text.dart';
 import 'package:survey_flutter_ic/utils/dimension.dart';
-
+import 'package:survey_flutter_ic/ui/home/home_side_menu.dart';
+import 'package:survey_flutter_ic/ui/home/home_side_menu_ui_model.dart';
+import 'package:survey_flutter_ic/utils/loading_text.dart';
 import '../../di/di.dart';
 import '../../gen/assets.gen.dart';
 import '../../usecases/get_surveys_use_case.dart';
-import 'home_side_menu.dart';
-import 'home_side_menu_ui_model.dart';
-import 'loading/home_loading.dart';
 
 final homeViewModelProvider =
     StateNotifierProvider.autoDispose<HomeViewModel, HomeState>(
@@ -155,7 +155,7 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
     final surveys = ref.watch(surveysStream).value ?? [];
     return surveys.isNotEmpty
         ? _homeWidget(context)
-        : const SafeArea(child: HomeLoading());
+        : const SafeArea(child: LoadingText());
   }
 
   void _setupStateListener() {

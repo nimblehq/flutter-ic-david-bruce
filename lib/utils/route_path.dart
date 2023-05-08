@@ -17,6 +17,15 @@ enum RoutePath {
     }
   }
 
+  String get pathParam {
+    switch (this) {
+      case RoutePath.surveyDetails:
+        return 'surveyId';
+      default:
+        return '';
+    }
+  }
+
   String get name {
     switch (this) {
       case RoutePath.login:
@@ -28,5 +37,9 @@ enum RoutePath {
       case RoutePath.surveyDetails:
         return "SURVEY_DETAILS";
     }
+  }
+
+  String get screenWithPathParams {
+    return pathParam.isEmpty ? screen : '$screen/:$pathParam';
   }
 }
