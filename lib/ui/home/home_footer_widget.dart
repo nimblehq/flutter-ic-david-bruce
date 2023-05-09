@@ -23,11 +23,12 @@ class HomeFooterWidget extends StatelessWidget {
         Row(
           children: [
             Expanded(
-                child: Text(
-              _survey?.description ?? '',
-              style: context.textTheme.bodyMedium,
-              maxLines: 2,
-            )),
+              child: Text(
+                _survey?.description ?? '',
+                style: context.textTheme.bodyMedium,
+                maxLines: 2,
+              ),
+            ),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
                 shape: const CircleBorder(),

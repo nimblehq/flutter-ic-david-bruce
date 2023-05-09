@@ -33,6 +33,7 @@ class HomeScreen extends ConsumerStatefulWidget {
 class HomeScreenState extends ConsumerState<HomeScreen> {
   final _pageController = PageController();
   final _currentPageIndex = ValueNotifier<int>(0);
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
 
   SideMenu get _sideMenu => SideMenu(
         sideMenuUIModel: SideMenuUIModel(
@@ -70,14 +71,11 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
     }
   }
 
-  Widget _homeHeaderWidget({
-    required BuildContext context,
-    required VoidCallback openSideMenuCallback,
-  }) {
+  Widget _homeHeaderWidget() {
     return HomeHeaderWidget(
       profileImgUrl:
           'https://secure.gravatar.com/avatar/6733d09432e89459dba795de8312ac2d',
-      profileImgClickCallback: openSideMenuCallback,
+      profileImgClickCallback: () => _scaffoldKey.currentState?.openEndDrawer(),
     );
   }
 
@@ -100,9 +98,8 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
       );
 
   Widget _homeWidget(BuildContext context) {
-    GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
     return Scaffold(
-      key: scaffoldKey,
+      key: _scaffoldKey,
       endDrawer: _sideMenu,
       body: Stack(
         children: [
@@ -118,12 +115,7 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  _homeHeaderWidget(
-                    context: context,
-                    openSideMenuCallback: () {
-                      scaffoldKey.currentState?.openEndDrawer();
-                    },
-                  ),
+                  _homeHeaderWidget(),
                   const Spacer(),
                   _pageIndicatorWidget(
                     context,
