@@ -62,15 +62,11 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
         fit: BoxFit.fill,
       );
 
-  Widget _homeBackground(List<SurveyModel>? surveys) {
-    if (surveys == null || surveys.isEmpty) {
+  Widget _homeBackground(List<SurveyModel> surveys, int focusedIndex) {
+    if (surveys.isEmpty) {
       return _emptyBackground;
     } else {
-      return PageView(
-        controller: _pageController,
-        onPageChanged: (index) => _currentPageIndex.value = index,
-        children: surveys.map((item) => _imageBackground(item)).toList(),
-      );
+      return _imageBackground(surveys[focusedIndex]);
     }
   }
 
@@ -82,27 +78,33 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
     );
   }
 
-  Widget _homeFooterWidget() => Consumer(builder: (_, ref, __) {
-        final surveys = ref.watch(surveysStream).value;
-        final index = ref.watch(focusedItemIndexStream).value ?? 0;
-        return HomeFooterWidget(surveys?.elementAt(index));
-      });
+  Widget _homeFooterWidget(List<SurveyModel> surveys) => HomeFooterWidget(
+        surveys: surveys,
+        pageController: _pageController,
+        onPageChangedCallback: (index) => _currentPageIndex.value = index,
+      );
 
-  Widget _pageIndicatorWidget(BuildContext context, int length) =>
-      SmoothPageIndicator(
-        controller: _pageController,
-        count: length,
-        effect: const WormEffect(
-          dotColor: Colors.white24,
-          activeDotColor: Colors.white,
-          dotHeight: 8.0,
-          dotWidth: 8.0,
+  Widget _pageIndicatorWidget(BuildContext context, int length) => Align(
+        alignment: Alignment.bottomLeft,
+        child: Padding(
+          padding: const EdgeInsets.only(bottom: 100.0),
+          child: SmoothPageIndicator(
+            controller: _pageController,
+            count: length,
+            effect: const WormEffect(
+              dotColor: Colors.white24,
+              activeDotColor: Colors.white,
+              dotHeight: 8.0,
+              dotWidth: 8.0,
+            ),
+          ),
         ),
       );
 
   Widget _homeWidget(BuildContext context) {
     final surveys = ref.watch(surveysStream).value ?? [];
-    _pageController = PageController(initialPage: _currentPageIndex.value);
+    final focusedItemIndex = ref.watch(focusedItemIndexStream).value ?? 0;
+    _pageController = PageController(initialPage: focusedItemIndex);
     return Scaffold(
       key: _scaffoldKey,
       backgroundColor: Colors.black,
@@ -113,23 +115,32 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
             visible: surveys.isNotEmpty,
             child: Stack(
               children: [
-                _homeBackground(surveys),
+                _homeBackground(surveys, focusedItemIndex),
                 SafeArea(
-                  child: Container(
-                    padding: const EdgeInsets.all(Dimensions.paddingMedium),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        _homeHeaderWidget(),
-                        const Spacer(),
-                        _pageIndicatorWidget(
-                          context,
-                          ref.watch(surveysStream).value?.length ?? 0,
+                  child: RefreshIndicator(
+                    color: Colors.black,
+                    backgroundColor: Colors.white,
+                    onRefresh: () => ref
+                        .read(homeViewModelProvider.notifier)
+                        .getSurveys(isRefresh: true),
+                    child: SingleChildScrollView(
+                      physics: const AlwaysScrollableScrollPhysics(),
+                      child: SizedBox(
+                        height: MediaQuery.of(context).size.height -
+                            MediaQuery.of(context).viewPadding.vertical,
+                        child: Container(
+                          padding: const EdgeInsets.all(
+                            Dimensions.paddingMedium,
+                          ),
+                          child: Stack(
+                            children: [
+                              _homeHeaderWidget(),
+                              _pageIndicatorWidget(context, surveys.length),
+                              _homeFooterWidget(surveys),
+                            ],
+                          ),
                         ),
-                        const SizedBox(height: Dimensions.paddingLarge),
-                        _homeFooterWidget()
-                      ],
+                      ),
                     ),
                   ),
                 ),
