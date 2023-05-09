@@ -105,4 +105,18 @@ class SurveyQuestionsViewModel extends StateNotifier<SurveyQuestionsState> {
         arguments[RoutePath.surveyQuestion.queryParams.first] ?? '0';
     return int.parse(questionNumber);
   }
+
+  Map<String, String> getPathParams() {
+    var params = <String, String>{};
+    params[RoutePath.surveyDetails.pathParam] = _surveyIdValue;
+    return params;
+  }
+
+  Map<String, String> getNextQuestionQueryParams() {
+    final nextQuestionNumber = _questionNumberValue + 1;
+    var params = <String, String>{};
+    params[RoutePath.surveyQuestion.queryParams.first] =
+        nextQuestionNumber.toString();
+    return params;
+  }
 }

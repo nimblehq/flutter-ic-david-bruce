@@ -22,7 +22,6 @@ enum RoutePath {
   String get pathParam {
     switch (this) {
       case RoutePath.surveyDetails:
-        return 'surveyId';
       case RoutePath.surveyQuestion:
         return 'surveyId';
       default:

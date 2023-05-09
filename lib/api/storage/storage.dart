@@ -6,6 +6,8 @@ const _tokenType = 'TOKEN_TYPE';
 const _accessToken = 'ACCESS_TOKEN';
 const _expiresIn = 'EXPIRES_IN';
 const _refreshToken = 'REFRESH_TOKEN';
+const _surveyDetail = 'SURVEY_DETAIL';
+const _surveySubmission = 'SURVEY_SUBMISSION';
 
 abstract class Storage {
   Future<String?> get id;
@@ -27,6 +29,12 @@ abstract class Storage {
   Future<void> saveExpiresIn(String expiresIn);
 
   Future<void> saveRefreshToken(String refreshToken);
+
+  Future<void> saveSurveyDetailJson(String json);
+
+  Future<void> saveSurveySubmissionJson(String json);
+
+  Future<void> clearSurveySubmissionJson();
 
   Future<void> clearAllStorage();
 }
@@ -75,6 +83,21 @@ class StorageImpl extends Storage {
   @override
   Future<void> saveRefreshToken(String refreshToken) {
     return _storage.write(key: _refreshToken, value: refreshToken);
+  }
+
+  @override
+  Future<void> saveSurveyDetailJson(String json) {
+    return _storage.write(key: _surveyDetail, value: json);
+  }
+
+  @override
+  Future<void> saveSurveySubmissionJson(String json) {
+    return _storage.write(key: _surveySubmission, value: json);
+  }
+
+  @override
+  Future<void> clearSurveySubmissionJson() {
+    return _storage.delete(key: _surveySubmission);
   }
 
   @override

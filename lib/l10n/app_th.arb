@@ -9,6 +9,7 @@
   "logout": "ออกจากระบบ",
   "messageEmailInvalid": "อีเมลไม่ถูกต้อง กรุณาตรวจสอบอีกครั้ง",
   "messagePasswordInvalid": "รหัสผ่านต้องไม่ว่างเปล่า โปรดตรวจสอบอีกครั้ง",
+  "pleaseTryAgain": "กรุณาลองอีกครั้ง",
   "surveyDetailsStartSurvey": "เริ่มการสำรวจ",
   "surveyDetailsSubmit": "ส่ง",
   "surveyThanks": "ขอขอบคุณที่ทำแบบสำรวจ",

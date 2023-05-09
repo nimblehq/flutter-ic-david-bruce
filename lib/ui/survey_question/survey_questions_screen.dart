@@ -89,7 +89,9 @@ class SurveyQuestionsScreenState extends ConsumerState<SurveyQuestionsScreen> {
         },
         error: (_, error) {
           context.displayLoadingDialog(showOrHide: false);
-          context.showMessageSnackBar(message: 'Please try again. $error.');
+          context.showMessageSnackBar(
+            message: '${context.localization.pleaseTryAgain} $error.',
+          );
         },
       );
     });
