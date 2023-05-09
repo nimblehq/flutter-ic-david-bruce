@@ -40,13 +40,13 @@ class SurveyDetailsScreenState extends ConsumerState<SurveyDetailsScreen> {
           builder: (_, ref, __) {
             final state = ref.watch(surveyDetailsViewModelProvider);
             return state.maybeWhen(
-              orElse: () => _defaultBackground,
               success: (uiModel) => FadeInImage.assetNetwork(
                 placeholder: Assets.images.bgLoginOverlay.path,
                 image: uiModel.imageUrl,
                 fit: BoxFit.cover,
                 alignment: Alignment.center,
               ),
+              orElse: () => _defaultBackground,
             );
           },
         ),
@@ -63,9 +63,9 @@ class SurveyDetailsScreenState extends ConsumerState<SurveyDetailsScreen> {
         builder: (_, ref, __) {
           final state = ref.watch(surveyDetailsViewModelProvider);
           return state.maybeWhen(
-            orElse: () => _emptyBody,
             loading: () => const SurveyDetailsSkeletonLoading(),
             success: (uiModel) => _surveyDetails(uiModel),
+            orElse: () => _emptyBody,
           );
         },
       );
