@@ -9,5 +9,6 @@
   "logout": "Logout",
   "messageEmailInvalid": "Email is invalid, please check again",
   "messagePasswordInvalid": "Password cannot be empty, please check again",
+  "surveyThanks": "Thanks for taking the survey.",
   "today": "Today"
 }
