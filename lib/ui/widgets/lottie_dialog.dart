@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:lottie/lottie.dart';
+import 'package:survey_flutter_ic/utils/context_ext.dart';
 
 class LottieDialog extends StatefulWidget {
   final Function() onAnimated;
@@ -39,8 +40,8 @@ class _LottieDialogState extends State<LottieDialog>
       backgroundColor: Colors.black,
       insetPadding: const EdgeInsets.all(0),
       child: Container(
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height,
+        width: context.screenSize.width,
+        height: context.screenSize.height,
         padding: const EdgeInsets.all(20),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -59,8 +60,8 @@ class _LottieDialogState extends State<LottieDialog>
             ),
             const SizedBox(height: 20),
             Text(
-              AppLocalizations.of(context)?.surveyThanks ?? '',
-              style: Theme.of(context).textTheme.displayMedium,
+              context.localization.surveyThanks,
+              style: context.textTheme.displayMedium,
             ),
           ],
         ),

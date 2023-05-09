@@ -34,8 +34,8 @@ class ForgotPasswordScreenState extends ConsumerState<ForgotPasswordScreen> {
       );
 
   Widget get _background => SizedBox(
-      width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height,
+      width: context.screenSize.width,
+      height: context.screenSize.height,
       child: Image(
         image: AssetImage(Assets.images.bgLoginOverlay.path),
         fit: BoxFit.cover,

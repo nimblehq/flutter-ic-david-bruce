@@ -8,6 +8,8 @@ extension BuildContextExtension on BuildContext {
 
   TextTheme get textTheme => Theme.of(this).textTheme;
 
+  Size get screenSize => MediaQuery.of(this).size;
+
   void showMessageSnackBar({required String message}) =>
       ScaffoldMessenger.of(this).showSnackBar(SnackBar(content: Text(message)));
 
@@ -30,8 +32,8 @@ extension BuildContextExtension on BuildContext {
       pageBuilder: (context, animation, secondaryAnimation) {
         return Scaffold(
           body: SizedBox(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height,
+            width: context.screenSize.width,
+            height: context.screenSize.height,
             child: Center(
               child: LottieDialog(
                 onAnimated: () {
