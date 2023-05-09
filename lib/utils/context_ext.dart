@@ -14,16 +14,35 @@ extension BuildContextExtension on BuildContext {
   void showLottie({
     required Function() onAnimated,
   }) {
-    showDialog(
+    showGeneralDialog(
       context: this,
-      barrierColor: Colors.black.withOpacity(0.2),
       barrierDismissible: false,
-      builder: (_) => LottieDialog(
-        onAnimated: () {
-          Navigator.of(this, rootNavigator: true).pop();
-          onAnimated();
-        },
-      ),
+      transitionDuration: const Duration(milliseconds: 300),
+      transitionBuilder: (context, animation, secondaryAnimation, child) {
+        return FadeTransition(
+          opacity: animation,
+          child: ScaleTransition(
+            scale: animation,
+            child: child,
+          ),
+        );
+      },
+      pageBuilder: (context, animation, secondaryAnimation) {
+        return Scaffold(
+          body: SizedBox(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height,
+            child: Center(
+              child: LottieDialog(
+                onAnimated: () {
+                  Navigator.of(this, rootNavigator: true).pop();
+                  onAnimated();
+                },
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 
