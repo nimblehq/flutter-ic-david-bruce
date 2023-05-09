@@ -26,11 +26,11 @@ class SurveyDetailsSkeletonLoading extends StatelessWidget {
               mainAxisSize: MainAxisSize.max,
               children: [
                 LoadingText(width: MediaQuery.of(context).size.width - 20.0),
-                const SizedBox(height: Dimensions.paddingDefault),
+                const SizedBox(height: Dimensions.paddingTiny),
                 const LoadingText(width: 120.0),
                 const SizedBox(height: Dimensions.paddingNormal),
                 LoadingText(width: MediaQuery.of(context).size.width - 20.0),
-                const SizedBox(height: Dimensions.paddingDefault),
+                const SizedBox(height: Dimensions.paddingTiny),
                 LoadingText(width: MediaQuery.of(context).size.width - 20.0),
               ],
             ),
