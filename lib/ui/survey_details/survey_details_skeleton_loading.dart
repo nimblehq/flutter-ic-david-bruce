@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:survey_flutter_ic/utils/context_ext.dart';
 import 'package:survey_flutter_ic/utils/dimension.dart';
 import 'package:survey_flutter_ic/utils/loading_text.dart';
 
@@ -25,13 +26,13 @@ class SurveyDetailsSkeletonLoading extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.max,
               children: [
-                LoadingText(width: MediaQuery.of(context).size.width - 20.0),
+                LoadingText(width: context.screenSize.width - 20.0),
                 const SizedBox(height: Dimensions.paddingTiny),
                 const LoadingText(width: 120.0),
                 const SizedBox(height: Dimensions.paddingNormal),
-                LoadingText(width: MediaQuery.of(context).size.width - 20.0),
+                LoadingText(width: context.screenSize.width - 20.0),
                 const SizedBox(height: Dimensions.paddingTiny),
-                LoadingText(width: MediaQuery.of(context).size.width - 20.0),
+                LoadingText(width: context.screenSize.width - 20.0),
               ],
             ),
           )

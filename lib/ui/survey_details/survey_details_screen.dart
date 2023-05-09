@@ -34,8 +34,8 @@ class SurveyDetailsScreenState extends ConsumerState<SurveyDetailsScreen> {
   AppBar get _appBar => CustomAppBar.backButton(context: context);
 
   Widget get _background => SizedBox(
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height,
+        width: context.screenSize.width,
+        height: context.screenSize.height,
         child: Consumer(
           builder: (_, ref, __) {
             final state = ref.watch(surveyDetailsViewModelProvider);
@@ -73,7 +73,7 @@ class SurveyDetailsScreenState extends ConsumerState<SurveyDetailsScreen> {
   Widget _surveyDetails(SurveyDetailsUIModel uiModel) => Consumer(
         builder: (_, ref, __) {
           return Container(
-            width: MediaQuery.of(context).size.width,
+            width: context.screenSize.width,
             padding: const EdgeInsets.all(Dimensions.paddingMedium),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -81,14 +81,12 @@ class SurveyDetailsScreenState extends ConsumerState<SurveyDetailsScreen> {
               children: [
                 Text(
                   uiModel.title,
-                  style: Theme.of(context).textTheme.displayLarge,
+                  style: context.textTheme.displayLarge,
                 ),
-                const SizedBox(
-                  height: Dimensions.paddingNormal,
-                ),
+                const SizedBox(height: Dimensions.paddingNormal),
                 Text(
                   uiModel.description,
-                  style: Theme.of(context).textTheme.bodyMedium,
+                  style: context.textTheme.bodyMedium,
                 ),
                 const Spacer(),
                 Row(
@@ -143,9 +141,4 @@ class SurveyDetailsScreenState extends ConsumerState<SurveyDetailsScreen> {
   }
 
   void _startSurvey() {}
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
 }
