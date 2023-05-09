@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:survey_flutter_ic/utils/context_ext.dart';
+import 'package:survey_flutter_ic/utils/dimension.dart';
 
 class LottieDialog extends StatefulWidget {
   final Function() onAnimated;
@@ -37,11 +38,11 @@ class _LottieDialogState extends State<LottieDialog>
   Widget build(BuildContext context) {
     return Dialog(
       backgroundColor: Colors.black,
-      insetPadding: const EdgeInsets.all(0),
+      insetPadding: const EdgeInsets.all(0.0),
       child: Container(
         width: context.screenSize.width,
         height: context.screenSize.height,
-        padding: const EdgeInsets.all(20),
+        padding: const EdgeInsets.all(Dimensions.paddingMedium),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -57,7 +58,7 @@ class _LottieDialogState extends State<LottieDialog>
                     );
               },
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: Dimensions.paddingMedium),
             Text(
               context.localization.surveyThanks,
               style: context.textTheme.displayMedium,
