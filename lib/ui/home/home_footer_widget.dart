@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:survey_flutter_ic/utils/context_ext.dart';
 import 'package:survey_flutter_ic/utils/dimension.dart';
+import 'package:survey_flutter_ic/utils/route_path.dart';
 
 import '../../model/survey_model.dart';
 
@@ -40,7 +42,11 @@ class HomeFooterWidget extends StatelessWidget {
                 Icons.navigate_next,
                 color: Colors.black,
               ),
-              onPressed: () {},
+              onPressed: () {
+                var params = <String, String>{};
+                params[RoutePath.surveyDetails.pathParam] = _survey?.id ?? '';
+                context.pushNamed(RoutePath.surveyDetails.name, params: params);
+              },
             ),
           ],
         ),
