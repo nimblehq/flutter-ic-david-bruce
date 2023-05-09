@@ -3,7 +3,7 @@ class Dimensions {
   static const double buttonHeight = 56.0;
 
   // Padding
-  static const double paddingDefault = 4.0;
+  static const double paddingTiny = 4.0;
   static const double paddingSmallest = 8.0;
   static const double paddingSmall = 12.0;
   static const double paddingNormal = 16.0;

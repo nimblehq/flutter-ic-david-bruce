@@ -8,5 +8,6 @@
   "login": "Đăng nhập",
   "logout": "Đăng xuất",
   "messageEmailInvalid": "Email sai, vui lòng thử lại",
-  "messagePasswordInvalid": "Mật khẩu không được trống, vui lòng thử lại"
+  "messagePasswordInvalid": "Mật khẩu không được trống, vui lòng thử lại",
+  "today": "Hôm nay"
 }
