@@ -4,6 +4,7 @@ import 'package:injectable/injectable.dart';
 import 'package:survey_flutter_ic/api/service/api_service.dart';
 import 'package:survey_flutter_ic/api/storage/storage.dart';
 import 'package:survey_flutter_ic/model/survey_model.dart';
+import 'package:survey_flutter_ic/model/survey_submission_model.dart';
 import 'package:survey_flutter_ic/model/surveys_model.dart';
 
 import '../exception/network_exceptions.dart';
@@ -23,6 +24,8 @@ abstract class SurveyRepository {
   Future<bool> saveCurrentSurvey({
     required SurveyModel survey,
   });
+
+  Future<void> submitSurveyAnswer({required SurveySubmissionModel submission});
 }
 
 @LazySingleton(as: SurveyRepository)
@@ -77,5 +80,17 @@ class SurveyRepositoryImpl extends SurveyRepository {
   Future<bool> saveCurrentSurvey({required SurveyModel survey}) async {
     await _storage.saveCurrentSurveyJson(jsonEncode(survey.toJson()));
     return true;
+  }
+
+  @override
+  Future<void> submitSurveyAnswer(
+      {required SurveySubmissionModel submission}) async {
+    try {
+      final result =
+          await _apiService.submitSurveyAnswer(submission.toRequestJson());
+      return result;
+    } catch (exception) {
+      throw NetworkExceptions.fromDioException(exception);
+    }
   }
 }
