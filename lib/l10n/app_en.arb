@@ -1,4 +1,6 @@
 {
+  "appName": "Survey",
+  "cancel" : "Cancel",
   "forgotPasswordInstruction": "Enter your email to receive instructions for resetting your password.",
   "forgotPasswordResetButton": "Reset",
   "hello": "Hello!",
@@ -10,8 +12,10 @@
   "messageEmailInvalid": "Email is invalid, please check again",
   "messagePasswordInvalid": "Password cannot be empty, please check again",
   "pleaseTryAgain": "Please try again.",
+  "surveyDetailsExitConfirm": "Are you sure you want to quit the survey?",
   "surveyDetailsStartSurvey": "Start Survey",
   "surveyDetailsSubmit": "Submit",
   "surveyThanks": "Thanks for taking the survey.",
-  "today": "Today"
+  "today": "Today",
+  "yes": "Yes"
 }

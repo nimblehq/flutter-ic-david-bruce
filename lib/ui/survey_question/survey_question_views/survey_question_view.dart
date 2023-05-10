@@ -25,9 +25,48 @@ class SurveyQuestionView extends StatelessWidget {
 
   AppBar _appBar(BuildContext context) => CustomAppBar.closeButton(
         context: context,
-        onPressed: () => context.pushReplacementNamed(
-          RoutePath.home.name,
-        ),
+        onPressed: () {
+          showDialog(
+            context: context,
+            barrierColor: Colors.black.withOpacity(0.5),
+            barrierDismissible: true,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: Text(
+                  context.localization.appName,
+                  style: context.textTheme.titleMedium
+                      ?.copyWith(color: Colors.black),
+                ),
+                content: Text(
+                  context.localization.surveyDetailsExitConfirm,
+                  style: context.textTheme.bodyMedium
+                      ?.copyWith(color: Colors.black),
+                ),
+                actions: [
+                  TextButton(
+                    child: Text(
+                      context.localization.cancel,
+                      style: context.textTheme.bodyMedium
+                          ?.copyWith(color: Colors.red),
+                    ),
+                    onPressed: () => Navigator.of(context).pop(false),
+                  ),
+                  TextButton(
+                    child: Text(
+                      context.localization.yes,
+                      style: context.textTheme.bodyMedium
+                          ?.copyWith(color: Colors.lightBlue),
+                    ),
+                    onPressed: () => {
+                      Navigator.of(context).pop(true),
+                      context.replaceNamed(RoutePath.home.name)
+                    },
+                  ),
+                ],
+              );
+            },
+          );
+        },
       );
 
   Widget _background(BuildContext context) => SizedBox(
