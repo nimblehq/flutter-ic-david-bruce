@@ -51,7 +51,7 @@ class _SingleChoiceViewState extends State<SingleChoiceView> {
   }
 
   Widget _listItem(SingleChoiceOptionUIModel uiModel) => SizedBox(
-        height: 56,
+        height: Dimensions.multipleChoiceItemHeight,
         child: Center(
           child: Text(
             style: uiModel.isSelected
@@ -83,18 +83,18 @@ class _SingleChoiceViewState extends State<SingleChoiceView> {
 
   Widget get _highlightSeparator => const Divider(
         color: Colors.white,
-        height: 1,
-        thickness: 1,
-        indent: 80,
-        endIndent: 80,
+        height: 1.0,
+        thickness: 1.0,
+        indent: Dimensions.separatorHeight,
+        endIndent: Dimensions.separatorHeight,
       );
 
   Widget get _separator => const Divider(
         color: Colors.white70,
         height: 0.5,
         thickness: 0.5,
-        indent: 80,
-        endIndent: 80,
+        indent: Dimensions.separatorHeight,
+        endIndent: Dimensions.separatorHeight,
       );
 
   @override
