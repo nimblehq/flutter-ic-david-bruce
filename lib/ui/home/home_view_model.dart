@@ -28,18 +28,20 @@ class HomeViewModel extends StateNotifier<HomeState> {
   final GetSurveysUseCase getSurveysUseCase;
 
   _LoadMoreDataSet _loadMoreDataSet = _LoadMoreDataSet();
+  final List<SurveyModel> _totalSurveys = List.empty(growable: true);
 
   HomeViewModel({required this.getSurveysUseCase})
       : super(const HomeState.init());
 
-  void getSurveys({bool isRefresh = false}) async {
+  Future<void> getSurveys({bool isRefresh = false}) async {
     if (isRefresh) {
       _loadMoreDataSet = _LoadMoreDataSet();
+      _focusedItemIndexStream.add(0);
+      _totalSurveys.clear();
     }
 
     if (!_loadMoreDataSet.isHasMore || _loadMoreDataSet.isLoading) return;
     _loadMoreDataSet.isLoading = true;
-
     final result = await getSurveysUseCase.call(SurveysParams(
       pageNumber: _loadMoreDataSet.page,
       pageSize: _loadMoreDataSet.pageSize,
@@ -47,7 +49,8 @@ class HomeViewModel extends StateNotifier<HomeState> {
     if (result is Success<SurveysModel>) {
       final newSurveys = result.value.surveys;
       calculateLoadMoreDataSet(result.value.meta);
-      _surveysStream.add(newSurveys);
+      _totalSurveys.addAll(newSurveys);
+      _surveysStream.add(_totalSurveys);
     } else {
       state = HomeState.error(NetworkExceptions.getErrorMessage(
           (result as Failed).exception.actualException));

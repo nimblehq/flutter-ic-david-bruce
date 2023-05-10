@@ -5,12 +5,13 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:survey_flutter_ic/model/survey_model.dart';
 import 'package:survey_flutter_ic/ui/home/home_footer_widget.dart';
 import 'package:survey_flutter_ic/ui/home/home_header_widget.dart';
+import 'package:survey_flutter_ic/ui/home/home_side_menu.dart';
+import 'package:survey_flutter_ic/ui/home/home_side_menu_ui_model.dart';
 import 'package:survey_flutter_ic/ui/home/home_state.dart';
 import 'package:survey_flutter_ic/ui/home/home_view_model.dart';
 import 'package:survey_flutter_ic/ui/home/loading/home_skeleton_loading.dart';
 import 'package:survey_flutter_ic/utils/dimension.dart';
-import 'package:survey_flutter_ic/ui/home/home_side_menu.dart';
-import 'package:survey_flutter_ic/ui/home/home_side_menu_ui_model.dart';
+
 import '../../di/di.dart';
 import '../../gen/assets.gen.dart';
 import '../../usecases/get_surveys_use_case.dart';
@@ -30,9 +31,9 @@ class HomeScreen extends ConsumerStatefulWidget {
 }
 
 class HomeScreenState extends ConsumerState<HomeScreen> {
-  final _pageController = PageController();
   final _currentPageIndex = ValueNotifier<int>(0);
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
+  PageController _pageController = PageController(initialPage: 0);
 
   SideMenu get _sideMenu => SideMenu(
         sideMenuUIModel: SideMenuUIModel(
@@ -62,12 +63,10 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
         fit: BoxFit.fill,
       );
 
-  List<Widget> _homeBackground(List<SurveyModel>? surveys) {
-    if (surveys == null || surveys.isEmpty) {
-      return [_emptyBackground];
-    } else {
-      return surveys.map((item) => _imageBackground(item)).toList();
-    }
+  Widget _homeBackground(List<SurveyModel> surveys, int focusedIndex) {
+    return surveys.isEmpty
+        ? _emptyBackground
+        : _imageBackground(surveys[focusedIndex]);
   }
 
   Widget _homeHeaderWidget() {
@@ -78,52 +77,78 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
     );
   }
 
-  Widget _homeFooterWidget() => Consumer(builder: (_, ref, __) {
-        final surveys = ref.watch(surveysStream).value;
-        final index = ref.watch(focusedItemIndexStream).value ?? 0;
-        return HomeFooterWidget(surveys?.elementAt(index));
-      });
+  Widget _homeFooterWidget(List<SurveyModel> surveys) => HomeFooterWidget(
+        surveys: surveys,
+        pageController: _pageController,
+        onPageChangedCallback: (index) => _currentPageIndex.value = index,
+      );
 
-  Widget _pageIndicatorWidget(BuildContext context, int length) =>
-      SmoothPageIndicator(
-        controller: _pageController,
-        count: length,
-        effect: const ScrollingDotsEffect(
-          dotColor: Colors.white24,
-          activeDotColor: Colors.white,
-          dotHeight: 8.0,
-          dotWidth: 8.0,
+  Widget _pageIndicatorWidget(BuildContext context, int length) => Align(
+        alignment: Alignment.bottomLeft,
+        child: Padding(
+          padding: const EdgeInsets.only(bottom: 100.0),
+          child: SmoothPageIndicator(
+            controller: _pageController,
+            count: length,
+            effect: const WormEffect(
+              dotColor: Colors.white24,
+              activeDotColor: Colors.white,
+              dotHeight: 8.0,
+              dotWidth: 8.0,
+            ),
+          ),
         ),
       );
 
   Widget _homeWidget(BuildContext context) {
+    final surveys = ref.watch(surveysStream).value ?? [];
+    final focusedItemIndex = ref.watch(focusedItemIndexStream).value ?? 0;
+    _pageController = PageController(initialPage: focusedItemIndex);
     return Scaffold(
       key: _scaffoldKey,
+      backgroundColor: Colors.black,
       endDrawer: _sideMenu,
       body: Stack(
         children: [
-          PageView(
-            controller: _pageController,
-            onPageChanged: (index) => _currentPageIndex.value = index,
-            children: _homeBackground(ref.watch(surveysStream).value),
-          ),
-          SafeArea(
-            child: Container(
-              padding: const EdgeInsets.all(Dimensions.paddingMedium),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  _homeHeaderWidget(),
-                  const Spacer(),
-                  _pageIndicatorWidget(
-                    context,
-                    ref.watch(surveysStream).value?.length ?? 0,
+          Visibility(
+            visible: surveys.isNotEmpty,
+            child: Stack(
+              children: [
+                _homeBackground(surveys, focusedItemIndex),
+                SafeArea(
+                  child: RefreshIndicator(
+                    color: Colors.black,
+                    backgroundColor: Colors.white,
+                    onRefresh: () => ref
+                        .read(homeViewModelProvider.notifier)
+                        .getSurveys(isRefresh: true),
+                    child: SingleChildScrollView(
+                      physics: const AlwaysScrollableScrollPhysics(),
+                      child: SizedBox(
+                        height: MediaQuery.of(context).size.height -
+                            MediaQuery.of(context).viewPadding.vertical,
+                        child: Container(
+                          padding:
+                              const EdgeInsets.all(Dimensions.paddingMedium),
+                          child: Stack(
+                            children: [
+                              _homeHeaderWidget(),
+                              _pageIndicatorWidget(context, surveys.length),
+                              _homeFooterWidget(surveys),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
                   ),
-                  const SizedBox(height: Dimensions.paddingLarge),
-                  _homeFooterWidget()
-                ],
-              ),
+                ),
+              ],
+            ),
+          ),
+          Visibility(
+            visible: surveys.isEmpty,
+            child: const SafeArea(
+              child: HomeSkeletonLoading(),
             ),
           ),
         ],
@@ -134,7 +159,7 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    ref.read(homeViewModelProvider.notifier).getSurveys();
+    ref.read(homeViewModelProvider.notifier).getSurveys(isRefresh: true);
   }
 
   @override
@@ -151,17 +176,18 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
       statusBarBrightness: Brightness.dark,
     ));
     _setupStateListener();
-    final surveys = ref.watch(surveysStream).value ?? [];
-    return surveys.isNotEmpty
-        ? _homeWidget(context)
-        : const SafeArea(child: HomeSkeletonLoading());
+    return _homeWidget(context);
   }
 
   void _setupStateListener() {
+    final surveys = ref.watch(surveysStream).value ?? [];
     _currentPageIndex.addListener(() {
       ref
           .read(homeViewModelProvider.notifier)
           .changeFocusedItem(index: _currentPageIndex.value);
+      if (_currentPageIndex.value == surveys.length - 2) {
+        ref.read(homeViewModelProvider.notifier).getSurveys(isRefresh: false);
+      }
     });
   }
 }
