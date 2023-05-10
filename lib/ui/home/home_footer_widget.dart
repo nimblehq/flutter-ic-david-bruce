@@ -54,7 +54,7 @@ class HomeFooterWidget extends StatelessWidget {
           ),
           onPressed: () {
             var params = <String, String>{};
-            params[RoutePath.surveyDetails.pathParam] = _survey?.id ?? '';
+            params[RoutePath.surveyDetails.pathParam] = survey.id;
             context.pushNamed(RoutePath.surveyDetails.name, params: params);
           },
         ),

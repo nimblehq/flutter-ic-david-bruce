@@ -9,6 +9,7 @@ import 'package:survey_flutter_ic/ui/home/home_side_menu.dart';
 import 'package:survey_flutter_ic/ui/home/home_side_menu_ui_model.dart';
 import 'package:survey_flutter_ic/ui/home/home_state.dart';
 import 'package:survey_flutter_ic/ui/home/home_view_model.dart';
+import 'package:survey_flutter_ic/ui/home/loading/home_skeleton_loading.dart';
 import 'package:survey_flutter_ic/utils/dimension.dart';
 
 import '../../di/di.dart';
@@ -63,11 +64,9 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
       );
 
   Widget _homeBackground(List<SurveyModel> surveys, int focusedIndex) {
-    if (surveys.isEmpty) {
-      return _emptyBackground;
-    } else {
-      return _imageBackground(surveys[focusedIndex]);
-    }
+    return surveys.isEmpty
+        ? _emptyBackground
+        : _imageBackground(surveys[focusedIndex]);
   }
 
   Widget _homeHeaderWidget() {
@@ -129,9 +128,8 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
                         height: MediaQuery.of(context).size.height -
                             MediaQuery.of(context).viewPadding.vertical,
                         child: Container(
-                          padding: const EdgeInsets.all(
-                            Dimensions.paddingMedium,
-                          ),
+                          padding:
+                              const EdgeInsets.all(Dimensions.paddingMedium),
                           child: Stack(
                             children: [
                               _homeHeaderWidget(),
@@ -150,7 +148,7 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
           Visibility(
             visible: surveys.isEmpty,
             child: const SafeArea(
-              child: HomeLoading(),
+              child: HomeSkeletonLoading(),
             ),
           ),
         ],
