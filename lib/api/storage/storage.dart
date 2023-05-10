@@ -6,8 +6,8 @@ const _tokenType = 'TOKEN_TYPE';
 const _accessToken = 'ACCESS_TOKEN';
 const _expiresIn = 'EXPIRES_IN';
 const _refreshToken = 'REFRESH_TOKEN';
-const _surveyDetail = 'SURVEY_DETAIL';
-const _surveySubmission = 'SURVEY_SUBMISSION';
+const _currentSurvey = 'CURRENT_SURVEY';
+const _currentSurveySubmission = 'CURRENT_SURVEY_SUBMISSION';
 
 abstract class Storage {
   Future<String?> get id;
@@ -20,6 +20,10 @@ abstract class Storage {
 
   Future<String?> get refreshToken;
 
+  Future<String?> get currentSurveyJson;
+
+  Future<String?> get currentSurveySubmissionJson;
+
   Future<void> saveId(String id);
 
   Future<void> saveTokenType(String tokenType);
@@ -30,9 +34,9 @@ abstract class Storage {
 
   Future<void> saveRefreshToken(String refreshToken);
 
-  Future<void> saveSurveyDetailJson(String json);
+  Future<void> saveCurrentSurveyJson(String json);
 
-  Future<void> saveSurveySubmissionJson(String json);
+  Future<void> saveCurrentSurveySubmissionJson(String json);
 
   Future<void> clearSurveySubmissionJson();
 
@@ -61,6 +65,13 @@ class StorageImpl extends Storage {
   Future<String?> get refreshToken => _storage.read(key: _refreshToken);
 
   @override
+  Future<String?> get currentSurveyJson => _storage.read(key: _currentSurvey);
+
+  @override
+  Future<String?> get currentSurveySubmissionJson =>
+      _storage.read(key: _currentSurveySubmission);
+
+  @override
   Future<void> saveId(String id) {
     return _storage.write(key: _id, value: id);
   }
@@ -86,18 +97,18 @@ class StorageImpl extends Storage {
   }
 
   @override
-  Future<void> saveSurveyDetailJson(String json) {
-    return _storage.write(key: _surveyDetail, value: json);
+  Future<void> saveCurrentSurveyJson(String json) {
+    return _storage.write(key: _currentSurvey, value: json);
   }
 
   @override
-  Future<void> saveSurveySubmissionJson(String json) {
-    return _storage.write(key: _surveySubmission, value: json);
+  Future<void> saveCurrentSurveySubmissionJson(String json) {
+    return _storage.write(key: _currentSurveySubmission, value: json);
   }
 
   @override
   Future<void> clearSurveySubmissionJson() {
-    return _storage.delete(key: _surveySubmission);
+    return _storage.delete(key: _currentSurveySubmission);
   }
 
   @override

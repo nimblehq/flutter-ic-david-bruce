@@ -9,6 +9,7 @@ import 'package:survey_flutter_ic/ui/survey_details/survey_details_ui_model.dart
 import 'package:survey_flutter_ic/ui/survey_details/survey_details_view_model.dart';
 import 'package:survey_flutter_ic/ui/survey_details/survey_details_state.dart';
 import 'package:survey_flutter_ic/usecases/get_survey_details_use_case.dart';
+import 'package:survey_flutter_ic/usecases/save_current_survey_use_case.dart';
 import 'package:survey_flutter_ic/utils/context_ext.dart';
 import 'package:survey_flutter_ic/utils/custom_app_bar.dart';
 import 'package:survey_flutter_ic/utils/dimension.dart';
@@ -16,7 +17,10 @@ import 'package:survey_flutter_ic/utils/route_path.dart';
 
 final surveyDetailsViewModelProvider = StateNotifierProvider.autoDispose<
     SurveyDetailsViewModel, SurveyDetailsState>(
-  (_) => SurveyDetailsViewModel(getIt.get<GetSurveyDetailsUseCase>()),
+  (_) => SurveyDetailsViewModel(
+    getIt.get<GetSurveyDetailsUseCase>(),
+    getIt.get<SaveCurrentSurveyUseCase>(),
+  ),
 );
 
 class SurveyDetailsScreen extends ConsumerStatefulWidget {

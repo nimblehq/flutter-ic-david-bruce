@@ -1,17 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:survey_flutter_ic/di/di.dart';
 import 'package:survey_flutter_ic/ui/survey_question/survey_question_views/survey_question_view.dart';
 import 'package:survey_flutter_ic/ui/survey_question/survey_questions_screen_builder.dart';
 import 'package:survey_flutter_ic/ui/survey_question/survey_questions_state.dart';
 import 'package:survey_flutter_ic/ui/survey_question/survey_questions_view_model.dart';
 import 'package:survey_flutter_ic/ui/survey_question/ui_models/survey_questions_ui_model.dart';
+import 'package:survey_flutter_ic/usecases/get_current_survey_use_case.dart';
 import 'package:survey_flutter_ic/utils/context_ext.dart';
 import 'package:survey_flutter_ic/utils/route_path.dart';
 
 final surveyQuestionsViewModelProvider = StateNotifierProvider.autoDispose<
     SurveyQuestionsViewModel, SurveyQuestionsState>(
-  (_) => SurveyQuestionsViewModel(),
+  (_) => SurveyQuestionsViewModel(
+    getIt.get<GetCurrentSurveyUseCase>(),
+  ),
 );
 
 class SurveyQuestionsScreen extends ConsumerStatefulWidget {

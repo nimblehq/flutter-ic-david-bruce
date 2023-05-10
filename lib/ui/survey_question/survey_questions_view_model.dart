@@ -5,9 +5,13 @@ import 'package:survey_flutter_ic/ui/survey_question/survey_questions_state.dart
 import 'package:survey_flutter_ic/ui/survey_question/ui_models/survey_answer_ui_model.dart';
 import 'package:survey_flutter_ic/ui/survey_question/ui_models/survey_question_ui_model.dart';
 import 'package:survey_flutter_ic/ui/survey_question/ui_models/survey_questions_ui_model.dart';
+import 'package:survey_flutter_ic/usecases/base/base_use_case.dart';
+import 'package:survey_flutter_ic/usecases/get_current_survey_use_case.dart';
 import 'package:survey_flutter_ic/utils/route_path.dart';
 
 class SurveyQuestionsViewModel extends StateNotifier<SurveyQuestionsState> {
+  final GetCurrentSurveyUseCase _getCurrentSurveyUseCase;
+
   String get _surveyIdValue => _surveyId ?? '';
   String? _surveyId;
 
@@ -23,7 +27,9 @@ class SurveyQuestionsViewModel extends StateNotifier<SurveyQuestionsState> {
     answer: SurveyAnswerUIModel.empty(),
   );
 
-  SurveyQuestionsViewModel() : super(const SurveyQuestionsState.init());
+  SurveyQuestionsViewModel(
+    this._getCurrentSurveyUseCase,
+  ) : super(const SurveyQuestionsState.init());
 
   void setUpData({
     required Map<String, String> arguments,
@@ -33,7 +39,12 @@ class SurveyQuestionsViewModel extends StateNotifier<SurveyQuestionsState> {
     _setUpSurveyDetailData().then((value) => _bindData());
   }
 
-  Future<void> _setUpSurveyDetailData() async {}
+  Future<void> _setUpSurveyDetailData() async {
+    final surveyResult = await _getCurrentSurveyUseCase.call();
+    if (surveyResult is Success<SurveyModel?>) {
+      _survey = surveyResult.value;
+    }
+  }
 
   void _bindData() {
     final totalQuestions = _surveyValue.questions.length;

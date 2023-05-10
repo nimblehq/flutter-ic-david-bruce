@@ -1,20 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:survey_flutter_ic/gen/assets.gen.dart';
 import 'package:survey_flutter_ic/ui/survey_question/survey_question_component_id.dart';
-import 'package:survey_flutter_ic/ui/survey_question/survey_questions_state.dart';
-import 'package:survey_flutter_ic/ui/survey_question/survey_questions_view_model.dart';
+import 'package:survey_flutter_ic/ui/survey_question/survey_questions_screen.dart';
 import 'package:survey_flutter_ic/ui/survey_question/ui_models/survey_question_ui_model.dart';
 import 'package:survey_flutter_ic/utils/context_ext.dart';
 import 'package:survey_flutter_ic/utils/custom_app_bar.dart';
 import 'package:survey_flutter_ic/utils/route_path.dart';
-
-final surveyQuestionsViewModelProvider = StateNotifierProvider.autoDispose<
-    SurveyQuestionsViewModel, SurveyQuestionsState>(
-  (_) => SurveyQuestionsViewModel(),
-);
 
 class SurveyQuestionView extends StatelessWidget {
   final SurveyQuestionUIModel uiModel;

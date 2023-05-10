@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:survey_flutter_ic/ui/survey_question/ui_models/single_choice_option_ui_model.dart';
+import 'package:survey_flutter_ic/utils/context_ext.dart';
 
 class SingleChoiceView extends StatefulWidget {
   final List<SingleChoiceOptionUIModel> uiModels;
@@ -51,19 +52,15 @@ class _SingleChoiceViewState extends State<SingleChoiceView> {
   Widget _listItem(SingleChoiceOptionUIModel uiModel) => SizedBox(
         height: 56,
         child: Center(
-            child: Text(
-          style: uiModel.isSelected
-              ? Theme.of(context)
-                  .textTheme
-                  .displaySmall
-                  ?.copyWith(color: Colors.white)
-              : Theme.of(context)
-                  .textTheme
-                  .headlineSmall
-                  ?.copyWith(color: Colors.white70),
-          maxLines: 1,
-          uiModel.title,
-        )),
+          child: Text(
+            style: uiModel.isSelected
+                ? context.textTheme.displaySmall?.copyWith(color: Colors.white)
+                : context.textTheme.headlineSmall
+                    ?.copyWith(color: Colors.white70),
+            maxLines: 1,
+            uiModel.title,
+          ),
+        ),
       );
 
   Widget _separatorBuilder({
