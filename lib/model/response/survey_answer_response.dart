@@ -8,8 +8,8 @@ part 'survey_answer_response.g.dart';
 @JsonSerializable()
 class SurveyAnswerResponse {
   final String id;
-  final String text;
-  final int displayOrder;
+  final String? text;
+  final int? displayOrder;
 
   SurveyAnswerResponse({
     required this.id,
@@ -22,7 +22,7 @@ class SurveyAnswerResponse {
 
   SurveyAnswerModel toSurveyAnswerModel() => SurveyAnswerModel(
         id: id,
-        text: text,
-        displayOrder: displayOrder,
+        text: text ?? '',
+        displayOrder: displayOrder ?? 0,
       );
 }

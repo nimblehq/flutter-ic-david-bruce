@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:survey_flutter_ic/utils/dimension.dart';
 
-class HomeLoadingText extends StatelessWidget {
+class LoadingText extends StatelessWidget {
   final double width;
 
-  const HomeLoadingText({
+  const LoadingText({
     Key? key,
     required this.width,
   }) : super(key: key);

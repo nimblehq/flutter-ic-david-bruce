@@ -1,5 +1,7 @@
 import 'package:equatable/equatable.dart';
+import 'package:survey_flutter_ic/model/enum/display_type.dart';
 import 'package:survey_flutter_ic/model/survey_question_model.dart';
+import 'package:survey_flutter_ic/ui/survey_details/survey_details_ui_model.dart';
 
 class SurveyModel extends Equatable {
   final String id;
@@ -60,4 +62,28 @@ class SurveyModel extends Equatable {
         inactiveAt,
         surveyType
       ];
+
+  SurveyDetailsUIModel toSurveyDetailsUiModel() {
+    final introSection = questions.isEmpty
+        ? null
+        : questions.firstWhere(
+            (question) => question.displayType == DisplayType.intro);
+    String description = '';
+    String imageUrl = '';
+
+    if (introSection != null) {
+      description =
+          introSection.text.isEmpty ? this.description : introSection.text;
+      imageUrl = introSection.imageUrl.isEmpty
+          ? introSection.coverImageUrl
+          : introSection.imageUrl;
+    }
+
+    imageUrl = imageUrl.isEmpty ? coverImageUrl : imageUrl;
+    return SurveyDetailsUIModel(
+      title: title,
+      description: description,
+      imageUrl: imageUrl,
+    );
+  }
 }

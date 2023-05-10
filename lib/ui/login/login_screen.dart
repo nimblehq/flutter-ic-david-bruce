@@ -55,7 +55,7 @@ class LoginScreenState extends ConsumerState<LoginScreen> {
         isPassword: true,
         textSuffixButton: context.localization.loginForgotPassword,
         textSuffixButtonCallback: () =>
-            context.goNamed(RoutePath.forgotPassword.name),
+            context.pushNamed(RoutePath.forgotPassword.name),
         controller: _passwordInputController,
       );
 

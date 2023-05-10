@@ -10,11 +10,11 @@ part 'survey_question_response.g.dart';
 @JsonSerializable()
 class SurveyQuestionResponse {
   final String id;
-  final String text;
-  final int displayOrder;
-  final String imageUrl;
-  final String coverImageUrl;
-  final DisplayType displayType;
+  final String? text;
+  final int? displayOrder;
+  final String? imageUrl;
+  final String? coverImageUrl;
+  final DisplayType? displayType;
   final List<SurveyAnswerResponse>? answers;
 
   SurveyQuestionResponse({
@@ -32,11 +32,11 @@ class SurveyQuestionResponse {
 
   SurveyQuestionModel toSurveyQuestionModel() => SurveyQuestionModel(
         id: id,
-        text: text,
-        displayOrder: displayOrder,
-        imageUrl: imageUrl,
-        coverImageUrl: coverImageUrl,
-        displayType: displayType,
+        text: text ?? '',
+        displayOrder: displayOrder ?? 0,
+        imageUrl: imageUrl ?? '',
+        coverImageUrl: coverImageUrl ?? '',
+        displayType: displayType ?? DisplayType.intro,
         answers: (answers ?? [])
             .map((answer) => answer.toSurveyAnswerModel())
             .toList(),
