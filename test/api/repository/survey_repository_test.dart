@@ -9,6 +9,7 @@ import 'package:survey_flutter_ic/model/response/surveys_meta_response.dart';
 import 'package:survey_flutter_ic/model/response/surveys_response.dart';
 import 'package:survey_flutter_ic/model/survey_model.dart';
 import 'package:survey_flutter_ic/model/survey_submission_model.dart';
+import 'package:survey_flutter_ic/model/surveys_model.dart';
 
 import '../../mocks/generate_mocks.mocks.dart';
 
@@ -132,6 +133,24 @@ void main() {
         await surveyRepository.submitSurveyAnswer(submission: submission);
       } catch (e) {
         expect(e, isInstanceOf<NetworkExceptions>());
+      }
+    });
+
+    test('When saving surveys is successful, it returns nothing', () async {
+      when(mockStorage.saveSurveys(any)).thenAnswer((_) async => {});
+
+      await surveyRepository.saveSurveys(surveys: SurveysModel.empty());
+
+      verify(mockStorage.saveSurveys(SurveysModel.empty())).called(1);
+    });
+
+    test('When saving surveys fails, it throws a Exception', () async {
+      when(mockStorage.saveSurveys(any)).thenThrow(Exception());
+
+      try {
+        await surveyRepository.saveSurveys(surveys: SurveysModel.empty());
+      } catch (e) {
+        expect(e, isInstanceOf<Exception>());
       }
     });
   });

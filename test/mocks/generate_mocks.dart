@@ -12,6 +12,7 @@ import 'package:survey_flutter_ic/usecases/get_current_survey_use_case.dart';
 import 'package:survey_flutter_ic/usecases/get_survey_details_use_case.dart';
 import 'package:survey_flutter_ic/usecases/login_use_case.dart';
 import 'package:survey_flutter_ic/usecases/save_current_survey_use_case.dart';
+import 'package:survey_flutter_ic/usecases/save_surveys_use_case.dart';
 
 @GenerateMocks([
   AuthApiService,
@@ -25,6 +26,7 @@ import 'package:survey_flutter_ic/usecases/save_current_survey_use_case.dart';
   LoginUseCase,
   FetchSurveysUseCase,
   GetSurveyDetailsUseCase,
+  SaveSurveysUseCase,
   GetCurrentSurveyUseCase,
   UseCaseException,
 ])

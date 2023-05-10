@@ -8,7 +8,7 @@ import 'package:survey_flutter_ic/usecases/params/surveys_params.dart';
 import '../mocks/generate_mocks.mocks.dart';
 
 void main() {
-  group('GetSurveysUseCaseTest', () {
+  group('FetchSurveysUseCaseTest', () {
     late MockSurveyRepository mockSurveyRepository;
     late FetchSurveysUseCase useCase;
 
