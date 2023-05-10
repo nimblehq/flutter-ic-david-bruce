@@ -5,6 +5,7 @@ import 'package:survey_flutter_ic/model/survey_meta_model.dart';
 import 'package:survey_flutter_ic/model/survey_model.dart';
 import 'package:survey_flutter_ic/ui/home/home_state.dart';
 import 'package:survey_flutter_ic/usecases/get_surveys_use_case.dart';
+import 'package:survey_flutter_ic/usecases/save_surveys_use_case.dart';
 
 import '../../api/exception/network_exceptions.dart';
 import '../../model/surveys_model.dart';
@@ -28,6 +29,7 @@ class HomeViewModel extends StateNotifier<HomeState> {
 
   final FetchSurveysUseCase fetchSurveysUseCase;
   final GetSurveysUseCase getSurveysUseCase;
+  final SaveSurveysUseCase saveSurveysUseCase;
 
   _LoadMoreDataSet _loadMoreDataSet = _LoadMoreDataSet();
   final List<SurveyModel> _totalSurveys = List.empty(growable: true);
@@ -35,6 +37,7 @@ class HomeViewModel extends StateNotifier<HomeState> {
   HomeViewModel({
     required this.fetchSurveysUseCase,
     required this.getSurveysUseCase,
+    required this.saveSurveysUseCase,
   }) : super(const HomeState.init());
 
   Future<void> getSurveys() async {
@@ -57,6 +60,12 @@ class HomeViewModel extends StateNotifier<HomeState> {
       pageSize: _loadMoreDataSet.pageSize,
     ));
     _handleResult(result);
+    if (result is Success<SurveysModel>) {
+      await saveSurveysUseCase.call(SurveysModel(
+        surveys: _totalSurveys,
+        meta: result.value.meta,
+      ));
+    }
   }
 
   void changeFocusedItem({required int index}) {

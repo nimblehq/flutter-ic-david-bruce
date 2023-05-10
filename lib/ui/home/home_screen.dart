@@ -11,6 +11,7 @@ import 'package:survey_flutter_ic/ui/home/home_state.dart';
 import 'package:survey_flutter_ic/ui/home/home_view_model.dart';
 import 'package:survey_flutter_ic/ui/home/loading/home_skeleton_loading.dart';
 import 'package:survey_flutter_ic/usecases/get_surveys_use_case.dart';
+import 'package:survey_flutter_ic/usecases/save_surveys_use_case.dart';
 import 'package:survey_flutter_ic/utils/context_ext.dart';
 import 'package:survey_flutter_ic/utils/dimension.dart';
 
@@ -23,6 +24,7 @@ final homeViewModelProvider =
   (_) => HomeViewModel(
     fetchSurveysUseCase: getIt.get<FetchSurveysUseCase>(),
     getSurveysUseCase: getIt.get<GetSurveysUseCase>(),
+    saveSurveysUseCase: getIt.get<SaveSurveysUseCase>(),
   ),
 );
 

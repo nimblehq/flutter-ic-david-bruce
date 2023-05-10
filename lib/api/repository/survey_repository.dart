@@ -50,11 +50,11 @@ class SurveyRepositoryImpl extends SurveyRepository {
     required int pageNumber,
     required int pageSize,
   }) async {
-    final cachedResult = await _storage.surveysResponse;
+    final cachedResult = await _storage.surveys;
     if (cachedResult == null) {
       return fetchSurveys(pageNumber: pageNumber, pageSize: pageSize);
     } else {
-      return SurveysResponse.deserialize(cachedResult).toSurveysModel();
+      return SurveysModel.deserialize(cachedResult);
     }
   }
 

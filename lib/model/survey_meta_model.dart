@@ -25,10 +25,10 @@ class SurveyMetaModel extends Equatable {
           records: 0,
         );
 
-  factory SurveysMetaModel.fromJson(Map<String, dynamic> json) =>
-      _$SurveysMetaModelFromJson(mapDataJson(json));
+  factory SurveyMetaModel.fromJson(Map<String, dynamic> json) =>
+      _$SurveyMetaModelFromJson(json);
 
-  Map<String, dynamic> toJson() => _$SurveysMetaModelToJson(this);
+  Map<String, dynamic> toJson() => _$SurveyMetaModelToJson(this);
 
   @override
   List<Object?> get props => [

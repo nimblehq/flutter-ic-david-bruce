@@ -5,16 +5,15 @@ import '../api/repository/survey_repository.dart';
 import 'base/base_use_case.dart';
 
 @Injectable()
-class FetchSurveysUseCase extends UseCase<Void, SurveysModel> {
+class SaveSurveysUseCase extends UseCase<void, SurveysModel> {
   final SurveyRepository _repository;
 
-  const FetchSurveysUseCase(this._repository);
+  const SaveSurveysUseCase(this._repository);
 
   @override
-  Future<Result<SurveysModel>> call(SurveysParams params) async {
+  Future<Result<void>> call(SurveysModel params) async {
     try {
-      final result = await _repository.fetchSurveys(
-          pageNumber: params.pageNumber, pageSize: params.pageSize);
+      final result = await _repository.saveSurveys(surveys: params);
       return Success(result);
     } catch (exception) {
       return Failed(UseCaseException(exception));
