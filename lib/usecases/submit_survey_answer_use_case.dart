@@ -12,7 +12,7 @@ class SubmitSurveyAnswerUseCase extends UseCase<bool, SurveySubmissionModel> {
   @override
   Future<Result<bool>> call(SurveySubmissionModel params) async {
     try {
-      final result = await _repository.submitSurveyAnswer(submission: params);
+      await _repository.submitSurveyAnswer(submission: params);
       return Success(true);
     } catch (exception) {
       return Failed(UseCaseException(exception));
