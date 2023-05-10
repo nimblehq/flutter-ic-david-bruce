@@ -65,7 +65,7 @@ class SurveyQuestionsScreenState extends ConsumerState<SurveyQuestionsScreen> {
       SurveyQuestionView(
         uiModel: uiModel.question,
         child: buildAnswer(uiModel.answer),
-        onNextQuestion: () => {},
+        onNextQuestion: () => _nextQuestion(),
         onSubmit: () => {},
       );
 
@@ -99,5 +99,23 @@ class SurveyQuestionsScreenState extends ConsumerState<SurveyQuestionsScreen> {
         },
       );
     });
+  }
+
+  void _nextQuestion() {
+    context.pushReplacementNamed(
+      RoutePath.surveyQuestion.name,
+      params: _getPathParams(),
+      queryParams: _getNextQuestionQueryParams(),
+    );
+  }
+
+  Map<String, String> _getPathParams() {
+    return ref.read(surveyQuestionsViewModelProvider.notifier).getPathParams();
+  }
+
+  Map<String, String> _getNextQuestionQueryParams() {
+    return ref
+        .read(surveyQuestionsViewModelProvider.notifier)
+        .getNextQuestionQueryParams();
   }
 }

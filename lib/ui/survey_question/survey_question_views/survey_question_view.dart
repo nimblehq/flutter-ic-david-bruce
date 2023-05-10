@@ -85,7 +85,7 @@ class SurveyQuestionView extends StatelessWidget {
         child: FloatingActionButton(
           foregroundColor: Colors.black,
           backgroundColor: Colors.white,
-          onPressed: onNextQuestion,
+          onPressed: () => onNextQuestion,
           child: const Icon(Icons.navigate_next),
         ),
       );
