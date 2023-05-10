@@ -6,10 +6,10 @@ import 'package:survey_flutter_ic/api/service/api_service.dart';
 import 'package:survey_flutter_ic/api/service/auth_api_service.dart';
 import 'package:survey_flutter_ic/api/storage/storage.dart';
 import 'package:survey_flutter_ic/usecases/base/base_use_case.dart';
+import 'package:survey_flutter_ic/usecases/fetch_surveys_use_case.dart';
 import 'package:survey_flutter_ic/usecases/forgot_password_use_case.dart';
 import 'package:survey_flutter_ic/usecases/get_current_survey_use_case.dart';
 import 'package:survey_flutter_ic/usecases/get_survey_details_use_case.dart';
-import 'package:survey_flutter_ic/usecases/get_surveys_use_case.dart';
 import 'package:survey_flutter_ic/usecases/login_use_case.dart';
 import 'package:survey_flutter_ic/usecases/save_current_survey_use_case.dart';
 
@@ -23,7 +23,7 @@ import 'package:survey_flutter_ic/usecases/save_current_survey_use_case.dart';
   DioError,
   ForgotPasswordUseCase,
   LoginUseCase,
-  GetSurveysUseCase,
+  FetchSurveysUseCase,
   GetSurveyDetailsUseCase,
   GetCurrentSurveyUseCase,
   UseCaseException,

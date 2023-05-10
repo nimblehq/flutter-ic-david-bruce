@@ -38,7 +38,7 @@ void main() {
           .thenAnswer((_) async => surveysResponse);
 
       final result =
-          await surveyRepository.getSurveys(pageSize: 0, pageNumber: 0);
+          await surveyRepository.fetchSurveys(pageSize: 0, pageNumber: 0);
 
       expect(result, surveysResponse.toSurveysModel());
     });
@@ -47,7 +47,7 @@ void main() {
       when(mockApiService.getSurveys(any, any)).thenThrow(Exception());
 
       try {
-        await surveyRepository.getSurveys(pageSize: 0, pageNumber: 0);
+        await surveyRepository.fetchSurveys(pageSize: 0, pageNumber: 0);
       } catch (e) {
         expect(e, isInstanceOf<NetworkExceptions>());
       }

@@ -1,5 +1,6 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:injectable/injectable.dart';
+import 'package:survey_flutter_ic/model/surveys_model.dart';
 
 const _id = 'ID';
 const _tokenType = 'TOKEN_TYPE';
@@ -8,6 +9,7 @@ const _expiresIn = 'EXPIRES_IN';
 const _refreshToken = 'REFRESH_TOKEN';
 const _currentSurvey = 'CURRENT_SURVEY';
 const _currentSurveySubmission = 'CURRENT_SURVEY_SUBMISSION';
+const _surveys = 'SURVEYS';
 
 abstract class Storage {
   Future<String?> get id;
@@ -24,6 +26,8 @@ abstract class Storage {
 
   Future<String?> get currentSurveySubmissionJson;
 
+  Future<String?> get surveys;
+
   Future<void> saveId(String id);
 
   Future<void> saveTokenType(String tokenType);
@@ -39,6 +43,8 @@ abstract class Storage {
   Future<void> saveCurrentSurveySubmissionJson(String json);
 
   Future<void> clearSurveySubmissionJson();
+
+  Future<void> saveSurveys(SurveysModel surveys);
 
   Future<void> clearAllStorage();
 }
@@ -70,6 +76,9 @@ class StorageImpl extends Storage {
   @override
   Future<String?> get currentSurveySubmissionJson =>
       _storage.read(key: _currentSurveySubmission);
+
+  @override
+  Future<String?> get surveys => _storage.read(key: _surveys);
 
   @override
   Future<void> saveId(String id) {
@@ -109,6 +118,12 @@ class StorageImpl extends Storage {
   @override
   Future<void> clearSurveySubmissionJson() {
     return _storage.delete(key: _currentSurveySubmission);
+  }
+
+  @override
+  Future<void> saveSurveys(SurveysModel surveys) {
+    String json = SurveysModel.serialize(surveys);
+    return _storage.write(key: _surveys, value: json);
   }
 
   @override
