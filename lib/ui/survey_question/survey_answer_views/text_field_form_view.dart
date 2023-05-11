@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:survey_flutter_ic/ui/survey_question/ui_models/survey_answer_ui_model.dart';
+import 'package:survey_flutter_ic/ui/survey_question/ui_models/survey_answer_option_ui_model.dart';
 import 'package:survey_flutter_ic/utils/dimension.dart';
 
 class TextFieldFormView extends StatefulWidget {
