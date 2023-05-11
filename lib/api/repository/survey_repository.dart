@@ -8,10 +8,7 @@ import 'package:survey_flutter_ic/model/surveys_model.dart';
 import '../exception/network_exceptions.dart';
 
 abstract class SurveyRepository {
-  Future<SurveysModel> getSurveys({
-    required int pageNumber,
-    required int pageSize,
-  });
+  Future<SurveysModel> getSurveysCached();
 
   Future<SurveysModel> fetchSurveys({
     required int pageNumber,
@@ -43,16 +40,12 @@ class SurveyRepositoryImpl extends SurveyRepository {
   SurveyRepositoryImpl(this._apiService, this._storage);
 
   @override
-  Future<SurveysModel> getSurveys({
-    required int pageNumber,
-    required int pageSize,
-  }) async {
+  Future<SurveysModel> getSurveysCached() async {
     final cachedResult = await _storage.surveys;
     if (cachedResult == null) {
-      return fetchSurveys(pageNumber: pageNumber, pageSize: pageSize);
-    } else {
-      return SurveysModel.deserialize(cachedResult);
+      throw NetworkExceptions.fromDioException(Exception());
     }
+    return SurveysModel.deserialize(cachedResult);
   }
 
   @override

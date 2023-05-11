@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:survey_flutter_ic/model/survey_meta_model.dart';
 import 'package:survey_flutter_ic/model/survey_model.dart';
 import 'package:survey_flutter_ic/ui/home/home_state.dart';
-import 'package:survey_flutter_ic/usecases/get_surveys_use_case.dart';
+import 'package:survey_flutter_ic/usecases/get_surveys_cached_use_case.dart';
 import 'package:survey_flutter_ic/usecases/save_surveys_use_case.dart';
 
 import '../../api/exception/network_exceptions.dart';
@@ -28,7 +28,7 @@ class HomeViewModel extends StateNotifier<HomeState> {
   final StreamController<int> _focusedItemIndexStream = StreamController();
 
   final FetchSurveysUseCase fetchSurveysUseCase;
-  final GetSurveysUseCase getSurveysUseCase;
+  final GetSurveysCachedUseCase getSurveysUseCase;
   final SaveSurveysUseCase saveSurveysUseCase;
 
   _LoadMoreDataSet _loadMoreDataSet = _LoadMoreDataSet();
@@ -39,15 +39,6 @@ class HomeViewModel extends StateNotifier<HomeState> {
     required this.getSurveysUseCase,
     required this.saveSurveysUseCase,
   }) : super(const HomeState.init());
-
-  Future<void> getSurveys() async {
-    _resetLoadMoreDataSet();
-    final result = await getSurveysUseCase.call(SurveysParams(
-      pageNumber: _loadMoreDataSet.page,
-      pageSize: _loadMoreDataSet.pageSize,
-    ));
-    _handleResult(result);
-  }
 
   Future<void> fetchSurveys({bool isRefresh = false}) async {
     if (isRefresh) {
@@ -60,16 +51,20 @@ class HomeViewModel extends StateNotifier<HomeState> {
       pageSize: _loadMoreDataSet.pageSize,
     ));
     _handleResult(result);
-    if (result is Success<SurveysModel>) {
-      await saveSurveysUseCase.call(SurveysModel(
-        surveys: _totalSurveys,
-        meta: result.value.meta,
-      ));
+    if (result is Success<SurveysModel> && isRefresh) {
+      await saveSurveysUseCase.call(result.value);
+    } else if (result is Failed<SurveysModel> && isRefresh) {
+      await _getSurveysCached();
     }
   }
 
   void changeFocusedItem({required int index}) {
     _focusedItemIndexStream.add(index);
+  }
+
+  Future<void> _getSurveysCached() async {
+    final result = await getSurveysUseCase.call();
+    _handleResult(result);
   }
 
   void _calculateLoadMoreDataSet(SurveyMetaModel meta) {

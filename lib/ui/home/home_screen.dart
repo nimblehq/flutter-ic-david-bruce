@@ -10,7 +10,7 @@ import 'package:survey_flutter_ic/ui/home/home_side_menu_ui_model.dart';
 import 'package:survey_flutter_ic/ui/home/home_state.dart';
 import 'package:survey_flutter_ic/ui/home/home_view_model.dart';
 import 'package:survey_flutter_ic/ui/home/loading/home_skeleton_loading.dart';
-import 'package:survey_flutter_ic/usecases/get_surveys_use_case.dart';
+import 'package:survey_flutter_ic/usecases/get_surveys_cached_use_case.dart';
 import 'package:survey_flutter_ic/usecases/save_surveys_use_case.dart';
 import 'package:survey_flutter_ic/utils/context_ext.dart';
 import 'package:survey_flutter_ic/utils/dimension.dart';
@@ -23,7 +23,7 @@ final homeViewModelProvider =
     StateNotifierProvider.autoDispose<HomeViewModel, HomeState>(
   (_) => HomeViewModel(
     fetchSurveysUseCase: getIt.get<FetchSurveysUseCase>(),
-    getSurveysUseCase: getIt.get<GetSurveysUseCase>(),
+    getSurveysUseCase: getIt.get<GetSurveysCachedUseCase>(),
     saveSurveysUseCase: getIt.get<SaveSurveysUseCase>(),
   ),
 );
@@ -164,7 +164,7 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    ref.read(homeViewModelProvider.notifier).getSurveys();
+    ref.read(homeViewModelProvider.notifier).fetchSurveys(isRefresh: true);
   }
 
   @override
