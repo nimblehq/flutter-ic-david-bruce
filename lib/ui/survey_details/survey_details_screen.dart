@@ -63,7 +63,7 @@ class SurveyDetailsScreenState extends ConsumerState<SurveyDetailsScreen> {
         fit: BoxFit.cover,
       );
 
-  Widget get _emptyBody => Container();
+  Widget get _emptyBody => const SizedBox.shrink();
 
   Widget get _body => Consumer(
         builder: (_, ref, __) {

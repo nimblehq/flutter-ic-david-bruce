@@ -71,9 +71,7 @@ class _TextFieldFormViewState extends State<TextFieldFormView> {
                 vertical: Dimensions.paddingSmallest),
             child: TextFormField(
               keyboardType: TextInputType.text,
-              decoration: _inputDecoration(
-                hintText: uiModel.title,
-              ),
+              decoration: _inputDecoration(hintText: uiModel.title),
               controller: controller,
             ),
           );

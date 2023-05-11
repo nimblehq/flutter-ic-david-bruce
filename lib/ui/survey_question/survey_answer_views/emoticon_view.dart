@@ -24,7 +24,7 @@ class _EmoticonViewState extends State<EmoticonView> {
     List<Widget> widgets = [];
     widget.type.icons.asMap().forEach((index, icon) {
       widgets.add(
-        GestureDetector(
+        InkWell(
           key: AnswerComponentId.answer('$index'),
           child: Container(
             margin: const EdgeInsets.all(Dimensions.paddingSmallest),

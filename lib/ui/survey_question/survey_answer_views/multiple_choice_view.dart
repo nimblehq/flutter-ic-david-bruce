@@ -55,55 +55,57 @@ class _MultipleChoiceViewState extends State<MultipleChoiceView> {
         child: Row(
           children: [
             Expanded(
-              child: Text(
-                style: uiModel.isSelected
-                    ? Theme.of(context)
-                        .textTheme
-                        .displaySmall
-                        ?.copyWith(color: Colors.white)
-                    : Theme.of(context)
-                        .textTheme
-                        .headlineSmall
-                        ?.copyWith(color: Colors.white70),
-                maxLines: 1,
-                uiModel.title,
-              ),
+              child: _titleText(uiModel),
             ),
-            Container(
-              width: Dimensions.multipleSelectionBoxHeight,
-              height: Dimensions.multipleSelectionBoxHeight,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                border: Border.all(width: 1, color: Colors.white),
-              ),
-              child: uiModel.isSelected
-                  ? Container(
-                      width: Dimensions.multipleSelectionBoxHeight,
-                      height: Dimensions.multipleSelectionBoxHeight,
-                      decoration: const BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Colors.white,
-                      ),
-                      child: const FittedBox(
-                        child: Icon(
-                          Icons.check,
-                          size: 25.0,
-                          color: Colors.black,
-                        ),
-                      ),
-                    )
-                  : Container(),
-            ),
+            _selectionBox(uiModel),
           ],
         ),
       );
+
+  Container _selectionBox(MultipleChoiceOptionUIModel uiModel) {
+    return Container(
+      width: Dimensions.multipleSelectionBoxHeight,
+      height: Dimensions.multipleSelectionBoxHeight,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        border: Border.all(width: 1, color: Colors.white),
+      ),
+      child: uiModel.isSelected
+          ? Container(
+              width: Dimensions.multipleSelectionBoxHeight,
+              height: Dimensions.multipleSelectionBoxHeight,
+              decoration: const BoxDecoration(
+                shape: BoxShape.circle,
+                color: Colors.white,
+              ),
+              child: const FittedBox(
+                child: Icon(
+                  Icons.check,
+                  size: 25.0,
+                  color: Colors.black,
+                ),
+              ),
+            )
+          : const SizedBox.shrink(),
+    );
+  }
+
+  Text _titleText(MultipleChoiceOptionUIModel uiModel) {
+    return Text(
+      style: uiModel.isSelected
+          ? context.textTheme.displaySmall?.copyWith(color: Colors.white)
+          : context.textTheme.headlineSmall?.copyWith(color: Colors.white70),
+      maxLines: 1,
+      uiModel.title,
+    );
+  }
 
   Widget _separatorBuilder({
     required int count,
     required int index,
   }) {
     if (index == count - 1) {
-      return Container();
+      return const SizedBox.shrink();
     }
     return _separator;
   }
