@@ -114,6 +114,7 @@ void main() {
       final submission = SurveySubmissionModel(surveyId: '123', questions: []);
 
       when(mockApiService.submitSurveyAnswer(submission.toJson()))
+          // ignore: avoid_returning_null_for_void
           .thenAnswer((_) async => null);
 
       await surveyRepository.submitSurveyAnswer(submission: submission);
