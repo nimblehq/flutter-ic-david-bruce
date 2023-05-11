@@ -10,6 +10,7 @@ import 'package:survey_flutter_ic/ui/home/home_side_menu_ui_model.dart';
 import 'package:survey_flutter_ic/ui/home/home_state.dart';
 import 'package:survey_flutter_ic/ui/home/home_view_model.dart';
 import 'package:survey_flutter_ic/ui/home/loading/home_skeleton_loading.dart';
+import 'package:survey_flutter_ic/utils/context_ext.dart';
 import 'package:survey_flutter_ic/utils/dimension.dart';
 
 import '../../di/di.dart';
@@ -125,7 +126,7 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
                     child: SingleChildScrollView(
                       physics: const AlwaysScrollableScrollPhysics(),
                       child: SizedBox(
-                        height: MediaQuery.of(context).size.height -
+                        height: context.screenSize.height -
                             MediaQuery.of(context).viewPadding.vertical,
                         child: Container(
                           padding:

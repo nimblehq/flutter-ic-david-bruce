@@ -2,7 +2,6 @@ import 'package:injectable/injectable.dart';
 import 'package:survey_flutter_ic/api/repository/survey_repository.dart';
 import 'package:survey_flutter_ic/model/surveys_model.dart';
 import 'package:survey_flutter_ic/usecases/params/surveys_params.dart';
-
 import 'base/base_use_case.dart';
 
 @Injectable()

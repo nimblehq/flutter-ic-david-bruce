@@ -1,8 +1,12 @@
 import 'package:equatable/equatable.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:survey_flutter_ic/model/enum/display_type.dart';
 import 'package:survey_flutter_ic/model/survey_question_model.dart';
 import 'package:survey_flutter_ic/ui/survey_details/survey_details_ui_model.dart';
 
+part 'survey_model.g.dart';
+
+@JsonSerializable()
 class SurveyModel extends Equatable {
   final String id;
   final String title;
@@ -47,6 +51,11 @@ class SurveyModel extends Equatable {
           surveyType: '',
           questions: const [],
         );
+
+  Map<String, dynamic> toJson() => _$SurveyModelToJson(this);
+
+  factory SurveyModel.fromJson(Map<String, dynamic> json) =>
+      _$SurveyModelFromJson(json);
 
   @override
   List<Object?> get props => [

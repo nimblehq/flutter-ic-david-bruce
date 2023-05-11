@@ -4,15 +4,15 @@ import 'package:survey_flutter_ic/model/survey_model.dart';
 import 'base/base_use_case.dart';
 
 @Injectable()
-class GetSurveyDetailsUseCase extends UseCase<SurveyModel, String> {
+class GetCurrentSurveyUseCase extends NoParamsUseCase<SurveyModel?> {
   final SurveyRepository _repository;
 
-  const GetSurveyDetailsUseCase(this._repository);
+  const GetCurrentSurveyUseCase(this._repository);
 
   @override
-  Future<Result<SurveyModel>> call(params) async {
+  Future<Result<SurveyModel?>> call() async {
     try {
-      final result = await _repository.getSurveyDetails(surveyId: params);
+      final result = await _repository.getCurrentSurvey();
       return Success(result);
     } catch (exception) {
       return Failed(UseCaseException(exception));

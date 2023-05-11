@@ -6,20 +6,24 @@ import 'package:survey_flutter_ic/ui/survey_details/survey_details_screen.dart';
 import 'package:survey_flutter_ic/ui/survey_details/survey_details_state.dart';
 import 'package:survey_flutter_ic/ui/survey_details/survey_details_view_model.dart';
 import 'package:survey_flutter_ic/usecases/base/base_use_case.dart';
-
 import '../mocks/generate_mocks.mocks.dart';
 
 void main() {
   group('Survey details view model test', () {
     late MockGetSurveyDetailsUseCase mockGetSurveyDetailsUseCase;
+    late MockSaveCurrentSurveyUseCase mockSaveCurrentSurveyUseCase;
     late ProviderContainer container;
 
     setUp(() {
       mockGetSurveyDetailsUseCase = MockGetSurveyDetailsUseCase();
+      mockSaveCurrentSurveyUseCase = MockSaveCurrentSurveyUseCase();
       container = ProviderContainer(
         overrides: [
-          surveyDetailsViewModelProvider.overrideWith(
-              (ref) => SurveyDetailsViewModel(mockGetSurveyDetailsUseCase)),
+          surveyDetailsViewModelProvider
+              .overrideWith((ref) => SurveyDetailsViewModel(
+                    mockGetSurveyDetailsUseCase,
+                    mockSaveCurrentSurveyUseCase,
+                  )),
         ],
       );
       addTearDown(container.dispose);
