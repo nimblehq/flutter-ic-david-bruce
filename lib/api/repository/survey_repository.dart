@@ -5,7 +5,6 @@ import 'package:survey_flutter_ic/api/service/api_service.dart';
 import 'package:survey_flutter_ic/api/storage/storage.dart';
 import 'package:survey_flutter_ic/model/survey_model.dart';
 import 'package:survey_flutter_ic/model/surveys_model.dart';
-import 'package:survey_flutter_ic/usecases/base/base_use_case.dart';
 
 import '../exception/network_exceptions.dart';
 
