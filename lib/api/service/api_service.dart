@@ -20,4 +20,9 @@ abstract class ApiService {
   Future<SurveyResponse> getSurveyDetails(
     @Path('survey_id') String surveyId,
   );
+
+  @POST('/responses')
+  Future<void> submitSurveyAnswer(
+    @Body() Map<String, dynamic> body,
+  );
 }
