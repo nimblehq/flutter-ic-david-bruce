@@ -50,7 +50,7 @@ class SurveyQuestionsScreenState extends ConsumerState<SurveyQuestionsScreen> {
         final state = ref.watch(surveyQuestionsViewModelProvider);
         return state.maybeWhen(
           orElse: () {
-            return Container();
+            return const SizedBox.shrink();
           },
           submitting: _buildQuestionView,
           submitted: _buildQuestionView,

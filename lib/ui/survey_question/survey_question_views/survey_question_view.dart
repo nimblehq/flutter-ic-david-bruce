@@ -40,7 +40,7 @@ class SurveyQuestionView extends StatelessWidget {
       );
 
   Widget _mainBody(BuildContext context) => Container(
-        width: MediaQuery.of(context).size.width,
+        width: context.screenSize.width,
         padding: const EdgeInsets.all(20),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -62,15 +62,15 @@ class SurveyQuestionView extends StatelessWidget {
         return state.maybeWhen(
           orElse: () => const SizedBox.shrink(),
           success: (uiModel) => Text(
-            '${uiModel.question.questionIndex}/${uiModel.question.totalQuestions}',
-            style: Theme.of(context).textTheme.bodyMedium,
+            uiModel.question.currentIndexPerTotal,
+            style: context.textTheme.bodyMedium,
           ),
         );
       });
 
   Widget _questionTitle(BuildContext context) => Text(
         uiModel.title,
-        style: Theme.of(context).textTheme.displayMedium,
+        style: context.textTheme.displayMedium,
       );
 
   Widget _floatingActionButton(BuildContext context) {

@@ -72,7 +72,7 @@ class _SingleChoiceViewState extends State<SingleChoiceView> {
       return _separator;
     }
     if (index == count - 1) {
-      return Container();
+      return const SizedBox.shrink();
     }
     if (index == selectedIndex - 1 || index == selectedIndex) {
       return _highlightSeparator;

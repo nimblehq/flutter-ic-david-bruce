@@ -11,7 +11,7 @@ extension SurveyQuestionsScreenStateExtension on SurveyQuestionsScreenState {
       case DisplayType.dropdown:
         return _buildSingleChoice(uiModel.options);
       default:
-        return Container();
+        return const SizedBox.shrink();
     }
   }
 

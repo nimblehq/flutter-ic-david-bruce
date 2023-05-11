@@ -5,6 +5,8 @@ class SurveyQuestionUIModel extends Equatable {
   final int totalQuestions;
   final String title;
 
+  String get currentIndexPerTotal => '$questionIndex/$totalQuestions';
+
   const SurveyQuestionUIModel({
     required this.questionIndex,
     required this.totalQuestions,

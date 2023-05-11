@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:survey_flutter_ic/utils/context_ext.dart';
 import 'package:survey_flutter_ic/utils/dimension.dart';
 import 'package:survey_flutter_ic/utils/loading_text.dart';
 
@@ -60,13 +61,13 @@ class HomeLoading extends StatelessWidget {
           children: [
             const LoadingText(width: 40.0),
             const SizedBox(height: Dimensions.paddingNormal),
-            LoadingText(width: MediaQuery.of(context).size.width - 102.0),
+            LoadingText(width: context.screenSize.width - 102.0),
             const SizedBox(height: Dimensions.paddingTiny),
-            LoadingText(width: MediaQuery.of(context).size.width - 240.0),
+            LoadingText(width: context.screenSize.width - 240.0),
             const SizedBox(height: Dimensions.paddingNormal),
-            LoadingText(width: MediaQuery.of(context).size.width - 36.0),
+            LoadingText(width: context.screenSize.width - 36.0),
             const SizedBox(height: Dimensions.paddingTiny),
-            LoadingText(width: MediaQuery.of(context).size.width - 140.0),
+            LoadingText(width: context.screenSize.width - 140.0),
             const SizedBox(height: Dimensions.paddingNormal)
           ],
         ),
