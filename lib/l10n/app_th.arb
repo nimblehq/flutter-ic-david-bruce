@@ -1,4 +1,6 @@
 {
+  "appName": "สำรวจ",
+  "cancel" : "ยกเลิก",
   "forgotPasswordInstruction": "ป้อนอีเมลเพื่อรับคำแนะนำในการรีเซ็ตรหัสผ่าน",
   "forgotPasswordResetButton": "รีเซ็ต",
   "hello": "สวัสดี",
@@ -10,8 +12,10 @@
   "messageEmailInvalid": "อีเมลไม่ถูกต้อง กรุณาตรวจสอบอีกครั้ง",
   "messagePasswordInvalid": "รหัสผ่านต้องไม่ว่างเปล่า โปรดตรวจสอบอีกครั้ง",
   "pleaseTryAgain": "กรุณาลองอีกครั้ง",
+  "surveyDetailsExitConfirm": "คุณแน่ใจหรือไม่ว่าต้องการออกจากแบบสำรวจ",
   "surveyDetailsStartSurvey": "เริ่มการสำรวจ",
   "surveyDetailsSubmit": "ส่ง",
   "surveyThanks": "ขอขอบคุณที่ทำแบบสำรวจ",
-  "today": "วันนี้"
+  "today": "วันนี้",
+  "yes": "ใช่"
 }
