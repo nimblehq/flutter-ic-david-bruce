@@ -8,20 +8,23 @@ import '../mocks/generate_mocks.mocks.dart';
 
 void main() {
   group('SaveCurrentSurveyUseCase', () {
-    late MockStorage storage;
+    late MockSurveyRepository mockSurveyRepository;
     late SaveCurrentSurveyUseCase useCase;
 
     setUp(() {
-      storage = MockStorage();
+      mockSurveyRepository = MockSurveyRepository();
       useCase = SaveCurrentSurveyUseCase(
-        storage,
+        mockSurveyRepository,
       );
     });
 
     test('When save current survey, it returns success result', () async {
+      const survey = SurveyModel.empty();
+      when(mockSurveyRepository.saveCurrentSurvey(survey: survey))
+          .thenAnswer((_) async => true);
       final result = await useCase.call(const SurveyModel.empty());
       expect(result, isA<Success>());
-      verify(storage.saveCurrentSurveyJson(captureAny)).called(1);
+      verify(mockSurveyRepository.saveCurrentSurvey(survey: survey)).called(1);
     });
   });
 }

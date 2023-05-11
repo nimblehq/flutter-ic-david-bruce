@@ -7,6 +7,7 @@ import 'package:survey_flutter_ic/ui/survey_question/survey_questions_screen.dar
 import 'package:survey_flutter_ic/ui/survey_question/ui_models/survey_question_ui_model.dart';
 import 'package:survey_flutter_ic/utils/context_ext.dart';
 import 'package:survey_flutter_ic/utils/custom_app_bar.dart';
+import 'package:survey_flutter_ic/utils/dimension.dart';
 import 'package:survey_flutter_ic/utils/route_path.dart';
 
 class SurveyQuestionView extends StatelessWidget {
@@ -41,15 +42,13 @@ class SurveyQuestionView extends StatelessWidget {
 
   Widget _mainBody(BuildContext context) => Container(
         width: context.screenSize.width,
-        padding: const EdgeInsets.all(20),
+        padding: const EdgeInsets.all(Dimensions.paddingMedium),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _questionNumber(context),
-            const SizedBox(
-              height: 16,
-            ),
+            const SizedBox(height: 16.0),
             _questionTitle(context),
             Expanded(child: child),
           ],
@@ -60,11 +59,11 @@ class SurveyQuestionView extends StatelessWidget {
       Consumer(builder: (_, ref, __) {
         final state = ref.watch(surveyQuestionsViewModelProvider);
         return state.maybeWhen(
-          orElse: () => const SizedBox.shrink(),
           success: (uiModel) => Text(
             uiModel.question.currentIndexPerTotal,
             style: context.textTheme.bodyMedium,
           ),
+          orElse: () => const SizedBox.shrink(),
         );
       });
 
@@ -81,7 +80,7 @@ class SurveyQuestionView extends StatelessWidget {
 
   Widget get _nextButton => Padding(
         key: SurveyQuestionComponentId.nextButton,
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(Dimensions.paddingSmallest),
         child: FloatingActionButton(
           foregroundColor: Colors.black,
           backgroundColor: Colors.white,
@@ -92,9 +91,12 @@ class SurveyQuestionView extends StatelessWidget {
 
   Widget _submitButton(BuildContext context) => Padding(
         key: SurveyQuestionComponentId.submitButton,
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(Dimensions.paddingSmallest),
         child: ElevatedButton(
-          style: ElevatedButton.styleFrom(minimumSize: const Size(140, 56)),
+          style: ElevatedButton.styleFrom(
+            minimumSize:
+                const Size(Dimensions.buttonWidth, Dimensions.buttonHeight),
+          ),
           onPressed: onSubmit,
           child: Text(context.localization.surveyDetailsSubmit),
         ),

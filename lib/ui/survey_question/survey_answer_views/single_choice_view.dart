@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:survey_flutter_ic/ui/survey_question/ui_models/single_choice_option_ui_model.dart';
 import 'package:survey_flutter_ic/utils/context_ext.dart';
+import 'package:survey_flutter_ic/utils/dimension.dart';
 
 class SingleChoiceView extends StatefulWidget {
   final List<SingleChoiceOptionUIModel> uiModels;
@@ -100,7 +101,7 @@ class _SingleChoiceViewState extends State<SingleChoiceView> {
   Widget build(BuildContext context) {
     return Center(
       child: Container(
-        padding: const EdgeInsets.all(20),
+        padding: const EdgeInsets.all(Dimensions.paddingMedium),
         child: _listView,
       ),
     );

@@ -8,31 +8,34 @@ import '../mocks/generate_mocks.mocks.dart';
 
 void main() {
   group('GetCurrentSurveyUseCase', () {
-    late MockStorage storage;
+    late MockSurveyRepository mockSurveyRepository;
     late GetCurrentSurveyUseCase useCase;
 
     setUp(() {
-      storage = MockStorage();
+      mockSurveyRepository = MockSurveyRepository();
       useCase = GetCurrentSurveyUseCase(
-        storage,
+        mockSurveyRepository,
       );
     });
 
-    test('When get current survey, it returns success result', () async {
-      when(storage.currentSurveyJson).thenAnswer(
-        (_) async => jsonEncode(const SurveyModel.empty().toJson()),
-      );
-      final result = await useCase.call();
-      expect(result, isA<Success>());
-    });
-
-    test('When get current survey as null, it returns success result',
+    test('should return Success with SurveyModel when repository call succeeds',
         () async {
-      when(storage.currentSurveyJson).thenAnswer(
-        (_) async => null,
-      );
+      when(mockSurveyRepository.getCurrentSurvey())
+          .thenAnswer((_) async => const SurveyModel.empty());
+
       final result = await useCase.call();
-      expect(result, isA<Success>());
+
+      expect(result, isA<Success<SurveyModel?>>());
+    });
+
+    test('should return Success with Null when repository call succeeds',
+        () async {
+      when(mockSurveyRepository.getCurrentSurvey())
+          .thenAnswer((_) async => null);
+
+      final result = await useCase.call();
+
+      expect(result, isA<Success<SurveyModel?>>());
     });
   });
 }

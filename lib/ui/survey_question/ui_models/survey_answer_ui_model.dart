@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:survey_flutter_ic/model/enum/display_type.dart';
+import 'package:survey_flutter_ic/ui/survey_question/ui_models/survey_answer_option_ui_model.dart';
 
 class SurveyAnswerUIModel extends Equatable {
   final DisplayType displayType;
@@ -20,24 +21,5 @@ class SurveyAnswerUIModel extends Equatable {
   List<Object?> get props => [
         displayType,
         options,
-      ];
-}
-
-class SurveyAnswerOptionUIModel extends Equatable {
-  final int index;
-  final String id;
-  final String title;
-
-  const SurveyAnswerOptionUIModel({
-    required this.index,
-    required this.id,
-    required this.title,
-  });
-
-  @override
-  List<Object?> get props => [
-        index,
-        id,
-        title,
       ];
 }

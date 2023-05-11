@@ -3,6 +3,7 @@ import 'package:survey_flutter_ic/model/enum/display_type.dart';
 import 'package:survey_flutter_ic/ui/survey_question/survey_answer_views/single_choice_view.dart';
 import 'package:survey_flutter_ic/ui/survey_question/survey_questions_screen.dart';
 import 'package:survey_flutter_ic/ui/survey_question/ui_models/single_choice_option_ui_model.dart';
+import 'package:survey_flutter_ic/ui/survey_question/ui_models/survey_answer_option_ui_model.dart';
 import 'package:survey_flutter_ic/ui/survey_question/ui_models/survey_answer_ui_model.dart';
 
 extension SurveyQuestionsScreenStateExtension on SurveyQuestionsScreenState {
