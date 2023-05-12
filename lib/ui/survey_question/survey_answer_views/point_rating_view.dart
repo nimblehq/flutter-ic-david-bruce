@@ -67,6 +67,7 @@ class _PointRatingViewState extends State<PointRatingView> {
 
   @override
   Widget build(BuildContext context) {
+    bool _isLikely = selectedPoint != null && selectedPoint! > maxLength / 2;
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -92,16 +93,15 @@ class _PointRatingViewState extends State<PointRatingView> {
             children: [
               Text(
                 context.localization.notAtAllLikely,
-                style:
-                    (selectedPoint != null && selectedPoint! <= maxLength / 2)
-                        ? context.textTheme.displaySmall
-                            ?.copyWith(color: Colors.white)
-                        : context.textTheme.displaySmall
-                            ?.copyWith(color: Colors.white54),
+                style: !_isLikely
+                    ? context.textTheme.displaySmall
+                        ?.copyWith(color: Colors.white)
+                    : context.textTheme.displaySmall
+                        ?.copyWith(color: Colors.white54),
               ),
               Text(
                 context.localization.extremelyLikely,
-                style: (selectedPoint != null && selectedPoint! > maxLength / 2)
+                style: _isLikely
                     ? context.textTheme.displaySmall
                         ?.copyWith(color: Colors.white)
                     : context.textTheme.displaySmall
