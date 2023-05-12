@@ -7,21 +7,11 @@ part 'survey_questions_state.freezed.dart';
 class SurveyQuestionsState with _$SurveyQuestionsState {
   const factory SurveyQuestionsState.init() = _Init;
 
-  const factory SurveyQuestionsState.submitting({
-    required SurveyQuestionsUIModel uiModel,
-    required String coverImageUrl,
-  }) = _Submitting;
+  const factory SurveyQuestionsState.submitting() = _Submitting;
 
-  const factory SurveyQuestionsState.submitted({
-    required SurveyQuestionsUIModel uiModel,
-    required String coverImageUrl,
-  }) = _Submitted;
+  const factory SurveyQuestionsState.submitted() = _Submitted;
 
-  const factory SurveyQuestionsState.error({
-    required SurveyQuestionsUIModel uiModel,
-    required String coverImageUrl,
-    required String? error,
-  }) = _Error;
+  const factory SurveyQuestionsState.error({required String? error}) = _Error;
 
   const factory SurveyQuestionsState.success({
     required SurveyQuestionsUIModel uiModel,

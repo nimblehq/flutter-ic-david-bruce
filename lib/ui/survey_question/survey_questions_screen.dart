@@ -10,6 +10,7 @@ import 'package:survey_flutter_ic/ui/survey_question/ui_models/survey_questions_
 import 'package:survey_flutter_ic/usecases/get_current_survey_use_case.dart';
 import 'package:survey_flutter_ic/usecases/get_survey_submission_use_case.dart';
 import 'package:survey_flutter_ic/usecases/save_survey_submission_use_case.dart';
+import 'package:survey_flutter_ic/usecases/submit_survey_answer_use_case.dart';
 import 'package:survey_flutter_ic/utils/context_ext.dart';
 import 'package:survey_flutter_ic/utils/route_path.dart';
 
@@ -19,6 +20,7 @@ final surveyQuestionsViewModelProvider = StateNotifierProvider.autoDispose<
     getIt.get<GetCurrentSurveyUseCase>(),
     getIt.get<GetSurveySubmissionUseCase>(),
     getIt.get<SaveSurveySubmissionUseCase>(),
+    getIt.get<SubmitSurveyAnswerUseCase>(),
   ),
 );
 
@@ -53,13 +55,7 @@ class SurveyQuestionsScreenState extends ConsumerState<SurveyQuestionsScreen> {
       builder: (_, ref, __) {
         final state = ref.watch(surveyQuestionsViewModelProvider);
         return state.maybeWhen(
-          submitting: (uiModel, coverImageUrl) =>
-              _buildQuestionView(uiModel, coverImageUrl),
-          submitted: (uiModel, coverImageUrl) =>
-              _buildQuestionView(uiModel, coverImageUrl),
           success: (uiModel, coverImageUrl) =>
-              _buildQuestionView(uiModel, coverImageUrl),
-          error: (uiModel, coverImageUrl, _) =>
               _buildQuestionView(uiModel, coverImageUrl),
           orElse: () {
             return const SizedBox.shrink();
@@ -93,16 +89,14 @@ class SurveyQuestionsScreenState extends ConsumerState<SurveyQuestionsScreen> {
     ref.listen<SurveyQuestionsState>(surveyQuestionsViewModelProvider,
         (_, state) {
       state.maybeWhen(
-        submitting: (_, __) {
-          context.displayLoadingDialog(showOrHide: true);
-        },
-        submitted: (_, __) {
+        submitting: () => context.displayLoadingDialog(showOrHide: true),
+        submitted: () {
           context.displayLoadingDialog(showOrHide: false);
           context.showLottie(
             onAnimated: () => context.pushReplacementNamed(RoutePath.home.name),
           );
         },
-        error: (_, __, error) {
+        error: (error) {
           context.displayLoadingDialog(showOrHide: false);
           context.showMessageSnackBar(
             message: '${context.localization.pleaseTryAgain} $error.',
@@ -133,5 +127,6 @@ class SurveyQuestionsScreenState extends ConsumerState<SurveyQuestionsScreen> {
 
   void _submit() {
     ref.read(surveyQuestionsViewModelProvider.notifier).saveAnswer();
+    ref.read(surveyQuestionsViewModelProvider.notifier).submitAnswers();
   }
 }
