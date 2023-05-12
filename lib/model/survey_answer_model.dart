@@ -8,11 +8,13 @@ class SurveyAnswerModel extends Equatable {
   final String id;
   final String text;
   final int displayOrder;
+  final String questionShortText;
 
   const SurveyAnswerModel({
     required this.id,
     required this.text,
     required this.displayOrder,
+    required this.questionShortText,
   });
 
   Map<String, dynamic> toJson() => _$SurveyAnswerModelToJson(this);
@@ -25,5 +27,6 @@ class SurveyAnswerModel extends Equatable {
         id,
         text,
         displayOrder,
+        questionShortText,
       ];
 }

@@ -16,6 +16,7 @@ class SurveyQuestionResponse {
   final String? coverImageUrl;
   final DisplayType? displayType;
   final List<SurveyAnswerResponse>? answers;
+  final String? shortText;
 
   SurveyQuestionResponse({
     required this.id,
@@ -25,6 +26,7 @@ class SurveyQuestionResponse {
     required this.coverImageUrl,
     required this.displayType,
     required this.answers,
+    required this.shortText,
   });
 
   factory SurveyQuestionResponse.fromJson(Map<String, dynamic> json) =>
@@ -38,7 +40,7 @@ class SurveyQuestionResponse {
         coverImageUrl: coverImageUrl ?? '',
         displayType: displayType ?? DisplayType.intro,
         answers: (answers ?? [])
-            .map((answer) => answer.toSurveyAnswerModel())
+            .map((answer) => answer.toSurveyAnswerModel(shortText ?? ''))
             .toList(),
       );
 }

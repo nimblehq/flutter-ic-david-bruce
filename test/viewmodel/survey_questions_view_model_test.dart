@@ -67,55 +67,80 @@ void main() {
     });
 
     test('should bind data when survey has questions and intro', () {
-      when(mockGetCurrentSurveyUseCase.call()).thenAnswer((_) async =>
-          Success(const SurveyModel(
-            id: '123',
-            title: 'title',
-            description: 'description',
-            thankEmailAboveThreshold: 'thankEmailAboveThreshold',
-            thankEmailBelowThreshold: 'thankEmailBelowThreshold',
-            isActive: true,
-            coverImageUrl: 'coverImageUrl',
-            createdAt: 'createdAt',
-            activeAt: 'activeAt',
-            inactiveAt: 'inactiveAt',
-            surveyType: 'surveyType',
-            questions: [
-              SurveyQuestionModel(
-                id: 'id0',
-                text: 'text0',
-                displayOrder: 0,
-                imageUrl: 'imageUrl0',
-                coverImageUrl: 'coverImageUrl0',
-                displayType: DisplayType.intro,
-                answers: [],
-              ),
-              SurveyQuestionModel(
-                id: 'id1',
-                text: 'text1',
-                displayOrder: 1,
-                imageUrl: 'imageUrl1',
-                coverImageUrl: 'coverImageUrl1',
-                displayType: DisplayType.star,
-                answers: [
-                  SurveyAnswerModel(id: 'id-star0', text: '0', displayOrder: 0),
-                  SurveyAnswerModel(id: 'id-star1', text: '1', displayOrder: 1),
-                  SurveyAnswerModel(id: 'id-star2', text: '2', displayOrder: 2),
-                  SurveyAnswerModel(id: 'id-star3', text: '3', displayOrder: 3),
-                  SurveyAnswerModel(id: 'id-star4', text: '4', displayOrder: 4),
+      when(mockGetCurrentSurveyUseCase.call())
+          .thenAnswer((_) async => Success(const SurveyModel(
+                id: '123',
+                title: 'title',
+                description: 'description',
+                thankEmailAboveThreshold: 'thankEmailAboveThreshold',
+                thankEmailBelowThreshold: 'thankEmailBelowThreshold',
+                isActive: true,
+                coverImageUrl: 'coverImageUrl',
+                createdAt: 'createdAt',
+                activeAt: 'activeAt',
+                inactiveAt: 'inactiveAt',
+                surveyType: 'surveyType',
+                questions: [
+                  SurveyQuestionModel(
+                    id: 'id0',
+                    text: 'text0',
+                    displayOrder: 0,
+                    imageUrl: 'imageUrl0',
+                    coverImageUrl: 'coverImageUrl0',
+                    displayType: DisplayType.intro,
+                    answers: [],
+                  ),
+                  SurveyQuestionModel(
+                    id: 'id1',
+                    text: 'text1',
+                    displayOrder: 1,
+                    imageUrl: 'imageUrl1',
+                    coverImageUrl: 'coverImageUrl1',
+                    displayType: DisplayType.star,
+                    answers: [
+                      SurveyAnswerModel(
+                        id: 'id-star0',
+                        text: '0',
+                        displayOrder: 0,
+                        questionShortText: '',
+                      ),
+                      SurveyAnswerModel(
+                        id: 'id-star1',
+                        text: '1',
+                        displayOrder: 1,
+                        questionShortText: '',
+                      ),
+                      SurveyAnswerModel(
+                        id: 'id-star2',
+                        text: '2',
+                        displayOrder: 2,
+                        questionShortText: '',
+                      ),
+                      SurveyAnswerModel(
+                        id: 'id-star3',
+                        text: '3',
+                        displayOrder: 3,
+                        questionShortText: '',
+                      ),
+                      SurveyAnswerModel(
+                        id: 'id-star4',
+                        text: '4',
+                        displayOrder: 4,
+                        questionShortText: '',
+                      ),
+                    ],
+                  ),
+                  SurveyQuestionModel(
+                    id: 'id2',
+                    text: 'text2',
+                    displayOrder: 2,
+                    imageUrl: 'imageUrl2',
+                    coverImageUrl: 'coverImageUrl2',
+                    displayType: DisplayType.outro,
+                    answers: [],
+                  ),
                 ],
-              ),
-              SurveyQuestionModel(
-                id: 'id2',
-                text: 'text2',
-                displayOrder: 2,
-                imageUrl: 'imageUrl2',
-                coverImageUrl: 'coverImageUrl2',
-                displayType: DisplayType.outro,
-                answers: [],
-              ),
-            ],
-          )));
+              )));
       final stateStream =
           container.read(surveyQuestionsViewModelProvider.notifier).stream;
       expect(
@@ -133,15 +158,15 @@ void main() {
                   displayType: DisplayType.star,
                   options: [
                     SurveyAnswerOptionUIModel(
-                        index: 0, id: 'id-star0', title: '0'),
+                        index: 0, id: 'id-star0', title: '0', shortText: ''),
                     SurveyAnswerOptionUIModel(
-                        index: 1, id: 'id-star1', title: '1'),
+                        index: 1, id: 'id-star1', title: '1', shortText: ''),
                     SurveyAnswerOptionUIModel(
-                        index: 2, id: 'id-star2', title: '2'),
+                        index: 2, id: 'id-star2', title: '2', shortText: ''),
                     SurveyAnswerOptionUIModel(
-                        index: 3, id: 'id-star3', title: '3'),
+                        index: 3, id: 'id-star3', title: '3', shortText: ''),
                     SurveyAnswerOptionUIModel(
-                        index: 4, id: 'id-star4', title: '4'),
+                        index: 4, id: 'id-star4', title: '4', shortText: ''),
                   ],
                 ),
               ),

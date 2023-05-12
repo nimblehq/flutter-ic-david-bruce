@@ -5,6 +5,7 @@ import 'package:survey_flutter_ic/ui/survey_question/survey_answer_views/emotico
 import 'package:survey_flutter_ic/ui/survey_question/survey_answer_views/multiple_choice_view.dart';
 import 'package:survey_flutter_ic/ui/survey_question/survey_answer_views/point_rating_view.dart';
 import 'package:survey_flutter_ic/ui/survey_question/survey_answer_views/single_choice_view.dart';
+import 'package:survey_flutter_ic/ui/survey_question/survey_answer_views/text_area_form_view.dart';
 import 'package:survey_flutter_ic/ui/survey_question/survey_answer_views/text_field_form_view.dart';
 import 'package:survey_flutter_ic/ui/survey_question/survey_questions_screen.dart';
 import 'package:survey_flutter_ic/ui/survey_question/ui_models/multiple_choice_option_ui_model.dart';
@@ -38,6 +39,8 @@ extension SurveyQuestionsScreenStateExtension on SurveyQuestionsScreenState {
         return _buildTextFieldForm(uiModel.options);
       case DisplayType.nps:
         return _buildPointRatingView();
+      case DisplayType.textarea:
+        return _buildTextAreaForm(uiModel.options.first);
       default:
         return const SizedBox.shrink();
     }
@@ -97,6 +100,13 @@ extension SurveyQuestionsScreenStateExtension on SurveyQuestionsScreenState {
   Widget _buildPointRatingView() {
     return PointRatingView(
       onSelect: (index) => {},
+    );
+  }
+
+  Widget _buildTextAreaForm(SurveyAnswerOptionUIModel option) {
+    return TextAreaFormView(
+      uiModel: option,
+      onChange: (_) => {},
     );
   }
 

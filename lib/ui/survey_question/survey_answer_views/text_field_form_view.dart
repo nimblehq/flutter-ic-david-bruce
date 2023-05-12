@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:survey_flutter_ic/ui/survey_question/ui_models/survey_answer_option_ui_model.dart';
 import 'package:survey_flutter_ic/utils/dimension.dart';
 
+import 'input_decoration.dart';
+
 class TextFieldFormView extends StatefulWidget {
   final List<SurveyAnswerOptionUIModel> uiModels;
   final Function(Map<String, String>) onChange;
@@ -60,40 +62,25 @@ class _TextFieldFormViewState extends State<TextFieldFormView> {
 
   Widget _buildForm() {
     int index = 0;
-    return ListView(
-      children: widget.uiModels.map(
-        (uiModel) {
-          final controller = _controllers[index];
-          index++;
-          answers[uiModel.id] = '';
-          return Container(
-            padding: const EdgeInsets.symmetric(
-                vertical: Dimensions.paddingSmallest),
-            child: TextFormField(
-              keyboardType: TextInputType.text,
-              decoration: _inputDecoration(hintText: uiModel.title),
-              controller: controller,
-            ),
-          );
-        },
-      ).toList(),
-    );
-  }
-
-  InputDecoration _inputDecoration({
-    required String hintText,
-  }) {
-    return InputDecoration(
-      labelText: hintText,
-      border: OutlineInputBorder(
-        borderSide: BorderSide.none,
-        borderRadius: BorderRadius.circular(12.0),
-      ),
-      fillColor: Colors.white24,
-      filled: true,
-      contentPadding: const EdgeInsets.symmetric(
-        vertical: Dimensions.paddingSemi,
-        horizontal: Dimensions.paddingSmall,
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 80.0),
+      child: ListView(
+        children: widget.uiModels.map(
+          (uiModel) {
+            final controller = _controllers[index];
+            index++;
+            answers[uiModel.id] = '';
+            return Container(
+              padding: const EdgeInsets.symmetric(
+                  vertical: Dimensions.paddingSmallest),
+              child: TextFormField(
+                keyboardType: TextInputType.text,
+                decoration: inputDecoration(hintText: uiModel.title),
+                controller: controller,
+              ),
+            );
+          },
+        ).toList(),
       ),
     );
   }

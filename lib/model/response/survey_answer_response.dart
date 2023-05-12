@@ -20,9 +20,10 @@ class SurveyAnswerResponse {
   factory SurveyAnswerResponse.fromJson(Map<String, dynamic> json) =>
       _$SurveyAnswerResponseFromJson(mapDataJson(json));
 
-  SurveyAnswerModel toSurveyAnswerModel() => SurveyAnswerModel(
+  SurveyAnswerModel toSurveyAnswerModel(String shortText) => SurveyAnswerModel(
         id: id,
         text: text ?? '',
         displayOrder: displayOrder ?? 0,
+        questionShortText: shortText,
       );
 }
