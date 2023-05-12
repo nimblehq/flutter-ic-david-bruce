@@ -3,20 +3,26 @@ import 'dart:convert';
 import 'package:injectable/injectable.dart';
 import 'package:survey_flutter_ic/api/service/api_service.dart';
 import 'package:survey_flutter_ic/api/storage/storage.dart';
-import 'package:survey_flutter_ic/model/survey_model.dart';
 import 'package:survey_flutter_ic/model/survey_submission_model.dart';
 import 'package:survey_flutter_ic/model/surveys_model.dart';
 
+import '../../model/survey_model.dart';
 import '../exception/network_exceptions.dart';
 
 abstract class SurveyRepository {
-  Future<SurveysModel> getSurveys({
+  Future<SurveysModel> getSurveysCached();
+
+  Future<SurveysModel> fetchSurveys({
     required int pageNumber,
     required int pageSize,
   });
 
   Future<SurveyModel> getSurveyDetails({
     required String surveyId,
+  });
+
+  Future<void> saveSurveys({
+    required SurveysModel surveys,
   });
 
   Future<SurveyModel?> getCurrentSurvey();
@@ -36,7 +42,16 @@ class SurveyRepositoryImpl extends SurveyRepository {
   SurveyRepositoryImpl(this._apiService, this._storage);
 
   @override
-  Future<SurveysModel> getSurveys({
+  Future<SurveysModel> getSurveysCached() async {
+    final cachedResult = await _storage.surveys;
+    if (cachedResult == null) {
+      throw NetworkExceptions.fromDioException(Exception());
+    }
+    return SurveysModel.deserialize(cachedResult);
+  }
+
+  @override
+  Future<SurveysModel> fetchSurveys({
     required int pageNumber,
     required int pageSize,
   }) async {
@@ -56,6 +71,11 @@ class SurveyRepositoryImpl extends SurveyRepository {
     } catch (exception) {
       throw NetworkExceptions.fromDioException(exception);
     }
+  }
+
+  @override
+  Future<void> saveSurveys({required SurveysModel surveys}) async {
+    await _storage.saveSurveys(surveys);
   }
 
   @override

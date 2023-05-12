@@ -10,17 +10,21 @@ import 'package:survey_flutter_ic/ui/home/home_side_menu_ui_model.dart';
 import 'package:survey_flutter_ic/ui/home/home_state.dart';
 import 'package:survey_flutter_ic/ui/home/home_view_model.dart';
 import 'package:survey_flutter_ic/ui/home/loading/home_skeleton_loading.dart';
+import 'package:survey_flutter_ic/usecases/get_surveys_cached_use_case.dart';
+import 'package:survey_flutter_ic/usecases/save_surveys_use_case.dart';
 import 'package:survey_flutter_ic/utils/context_ext.dart';
 import 'package:survey_flutter_ic/utils/dimension.dart';
 
 import '../../di/di.dart';
 import '../../gen/assets.gen.dart';
-import '../../usecases/get_surveys_use_case.dart';
+import '../../usecases/fetch_surveys_use_case.dart';
 
 final homeViewModelProvider =
     StateNotifierProvider.autoDispose<HomeViewModel, HomeState>(
   (_) => HomeViewModel(
-    getSurveysUseCase: getIt.get<GetSurveysUseCase>(),
+    fetchSurveysUseCase: getIt.get<FetchSurveysUseCase>(),
+    getSurveysUseCase: getIt.get<GetSurveysCachedUseCase>(),
+    saveSurveysUseCase: getIt.get<SaveSurveysUseCase>(),
   ),
 );
 
@@ -122,7 +126,7 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
                     backgroundColor: Colors.white,
                     onRefresh: () => ref
                         .read(homeViewModelProvider.notifier)
-                        .getSurveys(isRefresh: true),
+                        .fetchSurveys(isRefresh: true),
                     child: SingleChildScrollView(
                       physics: const AlwaysScrollableScrollPhysics(),
                       child: SizedBox(
@@ -160,7 +164,7 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    ref.read(homeViewModelProvider.notifier).getSurveys(isRefresh: true);
+    ref.read(homeViewModelProvider.notifier).fetchSurveys(isRefresh: true);
   }
 
   @override
@@ -187,8 +191,16 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
           .read(homeViewModelProvider.notifier)
           .changeFocusedItem(index: _currentPageIndex.value);
       if (_currentPageIndex.value == surveys.length - 2) {
-        ref.read(homeViewModelProvider.notifier).getSurveys(isRefresh: false);
+        ref.read(homeViewModelProvider.notifier).fetchSurveys(isRefresh: false);
       }
+    });
+    ref.listen<HomeState>(homeViewModelProvider, (_, state) {
+      state.maybeWhen(
+        error: (errorMessage) => context.showMessageSnackBar(
+          message: errorMessage,
+        ),
+        orElse: () {},
+      );
     });
   }
 }

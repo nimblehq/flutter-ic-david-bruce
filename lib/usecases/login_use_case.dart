@@ -20,7 +20,8 @@ class LoginUseCase extends UseCase<LoginModel, LoginParams> {
         email: params.email,
         password: params.password,
       );
-      return await _storeTokens(result);
+      await _storeTokens(result);
+      return Success(result);
     } catch (exception) {
       return Failed(UseCaseException(exception));
     }
