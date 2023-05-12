@@ -83,9 +83,9 @@ class SurveyModel extends Equatable {
     if (introSection != null) {
       description =
           introSection.text.isEmpty ? this.description : introSection.text;
-      imageUrl = introSection.imageUrl.isEmpty
-          ? introSection.coverImageUrl
-          : introSection.imageUrl;
+      imageUrl = introSection.coverImageUrl.isEmpty
+          ? introSection.imageUrl
+          : introSection.coverImageUrl;
     }
 
     imageUrl = imageUrl.isEmpty ? coverImageUrl : imageUrl;

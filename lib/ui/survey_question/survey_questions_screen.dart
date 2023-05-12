@@ -49,10 +49,14 @@ class SurveyQuestionsScreenState extends ConsumerState<SurveyQuestionsScreen> {
       builder: (_, ref, __) {
         final state = ref.watch(surveyQuestionsViewModelProvider);
         return state.maybeWhen(
-          submitting: _buildQuestionView,
-          submitted: _buildQuestionView,
-          success: _buildQuestionView,
-          error: (uiModel, _) => _buildQuestionView(uiModel),
+          submitting: (uiModel, coverImageUrl) =>
+              _buildQuestionView(uiModel, coverImageUrl),
+          submitted: (uiModel, coverImageUrl) =>
+              _buildQuestionView(uiModel, coverImageUrl),
+          success: (uiModel, coverImageUrl) =>
+              _buildQuestionView(uiModel, coverImageUrl),
+          error: (uiModel, coverImageUrl, _) =>
+              _buildQuestionView(uiModel, coverImageUrl),
           orElse: () {
             return const SizedBox.shrink();
           },
@@ -61,9 +65,13 @@ class SurveyQuestionsScreenState extends ConsumerState<SurveyQuestionsScreen> {
     );
   }
 
-  Widget _buildQuestionView(SurveyQuestionsUIModel uiModel) =>
+  Widget _buildQuestionView(
+    SurveyQuestionsUIModel uiModel,
+    String coverImageUrl,
+  ) =>
       SurveyQuestionView(
         uiModel: uiModel.question,
+        coverImageUrl: coverImageUrl,
         child: buildAnswer(uiModel.answer),
         onNextQuestion: () => _nextQuestion(),
         onSubmit: () => {},
@@ -81,22 +89,22 @@ class SurveyQuestionsScreenState extends ConsumerState<SurveyQuestionsScreen> {
     ref.listen<SurveyQuestionsState>(surveyQuestionsViewModelProvider,
         (_, state) {
       state.maybeWhen(
-        orElse: () {},
-        submitting: (_) {
+        submitting: (_, __) {
           context.displayLoadingDialog(showOrHide: true);
         },
-        submitted: (_) {
+        submitted: (_, __) {
           context.displayLoadingDialog(showOrHide: false);
           context.showLottie(
             onAnimated: () => context.pushReplacementNamed(RoutePath.home.name),
           );
         },
-        error: (_, error) {
+        error: (_, __, error) {
           context.displayLoadingDialog(showOrHide: false);
           context.showMessageSnackBar(
             message: '${context.localization.pleaseTryAgain} $error.',
           );
         },
+        orElse: () {},
       );
     });
   }

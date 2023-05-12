@@ -52,7 +52,7 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
           image: DecorationImage(
             image: FadeInImage.assetNetwork(
               placeholder: Assets.images.nimbleLogo.path,
-              image: surveyModel.coverImageUrl,
+              image: '${surveyModel.coverImageUrl}l',
             ).image,
             fit: BoxFit.cover,
             colorFilter: ColorFilter.mode(
