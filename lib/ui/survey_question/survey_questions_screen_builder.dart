@@ -38,7 +38,7 @@ extension SurveyQuestionsScreenStateExtension on SurveyQuestionsScreenState {
       case DisplayType.textfield:
         return _buildTextFieldForm(uiModel.options);
       case DisplayType.nps:
-        return _buildPointRatingView();
+        return _buildPointRatingView(uiModel.options);
       case DisplayType.textarea:
         return _buildTextAreaForm(uiModel.options.first);
       default:
@@ -59,7 +59,7 @@ extension SurveyQuestionsScreenStateExtension on SurveyQuestionsScreenState {
         .toList();
     return SingleChoiceView(
       uiModels: uiModels,
-      onSelect: (index) => {},
+      onSelect: (index) => _storeOptionAnswers([index]),
     );
   }
 
@@ -76,7 +76,7 @@ extension SurveyQuestionsScreenStateExtension on SurveyQuestionsScreenState {
         .toList();
     return MultipleChoiceView(
       uiModels: uiModels,
-      onSelect: (indexes) => {},
+      onSelect: (indexes) => _storeOptionAnswers(indexes),
     );
   }
 
@@ -84,30 +84,40 @@ extension SurveyQuestionsScreenStateExtension on SurveyQuestionsScreenState {
     required EmoticonType type,
     required List<SurveyAnswerOptionUIModel> options,
   }) {
+    var sortedOptions = _sortByIndex(options);
     return EmoticonView(
       type: type,
-      onSelect: (index) => {},
+      onSelect: (index) => _storeOptionAnswers([sortedOptions[index].id]),
+    );
+  }
+
+  Widget _buildPointRatingView(List<SurveyAnswerOptionUIModel> options) {
+    var sortedOptions = _sortByIndex(options);
+    return PointRatingView(
+      onSelect: (index) => _storeOptionAnswers([sortedOptions[index].id]),
     );
   }
 
   Widget _buildTextFieldForm(List<SurveyAnswerOptionUIModel> options) {
     return TextFieldFormView(
       uiModels: options,
-      onChange: (_) => {},
-    );
-  }
-
-  Widget _buildPointRatingView() {
-    return PointRatingView(
-      onSelect: (index) => {},
+      onChange: _storeInputAnswers,
     );
   }
 
   Widget _buildTextAreaForm(SurveyAnswerOptionUIModel option) {
     return TextAreaFormView(
       uiModel: option,
-      onChange: (_) => {},
+      onChange: _storeInputAnswers,
     );
+  }
+
+  void _storeOptionAnswers(List<String> ids) {
+    ref.read(surveyQuestionsViewModelProvider.notifier).storeAnswerList(ids);
+  }
+
+  void _storeInputAnswers(Map<String, String> answers) {
+    ref.read(surveyQuestionsViewModelProvider.notifier).storeAnswerMap(answers);
   }
 
   List<SurveyAnswerOptionUIModel> _sortByIndex(
