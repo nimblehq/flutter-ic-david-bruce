@@ -1,6 +1,6 @@
 {
   "appName": "สำรวจ",
-  "cancel" : "ยกเลิก",
+  "cancel": "ยกเลิก",
   "forgotPasswordInstruction": "ป้อนอีเมลเพื่อรับคำแนะนำในการรีเซ็ตรหัสผ่าน",
   "forgotPasswordResetButton": "รีเซ็ต",
   "hello": "สวัสดี",
@@ -17,5 +17,7 @@
   "surveyDetailsSubmit": "ส่ง",
   "surveyThanks": "ขอขอบคุณที่ทำแบบสำรวจ",
   "today": "วันนี้",
-  "yes": "ใช่"
+  "yes": "ใช่",
+  "notAtAllLikely": "ไม่น่าจะเป็นไปได้",
+  "extremelyLikely": "เป็นไปได้มาก"
 }

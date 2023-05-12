@@ -1,6 +1,6 @@
 {
   "appName": "Survey",
-  "cancel" : "Cancel",
+  "cancel": "Cancel",
   "forgotPasswordInstruction": "Enter your email to receive instructions for resetting your password.",
   "forgotPasswordResetButton": "Reset",
   "hello": "Hello!",
@@ -17,5 +17,7 @@
   "surveyDetailsSubmit": "Submit",
   "surveyThanks": "Thanks for taking the survey.",
   "today": "Today",
-  "yes": "Yes"
+  "yes": "Yes",
+  "notAtAllLikely": "Not at all Likely",
+  "extremelyLikely": "Extremely Likely"
 }

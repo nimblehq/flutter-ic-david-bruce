@@ -1,6 +1,6 @@
 {
   "appName": "Khảo sát",
-  "cancel" : "Hủy",
+  "cancel": "Hủy",
   "forgotPasswordInstruction": "Nhập email của bạn để nhận hướng dẫn đặt lại mật khẩu.",
   "forgotPasswordResetButton": "Đặt lại",
   "hello": "Xin chào!",
@@ -17,5 +17,7 @@
   "surveyDetailsSubmit": "Nộp",
   "surveyThanks": "Cảm ơn bạn đã thực hiện khảo sát.",
   "today": "Hôm nay",
-  "yes": "Đồng ý"
+  "yes": "Đồng ý",
+  "notAtAllLikely": "Rất thích",
+  "extremelyLikely": "Không thích"
 }

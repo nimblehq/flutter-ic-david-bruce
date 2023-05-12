@@ -3,6 +3,7 @@ import 'package:survey_flutter_ic/model/enum/display_type.dart';
 import 'package:survey_flutter_ic/model/enum/emoticon_type.dart';
 import 'package:survey_flutter_ic/ui/survey_question/survey_answer_views/emoticon_view.dart';
 import 'package:survey_flutter_ic/ui/survey_question/survey_answer_views/multiple_choice_view.dart';
+import 'package:survey_flutter_ic/ui/survey_question/survey_answer_views/point_rating_view.dart';
 import 'package:survey_flutter_ic/ui/survey_question/survey_answer_views/single_choice_view.dart';
 import 'package:survey_flutter_ic/ui/survey_question/survey_answer_views/text_field_form_view.dart';
 import 'package:survey_flutter_ic/ui/survey_question/survey_questions_screen.dart';
@@ -35,6 +36,8 @@ extension SurveyQuestionsScreenStateExtension on SurveyQuestionsScreenState {
         );
       case DisplayType.textfield:
         return _buildTextFieldForm(uiModel.options);
+      case DisplayType.nps:
+        return _buildPointRatingView();
       default:
         return const SizedBox.shrink();
     }
@@ -88,6 +91,12 @@ extension SurveyQuestionsScreenStateExtension on SurveyQuestionsScreenState {
     return TextFieldFormView(
       uiModels: options,
       onChange: (_) => {},
+    );
+  }
+
+  Widget _buildPointRatingView() {
+    return PointRatingView(
+      onSelect: (index) => {},
     );
   }
 
