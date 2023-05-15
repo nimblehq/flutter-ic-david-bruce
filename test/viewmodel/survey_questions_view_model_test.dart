@@ -13,6 +13,7 @@ import 'package:survey_flutter_ic/ui/survey_question/ui_models/survey_answer_ui_
 import 'package:survey_flutter_ic/ui/survey_question/ui_models/survey_question_ui_model.dart';
 import 'package:survey_flutter_ic/ui/survey_question/ui_models/survey_questions_ui_model.dart';
 import 'package:survey_flutter_ic/usecases/base/base_use_case.dart';
+
 import '../mocks/generate_mocks.mocks.dart';
 
 void main() {
@@ -52,6 +53,7 @@ void main() {
                 question: const SurveyQuestionUIModel.empty(),
                 answer: SurveyAnswerUIModel.empty(),
               ),
+              coverImageUrl: '',
             ),
           ],
         ),
@@ -143,6 +145,7 @@ void main() {
                   ],
                 ),
               ),
+              coverImageUrl: 'coverImageUrl',
             ),
           ],
         ),

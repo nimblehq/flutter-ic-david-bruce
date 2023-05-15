@@ -13,12 +13,14 @@ import 'package:survey_flutter_ic/utils/route_path.dart';
 class SurveyQuestionView extends StatelessWidget {
   final SurveyQuestionUIModel uiModel;
   final Widget child;
+  final String coverImageUrl;
   final Function() onNextQuestion;
   final Function() onSubmit;
 
   const SurveyQuestionView({
     super.key,
     required this.uiModel,
+    required this.coverImageUrl,
     required this.child,
     required this.onNextQuestion,
     required this.onSubmit,
@@ -73,9 +75,11 @@ class SurveyQuestionView extends StatelessWidget {
   Widget _background(BuildContext context) => SizedBox(
         width: context.screenSize.width,
         height: context.screenSize.height,
-        child: Image(
-          image: Assets.images.bgLoginOverlay.image().image,
+        child: FadeInImage.assetNetwork(
+          placeholder: Assets.images.bgLoginOverlay.path,
+          image: '${coverImageUrl}l',
           fit: BoxFit.cover,
+          alignment: Alignment.center,
         ),
       );
 
@@ -98,7 +102,7 @@ class SurveyQuestionView extends StatelessWidget {
       Consumer(builder: (_, ref, __) {
         final state = ref.watch(surveyQuestionsViewModelProvider);
         return state.maybeWhen(
-          success: (uiModel) => Text(
+          success: (uiModel, _) => Text(
             uiModel.question.currentIndexPerTotal,
             style: context.textTheme.bodyMedium,
           ),

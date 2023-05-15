@@ -105,7 +105,10 @@ class SurveyQuestionsViewModel extends StateNotifier<SurveyQuestionsState> {
       answer: answerUiModel,
     );
     _uiModel = uiModel;
-    state = SurveyQuestionsState.success(uiModel: uiModel);
+    state = SurveyQuestionsState.success(
+      uiModel: uiModel,
+      coverImageUrl: _survey?.coverImageUrl ?? '',
+    );
   }
 
   String _setUpSurveyId(Map<String, String> arguments) {

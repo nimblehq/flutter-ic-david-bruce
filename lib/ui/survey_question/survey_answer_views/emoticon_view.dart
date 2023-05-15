@@ -57,11 +57,11 @@ class _EmoticonViewState extends State<EmoticonView> {
     required int index,
   }) {
     if (selectedIndex == null) {
-      return Colors.white30;
+      return Colors.white54;
     } else if (widget.type.isSingleHighlight) {
-      return selectedIndex == index ? Colors.white : Colors.white30;
+      return selectedIndex == index ? Colors.white : Colors.white54;
     } else {
-      return selectedIndex >= index ? Colors.white : Colors.white30;
+      return selectedIndex >= index ? Colors.white : Colors.white54;
     }
   }
 

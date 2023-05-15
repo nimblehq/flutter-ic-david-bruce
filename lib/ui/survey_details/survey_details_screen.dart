@@ -5,9 +5,9 @@ import 'package:survey_flutter_ic/di/di.dart';
 import 'package:survey_flutter_ic/gen/assets.gen.dart';
 import 'package:survey_flutter_ic/ui/survey_details/survey_details_component_id.dart';
 import 'package:survey_flutter_ic/ui/survey_details/survey_details_skeleton_loading.dart';
+import 'package:survey_flutter_ic/ui/survey_details/survey_details_state.dart';
 import 'package:survey_flutter_ic/ui/survey_details/survey_details_ui_model.dart';
 import 'package:survey_flutter_ic/ui/survey_details/survey_details_view_model.dart';
-import 'package:survey_flutter_ic/ui/survey_details/survey_details_state.dart';
 import 'package:survey_flutter_ic/usecases/get_survey_details_use_case.dart';
 import 'package:survey_flutter_ic/usecases/save_current_survey_use_case.dart';
 import 'package:survey_flutter_ic/utils/context_ext.dart';
@@ -48,7 +48,7 @@ class SurveyDetailsScreenState extends ConsumerState<SurveyDetailsScreen> {
             return state.maybeWhen(
               success: (uiModel) => FadeInImage.assetNetwork(
                 placeholder: Assets.images.bgLoginOverlay.path,
-                image: uiModel.imageUrl,
+                image: '${uiModel.imageUrl}l',
                 fit: BoxFit.cover,
                 alignment: Alignment.center,
               ),

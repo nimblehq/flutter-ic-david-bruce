@@ -9,18 +9,22 @@ class SurveyQuestionsState with _$SurveyQuestionsState {
 
   const factory SurveyQuestionsState.submitting({
     required SurveyQuestionsUIModel uiModel,
+    required String coverImageUrl,
   }) = _Submitting;
 
   const factory SurveyQuestionsState.submitted({
     required SurveyQuestionsUIModel uiModel,
+    required String coverImageUrl,
   }) = _Submitted;
 
   const factory SurveyQuestionsState.error({
     required SurveyQuestionsUIModel uiModel,
+    required String coverImageUrl,
     required String? error,
   }) = _Error;
 
   const factory SurveyQuestionsState.success({
     required SurveyQuestionsUIModel uiModel,
+    required String coverImageUrl,
   }) = _Success;
 }
