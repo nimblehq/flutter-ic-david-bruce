@@ -188,7 +188,7 @@ class SurveyQuestionsViewModel extends StateNotifier<SurveyQuestionsState> {
         submission = _newSurveySubmission(answers);
       } else if (submission.surveyId != _surveyIdValue ||
           _questionNumberValue == 0) {
-        _clearStoredCurrentSurveySubmission();
+        await _clearStoredCurrentSurveySubmission();
         submission = _newSurveySubmission(answers);
       } else {
         submission = _addNewAnswerToSurveySubmission(
@@ -196,7 +196,7 @@ class SurveyQuestionsViewModel extends StateNotifier<SurveyQuestionsState> {
           answers,
         );
       }
-      _saveSurveySubmissionUseCase.call(submission);
+      await _saveSurveySubmissionUseCase.call(submission);
     }
   }
 

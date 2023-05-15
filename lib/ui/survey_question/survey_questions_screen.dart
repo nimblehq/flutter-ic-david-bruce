@@ -111,6 +111,7 @@ class SurveyQuestionsScreenState extends ConsumerState<SurveyQuestionsScreen> {
   }
 
   void _nextQuestion() {
+    ref.read(surveyQuestionsViewModelProvider.notifier).saveAnswer();
     context.pushReplacementNamed(
       RoutePath.surveyQuestion.name,
       params: _getPathParams(),
