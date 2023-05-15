@@ -259,15 +259,23 @@ class SurveyQuestionsViewModel extends StateNotifier<SurveyQuestionsState> {
   void submitAnswers() async {
     final result = await _getSurveySubmissionUseCase.call();
     if (result is Success<SurveySubmissionModel?>) {
-      state = const SurveyQuestionsState.submitting();
+      state = SurveyQuestionsState.submitting(
+        uiModel: uiModel,
+        coverImageUrl: _survey?.coverImageUrl ?? '',
+      );
       final submission = result.value;
       if (submission != null) {
         final result = await _submitSurveyAnswerUseCase.call(submission);
         if (result is Success<bool>) {
-          state = const SurveyQuestionsState.submitted();
-          _clearStoredCurrentSurveySubmission();
+          state = SurveyQuestionsState.submitted(
+            uiModel: uiModel,
+            coverImageUrl: _survey?.coverImageUrl ?? '',
+          );
+          await _clearStoredCurrentSurveySubmission();
         } else {
           state = SurveyQuestionsState.error(
+            uiModel: uiModel,
+            coverImageUrl: _survey?.coverImageUrl ?? '',
             error: NetworkExceptions.getErrorMessage(
               (result as Failed).exception.actualException,
             ),
@@ -277,7 +285,7 @@ class SurveyQuestionsViewModel extends StateNotifier<SurveyQuestionsState> {
     }
   }
 
-  void _clearStoredCurrentSurveySubmission() {
-    _saveSurveySubmissionUseCase.call(null);
+  Future<void> _clearStoredCurrentSurveySubmission() async {
+    await _saveSurveySubmissionUseCase.call(null);
   }
 }

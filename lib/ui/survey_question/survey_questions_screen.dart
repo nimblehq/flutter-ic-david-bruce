@@ -55,7 +55,10 @@ class SurveyQuestionsScreenState extends ConsumerState<SurveyQuestionsScreen> {
       builder: (_, ref, __) {
         final state = ref.watch(surveyQuestionsViewModelProvider);
         return state.maybeWhen(
-          success: (uiModel, coverImageUrl) =>
+          submitting: _buildQuestionView,
+          submitted: _buildQuestionView,
+          success: _buildQuestionView,
+          error: (uiModel, coverImageUrl, _) =>
               _buildQuestionView(uiModel, coverImageUrl),
           orElse: () {
             return const SizedBox.shrink();
@@ -89,14 +92,14 @@ class SurveyQuestionsScreenState extends ConsumerState<SurveyQuestionsScreen> {
     ref.listen<SurveyQuestionsState>(surveyQuestionsViewModelProvider,
         (_, state) {
       state.maybeWhen(
-        submitting: () => context.displayLoadingDialog(showOrHide: true),
-        submitted: () {
+        submitting: (_, __) => context.displayLoadingDialog(showOrHide: true),
+        submitted: (_, __) {
           context.displayLoadingDialog(showOrHide: false);
           context.showLottie(
             onAnimated: () => context.pushReplacementNamed(RoutePath.home.name),
           );
         },
-        error: (error) {
+        error: (_, __, error) {
           context.displayLoadingDialog(showOrHide: false);
           context.showMessageSnackBar(
             message: '${context.localization.pleaseTryAgain} $error.',
