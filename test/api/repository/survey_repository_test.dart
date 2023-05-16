@@ -103,10 +103,8 @@ void main() {
     test('saveCurrentSurvey returns true', () async {
       const surveyModel = SurveyModel.empty();
 
-      final result =
-          await surveyRepository.saveCurrentSurvey(survey: surveyModel);
+      await surveyRepository.saveCurrentSurvey(survey: surveyModel);
 
-      expect(result, true);
       verify(
           mockStorage.saveCurrentSurveyJson(jsonEncode(surveyModel.toJson())));
     });

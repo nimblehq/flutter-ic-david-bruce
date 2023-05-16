@@ -27,8 +27,14 @@ abstract class SurveyRepository {
 
   Future<SurveyModel?> getCurrentSurvey();
 
-  Future<bool> saveCurrentSurvey({
+  Future<void> saveCurrentSurvey({
     required SurveyModel survey,
+  });
+
+  Future<SurveySubmissionModel?> getSurveySubmission();
+
+  Future<void> saveSurveySubmission({
+    required SurveySubmissionModel? survey,
   });
 
   Future<void> submitSurveyAnswer({required SurveySubmissionModel submission});
@@ -97,9 +103,37 @@ class SurveyRepositoryImpl extends SurveyRepository {
   }
 
   @override
-  Future<bool> saveCurrentSurvey({required SurveyModel survey}) async {
+  Future<void> saveCurrentSurvey({required SurveyModel survey}) async {
     await _storage.saveCurrentSurveyJson(jsonEncode(survey.toJson()));
-    return true;
+  }
+
+  @override
+  Future<SurveySubmissionModel?> getSurveySubmission() async {
+    try {
+      final result = await _storage.currentSurveySubmissionJson;
+      if (result == null) {
+        return null;
+      }
+      dynamic json = jsonDecode(result);
+      if (json is Map<String, dynamic>) {
+        return SurveySubmissionModel.fromJson(json);
+      } else {
+        return null;
+      }
+    } catch (_) {
+      return null;
+    }
+  }
+
+  @override
+  Future<void> saveSurveySubmission(
+      {required SurveySubmissionModel? survey}) async {
+    if (survey == null) {
+      await _storage.clearSurveySubmissionJson();
+    } else {
+      await _storage
+          .saveCurrentSurveySubmissionJson(jsonEncode(survey.toRequestJson()));
+    }
   }
 
   @override
