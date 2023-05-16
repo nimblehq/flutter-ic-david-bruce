@@ -76,6 +76,7 @@ class SurveyQuestionsViewModel extends StateNotifier<SurveyQuestionsState> {
             index: answer.displayOrder,
             id: answer.id,
             title: answer.text,
+            shortText: answer.questionShortText,
           ),
         )
         .toList();

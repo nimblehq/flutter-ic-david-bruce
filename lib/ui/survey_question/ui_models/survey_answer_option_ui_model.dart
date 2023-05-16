@@ -4,11 +4,13 @@ class SurveyAnswerOptionUIModel extends Equatable {
   final int index;
   final String id;
   final String title;
+  final String shortText;
 
   const SurveyAnswerOptionUIModel({
     required this.index,
     required this.id,
     required this.title,
+    required this.shortText,
   });
 
   @override
@@ -16,5 +18,6 @@ class SurveyAnswerOptionUIModel extends Equatable {
         index,
         id,
         title,
+        shortText,
       ];
 }
