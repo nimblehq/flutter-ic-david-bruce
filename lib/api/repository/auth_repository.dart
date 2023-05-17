@@ -1,6 +1,7 @@
 import 'package:injectable/injectable.dart';
 import 'package:survey_flutter_ic/api/exception/network_exceptions.dart';
 import 'package:survey_flutter_ic/api/service/auth_api_service.dart';
+import 'package:survey_flutter_ic/api/storage/storage.dart';
 import 'package:survey_flutter_ic/env.dart';
 import 'package:survey_flutter_ic/model/login_model.dart';
 import 'package:survey_flutter_ic/model/refresh_token_model.dart';
@@ -20,13 +21,19 @@ abstract class AuthRepository {
   Future<String> forgotPassword({
     required String email,
   });
+
+  Future<void> logout();
 }
 
 @LazySingleton(as: AuthRepository)
 class AuthRepositoryImpl extends AuthRepository {
   final AuthApiService _authApiService;
+  final Storage _storage;
 
-  AuthRepositoryImpl(this._authApiService);
+  AuthRepositoryImpl(
+    this._authApiService,
+    this._storage,
+  );
 
   @override
   Future<LoginModel> login({
@@ -86,5 +93,10 @@ class AuthRepositoryImpl extends AuthRepository {
     } catch (exception) {
       throw NetworkExceptions.fromDioException(exception);
     }
+  }
+
+  @override
+  Future<void> logout() async {
+    await _storage.clearAllStorage();
   }
 }
