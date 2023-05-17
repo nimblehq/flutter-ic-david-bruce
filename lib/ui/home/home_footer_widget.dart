@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:survey_flutter_ic/ui/home/home_footer_component_id.dart';
 import 'package:survey_flutter_ic/utils/context_ext.dart';
 import 'package:survey_flutter_ic/utils/dimension.dart';
 import 'package:survey_flutter_ic/utils/route_path.dart';
@@ -42,6 +43,7 @@ class HomeFooterWidget extends StatelessWidget {
           ),
         ),
         ElevatedButton(
+          key: HomeFooterComponentId.takeSurveyButton,
           style: ElevatedButton.styleFrom(
             shape: const CircleBorder(),
             backgroundColor: Colors.white,
