@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:survey_flutter_ic/model/survey_model.dart';
+import 'package:survey_flutter_ic/model/user_model.dart';
 import 'package:survey_flutter_ic/ui/home/home_footer_widget.dart';
 import 'package:survey_flutter_ic/ui/home/home_header_widget.dart';
 import 'package:survey_flutter_ic/ui/home/home_side_menu.dart';
@@ -11,6 +12,7 @@ import 'package:survey_flutter_ic/ui/home/home_state.dart';
 import 'package:survey_flutter_ic/ui/home/home_view_model.dart';
 import 'package:survey_flutter_ic/ui/home/loading/home_skeleton_loading.dart';
 import 'package:survey_flutter_ic/usecases/get_surveys_cached_use_case.dart';
+import 'package:survey_flutter_ic/usecases/get_user_profile_use_case.dart';
 import 'package:survey_flutter_ic/usecases/save_surveys_use_case.dart';
 import 'package:survey_flutter_ic/utils/context_ext.dart';
 import 'package:survey_flutter_ic/utils/dimension.dart';
@@ -22,6 +24,7 @@ import '../../usecases/fetch_surveys_use_case.dart';
 final homeViewModelProvider =
     StateNotifierProvider.autoDispose<HomeViewModel, HomeState>(
   (_) => HomeViewModel(
+    getUserProfileUseCase: getIt.get<GetUserProfileUseCase>(),
     fetchSurveysUseCase: getIt.get<FetchSurveysUseCase>(),
     getSurveysUseCase: getIt.get<GetSurveysCachedUseCase>(),
     saveSurveysUseCase: getIt.get<SaveSurveysUseCase>(),
@@ -37,15 +40,8 @@ class HomeScreen extends ConsumerStatefulWidget {
 
 class HomeScreenState extends ConsumerState<HomeScreen> {
   final _currentPageIndex = ValueNotifier<int>(0);
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
   PageController _pageController = PageController(initialPage: 0);
-
-  SideMenu get _sideMenu => SideMenu(
-        sideMenuUIModel: SideMenuUIModel(
-          name: 'Mai',
-          version: 'v0.1.0 (1562903885)',
-        ),
-      );
 
   Widget _imageBackground(SurveyModel surveyModel) => Container(
         decoration: BoxDecoration(
@@ -108,11 +104,16 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
   Widget _homeWidget(BuildContext context) {
     final surveys = ref.watch(surveysStream).value ?? [];
     final focusedItemIndex = ref.watch(focusedItemIndexStream).value ?? 0;
+    final userProfile =
+        ref.watch(userProfileStream).value ?? const UserModel.empty();
+    final version = ref.watch(versionStream).value ?? '';
     _pageController = PageController(initialPage: focusedItemIndex);
     return Scaffold(
       key: _scaffoldKey,
       backgroundColor: Colors.black,
-      endDrawer: _sideMenu,
+      endDrawer: SideMenu(
+          sideMenuUIModel:
+              SideMenuUIModel(name: userProfile.email, version: version)),
       body: Stack(
         children: [
           Visibility(
@@ -137,9 +138,9 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
                               const EdgeInsets.all(Dimensions.paddingMedium),
                           child: Stack(
                             children: [
-                              _homeHeaderWidget(),
                               _pageIndicatorWidget(context, surveys.length),
                               _homeFooterWidget(surveys),
+                              _homeHeaderWidget(),
                             ],
                           ),
                         ),
@@ -164,6 +165,8 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
   @override
   void initState() {
     super.initState();
+    ref.read(homeViewModelProvider.notifier).getAppVersion();
+    ref.read(homeViewModelProvider.notifier).getUserProfile();
     ref.read(homeViewModelProvider.notifier).fetchSurveys(isRefresh: true);
   }
 

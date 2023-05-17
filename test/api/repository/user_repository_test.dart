@@ -1,11 +1,8 @@
-import 'dart:convert';
-
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:survey_flutter_ic/api/exception/network_exceptions.dart';
 import 'package:survey_flutter_ic/api/repository/user_repository.dart';
 import 'package:survey_flutter_ic/model/response/me_response.dart';
-import 'package:survey_flutter_ic/model/response/survey_response.dart';
 
 import '../../mocks/generate_mocks.mocks.dart';
 
