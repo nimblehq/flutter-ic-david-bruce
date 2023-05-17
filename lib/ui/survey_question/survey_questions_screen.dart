@@ -8,6 +8,8 @@ import 'package:survey_flutter_ic/ui/survey_question/survey_questions_state.dart
 import 'package:survey_flutter_ic/ui/survey_question/survey_questions_view_model.dart';
 import 'package:survey_flutter_ic/ui/survey_question/ui_models/survey_questions_ui_model.dart';
 import 'package:survey_flutter_ic/usecases/get_current_survey_use_case.dart';
+import 'package:survey_flutter_ic/usecases/get_survey_submission_use_case.dart';
+import 'package:survey_flutter_ic/usecases/save_survey_submission_use_case.dart';
 import 'package:survey_flutter_ic/utils/context_ext.dart';
 import 'package:survey_flutter_ic/utils/route_path.dart';
 
@@ -15,6 +17,8 @@ final surveyQuestionsViewModelProvider = StateNotifierProvider.autoDispose<
     SurveyQuestionsViewModel, SurveyQuestionsState>(
   (_) => SurveyQuestionsViewModel(
     getIt.get<GetCurrentSurveyUseCase>(),
+    getIt.get<GetSurveySubmissionUseCase>(),
+    getIt.get<SaveSurveySubmissionUseCase>(),
   ),
 );
 
@@ -74,7 +78,7 @@ class SurveyQuestionsScreenState extends ConsumerState<SurveyQuestionsScreen> {
         coverImageUrl: coverImageUrl,
         child: buildAnswer(uiModel.answer),
         onNextQuestion: () => _nextQuestion(),
-        onSubmit: () => {},
+        onSubmit: () => _submit(),
       );
 
   void _setUpData() {
@@ -125,5 +129,9 @@ class SurveyQuestionsScreenState extends ConsumerState<SurveyQuestionsScreen> {
     return ref
         .read(surveyQuestionsViewModelProvider.notifier)
         .getNextQuestionQueryParams();
+  }
+
+  void _submit() {
+    ref.read(surveyQuestionsViewModelProvider.notifier).saveAnswer();
   }
 }

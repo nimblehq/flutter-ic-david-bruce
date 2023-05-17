@@ -1,6 +1,9 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:survey_flutter_ic/model/enum/display_type.dart';
 import 'package:survey_flutter_ic/model/survey_model.dart';
+import 'package:survey_flutter_ic/model/survey_submission_answer_model.dart';
+import 'package:survey_flutter_ic/model/survey_submission_model.dart';
+import 'package:survey_flutter_ic/model/survey_submission_question_model.dart';
 import 'package:survey_flutter_ic/ui/survey_question/survey_questions_state.dart';
 import 'package:survey_flutter_ic/ui/survey_question/ui_models/survey_answer_option_ui_model.dart';
 import 'package:survey_flutter_ic/ui/survey_question/ui_models/survey_answer_ui_model.dart';
@@ -8,10 +11,14 @@ import 'package:survey_flutter_ic/ui/survey_question/ui_models/survey_question_u
 import 'package:survey_flutter_ic/ui/survey_question/ui_models/survey_questions_ui_model.dart';
 import 'package:survey_flutter_ic/usecases/base/base_use_case.dart';
 import 'package:survey_flutter_ic/usecases/get_current_survey_use_case.dart';
+import 'package:survey_flutter_ic/usecases/get_survey_submission_use_case.dart';
+import 'package:survey_flutter_ic/usecases/save_survey_submission_use_case.dart';
 import 'package:survey_flutter_ic/utils/route_path.dart';
 
 class SurveyQuestionsViewModel extends StateNotifier<SurveyQuestionsState> {
   final GetCurrentSurveyUseCase _getCurrentSurveyUseCase;
+  final GetSurveySubmissionUseCase _getSurveySubmissionUseCase;
+  final SaveSurveySubmissionUseCase _saveSurveySubmissionUseCase;
 
   String get _surveyIdValue => _surveyId ?? '';
   String? _surveyId;
@@ -28,8 +35,13 @@ class SurveyQuestionsViewModel extends StateNotifier<SurveyQuestionsState> {
     answer: SurveyAnswerUIModel.empty(),
   );
 
+  List<String> _currentAnswerList = [];
+  Map<String, String> _currentAnswerMap = <String, String>{};
+
   SurveyQuestionsViewModel(
     this._getCurrentSurveyUseCase,
+    this._getSurveySubmissionUseCase,
+    this._saveSurveySubmissionUseCase,
   ) : super(const SurveyQuestionsState.init());
 
   void setUpData({
@@ -134,5 +146,114 @@ class SurveyQuestionsViewModel extends StateNotifier<SurveyQuestionsState> {
     params[RoutePath.surveyQuestion.queryParams.first] =
         nextQuestionNumber.toString();
     return params;
+  }
+
+  void storeAnswerList(List<String> ids) {
+    _currentAnswerList = ids;
+  }
+
+  void storeAnswerMap(Map<String, String> answers) {
+    _currentAnswerMap = answers;
+  }
+
+  void saveAnswer() {
+    if (_currentAnswerList.isNotEmpty) {
+      _saveAnswerList();
+    }
+    if (_currentAnswerMap.isNotEmpty) {
+      _saveAnswerMap();
+    }
+  }
+
+  void _saveAnswerList() async {
+    final ids = _currentAnswerList;
+    _storeAnswer(_idsToAnswers(ids));
+  }
+
+  void _saveAnswerMap() async {
+    final answerMap = _currentAnswerMap;
+    _storeAnswer(_answerMapToAnswers(answerMap));
+  }
+
+  void _storeAnswer(List<SurveySubmissionAnswerModel> answers) async {
+    final result = await _getSurveySubmissionUseCase.call();
+    if (result is Success<SurveySubmissionModel?>) {
+      var submission = result.value;
+      if (submission == null) {
+        submission = _newSurveySubmission(answers);
+      } else if (submission.surveyId != _surveyIdValue ||
+          _questionNumberValue == 0) {
+        _clearStoredCurrentSurveySubmission();
+        submission = _newSurveySubmission(answers);
+      } else {
+        submission = _addNewAnswerToSurveySubmission(
+          submission,
+          answers,
+        );
+      }
+      _saveSurveySubmissionUseCase.call(submission);
+    }
+  }
+
+  SurveySubmissionModel _newSurveySubmission(
+    List<SurveySubmissionAnswerModel> answers,
+  ) {
+    return SurveySubmissionModel(
+      surveyId: _surveyIdValue,
+      questions: [
+        SurveySubmissionQuestionModel(
+          id: _surveyValue.questions[_questionNumberValue].id,
+          answers: answers,
+        ),
+      ],
+    );
+  }
+
+  SurveySubmissionModel _addNewAnswerToSurveySubmission(
+    SurveySubmissionModel submission,
+    List<SurveySubmissionAnswerModel> answers,
+  ) {
+    List<SurveySubmissionQuestionModel> questions = submission.questions;
+    questions.add(
+      SurveySubmissionQuestionModel(
+        id: _surveyValue.questions[_questionNumberValue].id,
+        answers: answers,
+      ),
+    );
+    submission.questions = questions;
+    return submission;
+  }
+
+  List<SurveySubmissionAnswerModel> _idsToAnswers(List<String> ids) {
+    return ids
+        .map(
+          (id) => SurveySubmissionAnswerModel(
+            id: id,
+            answer: null,
+          ),
+        )
+        .toList();
+  }
+
+  List<SurveySubmissionAnswerModel> _answerMapToAnswers(
+      Map<String, String> answerMap) {
+    List<SurveySubmissionAnswerModel> answers = [];
+    answerMap.forEach(
+      (key, value) {
+        answers.add(
+          SurveySubmissionAnswerModel(
+            id: key,
+            answer: value,
+          ),
+        );
+      },
+    );
+    return answers;
+  }
+
+  void submitAnswers() async {}
+
+  void _clearStoredCurrentSurveySubmission() {
+    _saveSurveySubmissionUseCase.call(null);
   }
 }

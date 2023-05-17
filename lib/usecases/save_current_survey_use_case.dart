@@ -5,14 +5,14 @@ import 'package:survey_flutter_ic/model/survey_model.dart';
 import 'base/base_use_case.dart';
 
 @Injectable()
-class SaveCurrentSurveyUseCase extends UseCase<bool, SurveyModel> {
+class SaveCurrentSurveyUseCase extends UseCase<void, SurveyModel> {
   final SurveyRepository _repository;
 
   const SaveCurrentSurveyUseCase(this._repository);
 
   @override
-  Future<Result<bool>> call(params) async {
-    await _repository.saveCurrentSurvey(survey: params);
-    return Success(true);
+  Future<Result<void>> call(params) async {
+    final result = await _repository.saveCurrentSurvey(survey: params);
+    return Success(result);
   }
 }

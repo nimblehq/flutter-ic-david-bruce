@@ -19,16 +19,21 @@ import '../mocks/generate_mocks.mocks.dart';
 void main() {
   group('Survey questions view model test', () {
     late MockGetCurrentSurveyUseCase mockGetCurrentSurveyUseCase;
+    late MockGetSurveySubmissionUseCase mockGetSurveySubmissionUseCase;
+    late MockSaveSurveySubmissionUseCase mockSaveSurveySubmissionUseCase;
     late ProviderContainer container;
 
     setUp(() {
       mockGetCurrentSurveyUseCase = MockGetCurrentSurveyUseCase();
+      mockGetSurveySubmissionUseCase = MockGetSurveySubmissionUseCase();
+      mockSaveSurveySubmissionUseCase = MockSaveSurveySubmissionUseCase();
       container = ProviderContainer(
         overrides: [
-          surveyQuestionsViewModelProvider
-              .overrideWith((ref) => SurveyQuestionsViewModel(
-                    mockGetCurrentSurveyUseCase,
-                  )),
+          surveyQuestionsViewModelProvider.overrideWith((ref) =>
+              SurveyQuestionsViewModel(
+                  mockGetCurrentSurveyUseCase,
+                  mockGetSurveySubmissionUseCase,
+                  mockSaveSurveySubmissionUseCase)),
         ],
       );
       addTearDown(container.dispose);
