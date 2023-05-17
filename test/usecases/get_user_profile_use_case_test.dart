@@ -1,6 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
-import 'package:survey_flutter_ic/model/survey_model.dart';
 import 'package:survey_flutter_ic/model/user_model.dart';
 import 'package:survey_flutter_ic/usecases/base/base_use_case.dart';
 import 'package:survey_flutter_ic/usecases/get_user_profile_use_case.dart';
@@ -11,7 +10,6 @@ void main() {
   group('GetUserProfileUseCaseTest', () {
     late MockUserRepository mockUserRepository;
     late GetUserProfileUseCase useCase;
-    const surveyId = '';
 
     setUp(() {
       mockUserRepository = MockUserRepository();
