@@ -13,12 +13,16 @@ import 'package:survey_flutter_ic/usecases/base/base_use_case.dart';
 import 'package:survey_flutter_ic/usecases/get_current_survey_use_case.dart';
 import 'package:survey_flutter_ic/usecases/get_survey_submission_use_case.dart';
 import 'package:survey_flutter_ic/usecases/save_survey_submission_use_case.dart';
+import 'package:survey_flutter_ic/usecases/submit_survey_answer_use_case.dart';
 import 'package:survey_flutter_ic/utils/route_path.dart';
+
+import '../../api/exception/network_exceptions.dart';
 
 class SurveyQuestionsViewModel extends StateNotifier<SurveyQuestionsState> {
   final GetCurrentSurveyUseCase _getCurrentSurveyUseCase;
   final GetSurveySubmissionUseCase _getSurveySubmissionUseCase;
   final SaveSurveySubmissionUseCase _saveSurveySubmissionUseCase;
+  final SubmitSurveyAnswerUseCase _submitSurveyAnswerUseCase;
 
   String get _surveyIdValue => _surveyId ?? '';
   String? _surveyId;
@@ -42,6 +46,7 @@ class SurveyQuestionsViewModel extends StateNotifier<SurveyQuestionsState> {
     this._getCurrentSurveyUseCase,
     this._getSurveySubmissionUseCase,
     this._saveSurveySubmissionUseCase,
+    this._submitSurveyAnswerUseCase,
   ) : super(const SurveyQuestionsState.init());
 
   void setUpData({
@@ -183,7 +188,7 @@ class SurveyQuestionsViewModel extends StateNotifier<SurveyQuestionsState> {
         submission = _newSurveySubmission(answers);
       } else if (submission.surveyId != _surveyIdValue ||
           _questionNumberValue == 0) {
-        _clearStoredCurrentSurveySubmission();
+        await _clearStoredCurrentSurveySubmission();
         submission = _newSurveySubmission(answers);
       } else {
         submission = _addNewAnswerToSurveySubmission(
@@ -191,7 +196,7 @@ class SurveyQuestionsViewModel extends StateNotifier<SurveyQuestionsState> {
           answers,
         );
       }
-      _saveSurveySubmissionUseCase.call(submission);
+      await _saveSurveySubmissionUseCase.call(submission);
     }
   }
 
@@ -251,9 +256,36 @@ class SurveyQuestionsViewModel extends StateNotifier<SurveyQuestionsState> {
     return answers;
   }
 
-  void submitAnswers() async {}
+  void submitAnswers() async {
+    final result = await _getSurveySubmissionUseCase.call();
+    if (result is Success<SurveySubmissionModel?>) {
+      state = SurveyQuestionsState.submitting(
+        uiModel: uiModel,
+        coverImageUrl: _survey?.coverImageUrl ?? '',
+      );
+      final submission = result.value;
+      if (submission != null) {
+        final result = await _submitSurveyAnswerUseCase.call(submission);
+        if (result is Success<bool>) {
+          state = SurveyQuestionsState.submitted(
+            uiModel: uiModel,
+            coverImageUrl: _survey?.coverImageUrl ?? '',
+          );
+          await _clearStoredCurrentSurveySubmission();
+        } else {
+          state = SurveyQuestionsState.error(
+            uiModel: uiModel,
+            coverImageUrl: _survey?.coverImageUrl ?? '',
+            error: NetworkExceptions.getErrorMessage(
+              (result as Failed).exception.actualException,
+            ),
+          );
+        }
+      }
+    }
+  }
 
-  void _clearStoredCurrentSurveySubmission() {
-    _saveSurveySubmissionUseCase.call(null);
+  Future<void> _clearStoredCurrentSurveySubmission() async {
+    await _saveSurveySubmissionUseCase.call(null);
   }
 }

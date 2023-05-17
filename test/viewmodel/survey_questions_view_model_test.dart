@@ -21,19 +21,24 @@ void main() {
     late MockGetCurrentSurveyUseCase mockGetCurrentSurveyUseCase;
     late MockGetSurveySubmissionUseCase mockGetSurveySubmissionUseCase;
     late MockSaveSurveySubmissionUseCase mockSaveSurveySubmissionUseCase;
+    late MockSubmitSurveyAnswerUseCase mockSubmitSurveyAnswerUseCase;
     late ProviderContainer container;
 
     setUp(() {
       mockGetCurrentSurveyUseCase = MockGetCurrentSurveyUseCase();
       mockGetSurveySubmissionUseCase = MockGetSurveySubmissionUseCase();
       mockSaveSurveySubmissionUseCase = MockSaveSurveySubmissionUseCase();
+      mockSubmitSurveyAnswerUseCase = MockSubmitSurveyAnswerUseCase();
       container = ProviderContainer(
         overrides: [
-          surveyQuestionsViewModelProvider.overrideWith((ref) =>
-              SurveyQuestionsViewModel(
-                  mockGetCurrentSurveyUseCase,
-                  mockGetSurveySubmissionUseCase,
-                  mockSaveSurveySubmissionUseCase)),
+          surveyQuestionsViewModelProvider.overrideWith(
+            (ref) => SurveyQuestionsViewModel(
+              mockGetCurrentSurveyUseCase,
+              mockGetSurveySubmissionUseCase,
+              mockSaveSurveySubmissionUseCase,
+              mockSubmitSurveyAnswerUseCase,
+            ),
+          ),
         ],
       );
       addTearDown(container.dispose);
