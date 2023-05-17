@@ -2,7 +2,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:survey_flutter_ic/api/exception/network_exceptions.dart';
 import 'package:survey_flutter_ic/api/repository/user_repository.dart';
-import 'package:survey_flutter_ic/model/response/me_response.dart';
+import 'package:survey_flutter_ic/model/response/user_response.dart';
 
 import '../../mocks/generate_mocks.mocks.dart';
 
@@ -17,7 +17,7 @@ void main() {
     });
 
     test('returns UserModel when getUserProfile successful', () async {
-      final meResponse = MeResponse(email: 'email', avatarUrl: 'avatarUrl');
+      final meResponse = UserResponse(email: 'email', avatarUrl: 'avatarUrl');
 
       when(mockApiService.getUserProfile()).thenAnswer((_) async => meResponse);
 

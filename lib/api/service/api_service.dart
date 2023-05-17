@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:retrofit/http.dart';
-import 'package:survey_flutter_ic/model/response/me_response.dart';
+import 'package:survey_flutter_ic/model/response/user_response.dart';
 
 import '../../model/response/survey_response.dart';
 import '../../model/response/surveys_response.dart';
@@ -12,7 +12,7 @@ abstract class ApiService {
   factory ApiService(Dio dio, {String baseUrl}) = _ApiService;
 
   @GET('/me')
-  Future<MeResponse> getUserProfile();
+  Future<UserResponse> getUserProfile();
 
   @GET('/surveys?page[number]={page_number}&page[size]={page_size}')
   Future<SurveysResponse> getSurveys(
