@@ -39,7 +39,7 @@ class HomeViewModel extends StateNotifier<HomeState> {
   final StreamController<List<SurveyModel>> _surveysStream = StreamController();
   final StreamController<int> _focusedItemIndexStream = StreamController();
 
-  final LogoutUseCse logoutUseCase;
+  final LogoutUseCase logoutUseCase;
   final GetUserProfileUseCase getUserProfileUseCase;
   final FetchSurveysUseCase fetchSurveysUseCase;
   final GetSurveysCachedUseCase getSurveysUseCase;

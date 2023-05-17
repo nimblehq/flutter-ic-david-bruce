@@ -3,10 +3,10 @@ import 'package:survey_flutter_ic/api/repository/auth_repository.dart';
 import 'base/base_use_case.dart';
 
 @Injectable()
-class LogoutUseCse extends NoParamsUseCase<void> {
+class LogoutUseCase extends NoParamsUseCase<void> {
   final AuthRepository _repository;
 
-  const LogoutUseCse(this._repository);
+  const LogoutUseCase(this._repository);
 
   @override
   Future<Result<void>> call() async {

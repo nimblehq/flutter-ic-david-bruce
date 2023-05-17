@@ -14,6 +14,7 @@ import 'package:survey_flutter_ic/usecases/get_survey_details_use_case.dart';
 import 'package:survey_flutter_ic/usecases/get_survey_submission_use_case.dart';
 import 'package:survey_flutter_ic/usecases/get_user_profile_use_case.dart';
 import 'package:survey_flutter_ic/usecases/login_use_case.dart';
+import 'package:survey_flutter_ic/usecases/logout_use_case.dart';
 import 'package:survey_flutter_ic/usecases/save_current_survey_use_case.dart';
 import 'package:survey_flutter_ic/usecases/save_survey_submission_use_case.dart';
 import 'package:survey_flutter_ic/usecases/save_surveys_use_case.dart';
@@ -37,6 +38,7 @@ import 'package:survey_flutter_ic/usecases/submit_survey_answer_use_case.dart';
   GetSurveySubmissionUseCase,
   SaveSurveySubmissionUseCase,
   SubmitSurveyAnswerUseCase,
+  LogoutUseCase,
   GetUserProfileUseCase,
   UseCaseException,
 ])

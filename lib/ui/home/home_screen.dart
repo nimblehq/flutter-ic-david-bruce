@@ -27,7 +27,7 @@ import '../../usecases/fetch_surveys_use_case.dart';
 final homeViewModelProvider =
     StateNotifierProvider.autoDispose<HomeViewModel, HomeState>(
   (_) => HomeViewModel(
-    logoutUseCase: getIt.get<LogoutUseCse>(),
+    logoutUseCase: getIt.get<LogoutUseCase>(),
     getUserProfileUseCase: getIt.get<GetUserProfileUseCase>(),
     fetchSurveysUseCase: getIt.get<FetchSurveysUseCase>(),
     getSurveysUseCase: getIt.get<GetSurveysCachedUseCase>(),
