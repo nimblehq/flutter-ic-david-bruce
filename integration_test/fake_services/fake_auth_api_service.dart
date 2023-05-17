@@ -36,7 +36,7 @@ class FakeAuthApiService extends Fake implements AuthApiService {
   }
 
   @override
-  Future<ForgotPasswordResponse> forgetPassword(
+  Future<ForgotPasswordResponse> forgotPassword(
     ForgotPasswordRequest body,
   ) async {
     await Future.delayed(fakeApiDuration);
