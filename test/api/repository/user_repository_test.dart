@@ -27,7 +27,7 @@ void main() {
     });
 
     test('throws NetworkExceptions when getUserProfile unsuccessful', () async {
-      when(mockApiService.getSurveyDetails(any)).thenThrow(Exception());
+      when(mockApiService.getUserProfile()).thenThrow(Exception());
 
       try {
         await userRepository.getUserProfile();
