@@ -14,7 +14,7 @@ void main() {
       useCase = LogoutUseCase(mockAuthRepository);
     });
 
-    test('Should call storage.clearAllStorage when logout', () async {
+    test('Should call mockAuthRepository.logout when usecase called', () async {
       await useCase.call();
 
       verify(mockAuthRepository.logout()).called(1);
