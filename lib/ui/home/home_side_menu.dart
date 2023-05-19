@@ -4,10 +4,12 @@ import 'package:survey_flutter_ic/utils/context_ext.dart';
 
 class SideMenu extends StatelessWidget {
   final SideMenuUIModel sideMenuUIModel;
+  final VoidCallback? logoutCallback;
 
   const SideMenu({
     super.key,
     required this.sideMenuUIModel,
+    required this.logoutCallback,
   });
 
   @override
@@ -58,7 +60,7 @@ class SideMenu extends StatelessWidget {
         context.localization.logout,
         style: context.textTheme.bodyLarge?.copyWith(color: Colors.white70),
       ),
-      onTap: () {},
+      onTap: logoutCallback,
     );
   }
 

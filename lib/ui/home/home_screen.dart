@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:survey_flutter_ic/model/survey_model.dart';
 import 'package:survey_flutter_ic/model/user_model.dart';
@@ -13,9 +14,11 @@ import 'package:survey_flutter_ic/ui/home/home_view_model.dart';
 import 'package:survey_flutter_ic/ui/home/loading/home_skeleton_loading.dart';
 import 'package:survey_flutter_ic/usecases/get_surveys_cached_use_case.dart';
 import 'package:survey_flutter_ic/usecases/get_user_profile_use_case.dart';
+import 'package:survey_flutter_ic/usecases/logout_use_case.dart';
 import 'package:survey_flutter_ic/usecases/save_surveys_use_case.dart';
 import 'package:survey_flutter_ic/utils/context_ext.dart';
 import 'package:survey_flutter_ic/utils/dimension.dart';
+import 'package:survey_flutter_ic/utils/route_path.dart';
 
 import '../../di/di.dart';
 import '../../gen/assets.gen.dart';
@@ -24,6 +27,7 @@ import '../../usecases/fetch_surveys_use_case.dart';
 final homeViewModelProvider =
     StateNotifierProvider.autoDispose<HomeViewModel, HomeState>(
   (_) => HomeViewModel(
+    logoutUseCase: getIt.get<LogoutUseCase>(),
     getUserProfileUseCase: getIt.get<GetUserProfileUseCase>(),
     fetchSurveysUseCase: getIt.get<FetchSurveysUseCase>(),
     getSurveysUseCase: getIt.get<GetSurveysCachedUseCase>(),
@@ -112,8 +116,14 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
       key: _scaffoldKey,
       backgroundColor: Colors.black,
       endDrawer: SideMenu(
-          sideMenuUIModel:
-              SideMenuUIModel(name: userProfile.email, version: version)),
+          sideMenuUIModel: SideMenuUIModel(
+            name: userProfile.email,
+            version: version,
+          ),
+          logoutCallback: () {
+            ref.read(homeViewModelProvider.notifier).logOut();
+            context.pushReplacementNamed(RoutePath.login.name);
+          }),
       body: Stack(
         children: [
           Visibility(

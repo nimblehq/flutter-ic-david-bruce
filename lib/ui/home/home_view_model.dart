@@ -8,6 +8,7 @@ import 'package:survey_flutter_ic/model/user_model.dart';
 import 'package:survey_flutter_ic/ui/home/home_state.dart';
 import 'package:survey_flutter_ic/usecases/get_surveys_cached_use_case.dart';
 import 'package:survey_flutter_ic/usecases/get_user_profile_use_case.dart';
+import 'package:survey_flutter_ic/usecases/logout_use_case.dart';
 import 'package:survey_flutter_ic/usecases/save_surveys_use_case.dart';
 
 import '../../api/exception/network_exceptions.dart';
@@ -38,6 +39,7 @@ class HomeViewModel extends StateNotifier<HomeState> {
   final StreamController<List<SurveyModel>> _surveysStream = StreamController();
   final StreamController<int> _focusedItemIndexStream = StreamController();
 
+  final LogoutUseCase logoutUseCase;
   final GetUserProfileUseCase getUserProfileUseCase;
   final FetchSurveysUseCase fetchSurveysUseCase;
   final GetSurveysCachedUseCase getSurveysUseCase;
@@ -47,6 +49,7 @@ class HomeViewModel extends StateNotifier<HomeState> {
   final List<SurveyModel> _totalSurveys = List.empty(growable: true);
 
   HomeViewModel({
+    required this.logoutUseCase,
     required this.getUserProfileUseCase,
     required this.fetchSurveysUseCase,
     required this.getSurveysUseCase,
@@ -122,6 +125,10 @@ class HomeViewModel extends StateNotifier<HomeState> {
     _loadMoreDataSet = _LoadMoreDataSet();
     _focusedItemIndexStream.add(0);
     _totalSurveys.clear();
+  }
+
+  Future<void> logOut() async {
+    await logoutUseCase.call();
   }
 }
 
