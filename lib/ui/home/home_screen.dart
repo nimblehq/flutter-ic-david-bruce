@@ -122,7 +122,7 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
           ),
           logoutCallback: () {
             ref.read(homeViewModelProvider.notifier).logOut();
-            context.goNamed(RoutePath.login.name);
+            context.pushReplacementNamed(RoutePath.login.name);
           }),
       body: Stack(
         children: [
