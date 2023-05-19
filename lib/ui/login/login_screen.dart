@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:survey_flutter_ic/di/di.dart';
 import 'package:survey_flutter_ic/gen/assets.gen.dart';
+import 'package:survey_flutter_ic/ui/login/login_component_id.dart';
 import 'package:survey_flutter_ic/ui/login/login_state.dart';
 import 'package:survey_flutter_ic/ui/login/login_view_model.dart';
 import 'package:survey_flutter_ic/ui/widgets/input_field_widget.dart';
@@ -41,7 +42,7 @@ class LoginScreenState extends ConsumerState<LoginScreen> {
       ));
 
   InputFieldWidget get _emailInputField => InputFieldWidget(
-        key: const Key('login_email'),
+        key: LoginComponentId.emailTextField,
         textHint: context.localization.loginEmail,
         keyboardType: TextInputType.emailAddress,
         textInputAction: TextInputAction.next,
@@ -49,7 +50,7 @@ class LoginScreenState extends ConsumerState<LoginScreen> {
       );
 
   InputFieldWidget get _passwordInputField => InputFieldWidget(
-        key: const Key('login_password'),
+        key: LoginComponentId.passwordTextField,
         textHint: context.localization.loginPassword,
         keyboardType: TextInputType.visiblePassword,
         isPassword: true,
@@ -60,6 +61,7 @@ class LoginScreenState extends ConsumerState<LoginScreen> {
       );
 
   ElevatedButton get _loginButton => ElevatedButton(
+        key: LoginComponentId.loginButton,
         onPressed: () {
           ref.read(loginViewModelProvider.notifier).login(
                 _emailInputController.text,
@@ -124,7 +126,7 @@ class LoginScreenState extends ConsumerState<LoginScreen> {
       state.maybeWhen(
         success: () => context.goNamed(RoutePath.home.name),
         error: (errorMessage) => context.showMessageSnackBar(
-          message: errorMessage,
+          message: context.localization.pleaseTryAgain,
         ),
         errorEmailInput: () => context.showMessageSnackBar(
           message: context.localization.messageEmailInvalid,
