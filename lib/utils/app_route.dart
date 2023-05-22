@@ -4,6 +4,8 @@ import 'package:survey_flutter_ic/api/storage/storage.dart';
 import 'package:survey_flutter_ic/ui/forgot_password/forgot_password_screen.dart';
 import 'package:survey_flutter_ic/ui/home/home_screen.dart';
 import 'package:survey_flutter_ic/ui/login/login_screen.dart';
+import 'package:survey_flutter_ic/ui/survey_details/survey_details_screen.dart';
+import 'package:survey_flutter_ic/ui/survey_question/survey_questions_screen.dart';
 import 'package:survey_flutter_ic/utils/route_path.dart';
 
 @Singleton()
@@ -19,7 +21,26 @@ class AppRouter {
             path: RoutePath.home.screen,
             name: RoutePath.home.name,
             builder: (context, state) => const HomeScreen(),
-            routes: const [],
+            routes: [
+              GoRoute(
+                path: RoutePath.surveyDetails.screenWithPathParams,
+                name: RoutePath.surveyDetails.name,
+                builder: (context, state) => SurveyDetailsScreen(
+                    surveyId:
+                        state.params[RoutePath.surveyDetails.pathParam] ?? ''),
+              ),
+              GoRoute(
+                path: RoutePath.surveyQuestion.screenWithPathParams,
+                name: RoutePath.surveyQuestion.name,
+                builder: (context, state) => SurveyQuestionsScreen(
+                  surveyId:
+                      state.params[RoutePath.surveyQuestion.pathParam] ?? '',
+                  questionNumber: int.parse(state
+                          .params[RoutePath.surveyQuestion.queryParams.first] ??
+                      0.toString()),
+                ),
+              ),
+            ],
           ),
           GoRoute(
             path: RoutePath.login.screen,

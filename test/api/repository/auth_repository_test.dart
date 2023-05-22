@@ -16,6 +16,7 @@ void main() {
 
   group('AuthApiRepositoryImplTest', () {
     late MockAuthApiService mockAuthApiService;
+    late MockStorage mockStorage;
     late AuthRepositoryImpl authRepository;
 
     const email = "email";
@@ -23,7 +24,11 @@ void main() {
 
     setUp(() {
       mockAuthApiService = MockAuthApiService();
-      authRepository = AuthRepositoryImpl(mockAuthApiService);
+      mockStorage = MockStorage();
+      authRepository = AuthRepositoryImpl(
+        mockAuthApiService,
+        mockStorage,
+      );
     });
 
     test('When login is successful, it returns a LoginModel', () async {
@@ -73,6 +78,12 @@ void main() {
       final call = authRepository.forgotPassword(email: email);
 
       expect(call, throwsA(isA<NetworkExceptions>()));
+    });
+
+    test('Should call storage.clearAllStorage when logout', () async {
+      await authRepository.logout();
+
+      verify(mockStorage.clearAllStorage()).called(1);
     });
   });
 }

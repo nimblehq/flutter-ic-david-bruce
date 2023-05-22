@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:survey_flutter_ic/ui/home/home_side_menu_component_id.dart';
 import 'package:survey_flutter_ic/ui/home/home_side_menu_ui_model.dart';
 import 'package:survey_flutter_ic/utils/context_ext.dart';
 
 class SideMenu extends StatelessWidget {
   final SideMenuUIModel sideMenuUIModel;
+  final VoidCallback? logoutCallback;
 
   const SideMenu({
     super.key,
     required this.sideMenuUIModel,
+    required this.logoutCallback,
   });
 
   @override
@@ -38,27 +41,23 @@ class SideMenu extends StatelessWidget {
         ));
   }
 
-  Positioned _appVersion(BuildContext context) {
-    return Positioned(
-      bottom: 0,
-      left: 0,
-      right: 0,
-      child: ListTile(
-        title: Text(
-          sideMenuUIModel.version,
-          style: context.textTheme.bodySmall?.copyWith(color: Colors.white70),
-        ),
+  ListTile _appVersion(BuildContext context) {
+    return ListTile(
+      title: Text(
+        sideMenuUIModel.version,
+        style: context.textTheme.bodySmall?.copyWith(color: Colors.white70),
       ),
     );
   }
 
   ListTile _logOut(BuildContext context) {
     return ListTile(
+      key: HomeSideMenuComponentId.logoutButton,
       title: Text(
         context.localization.logout,
         style: context.textTheme.bodyLarge?.copyWith(color: Colors.white70),
       ),
-      onTap: () {},
+      onTap: logoutCallback,
     );
   }
 

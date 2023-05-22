@@ -1,6 +1,12 @@
 import 'package:equatable/equatable.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:survey_flutter_ic/model/enum/display_type.dart';
 import 'package:survey_flutter_ic/model/survey_question_model.dart';
+import 'package:survey_flutter_ic/ui/survey_details/survey_details_ui_model.dart';
 
+part 'survey_model.g.dart';
+
+@JsonSerializable()
 class SurveyModel extends Equatable {
   final String id;
   final String title;
@@ -46,6 +52,11 @@ class SurveyModel extends Equatable {
           questions: const [],
         );
 
+  Map<String, dynamic> toJson() => _$SurveyModelToJson(this);
+
+  factory SurveyModel.fromJson(Map<String, dynamic> json) =>
+      _$SurveyModelFromJson(json);
+
   @override
   List<Object?> get props => [
         id,
@@ -60,4 +71,28 @@ class SurveyModel extends Equatable {
         inactiveAt,
         surveyType
       ];
+
+  SurveyDetailsUIModel toSurveyDetailsUiModel() {
+    final introSection = questions.isEmpty
+        ? null
+        : questions.firstWhere(
+            (question) => question.displayType == DisplayType.intro);
+    String description = '';
+    String imageUrl = '';
+
+    if (introSection != null) {
+      description =
+          introSection.text.isEmpty ? this.description : introSection.text;
+      imageUrl = introSection.coverImageUrl.isEmpty
+          ? introSection.imageUrl
+          : introSection.coverImageUrl;
+    }
+
+    imageUrl = imageUrl.isEmpty ? coverImageUrl : imageUrl;
+    return SurveyDetailsUIModel(
+      title: title,
+      description: description,
+      imageUrl: imageUrl,
+    );
+  }
 }

@@ -4,9 +4,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:survey_flutter_ic/di/di.dart';
 import 'package:survey_flutter_ic/gen/assets.gen.dart';
+import 'package:survey_flutter_ic/ui/login/login_component_id.dart';
 import 'package:survey_flutter_ic/ui/login/login_state.dart';
 import 'package:survey_flutter_ic/ui/login/login_view_model.dart';
-import 'package:survey_flutter_ic/ui/widget/input_field_widget.dart';
+import 'package:survey_flutter_ic/ui/widgets/input_field_widget.dart';
 import 'package:survey_flutter_ic/usecases/login_use_case.dart';
 import 'package:survey_flutter_ic/utils/context_ext.dart';
 import 'package:survey_flutter_ic/utils/dimension.dart';
@@ -41,7 +42,7 @@ class LoginScreenState extends ConsumerState<LoginScreen> {
       ));
 
   InputFieldWidget get _emailInputField => InputFieldWidget(
-        key: const Key('login_email'),
+        key: LoginComponentId.emailTextField,
         textHint: context.localization.loginEmail,
         keyboardType: TextInputType.emailAddress,
         textInputAction: TextInputAction.next,
@@ -49,17 +50,18 @@ class LoginScreenState extends ConsumerState<LoginScreen> {
       );
 
   InputFieldWidget get _passwordInputField => InputFieldWidget(
-        key: const Key('login_password'),
+        key: LoginComponentId.passwordTextField,
         textHint: context.localization.loginPassword,
         keyboardType: TextInputType.visiblePassword,
         isPassword: true,
         textSuffixButton: context.localization.loginForgotPassword,
         textSuffixButtonCallback: () =>
-            context.goNamed(RoutePath.forgotPassword.name),
+            context.pushNamed(RoutePath.forgotPassword.name),
         controller: _passwordInputController,
       );
 
   ElevatedButton get _loginButton => ElevatedButton(
+        key: LoginComponentId.loginButton,
         onPressed: () {
           ref.read(loginViewModelProvider.notifier).login(
                 _emailInputController.text,
@@ -82,9 +84,10 @@ class LoginScreenState extends ConsumerState<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-        statusBarColor: Colors.transparent,
-        statusBarIconBrightness: Brightness.light,
-        statusBarBrightness: Brightness.dark));
+      statusBarColor: Colors.transparent,
+      statusBarIconBrightness: Brightness.light,
+      statusBarBrightness: Brightness.dark,
+    ));
     _registerStateListener();
     return Stack(
       fit: StackFit.expand,
@@ -123,7 +126,7 @@ class LoginScreenState extends ConsumerState<LoginScreen> {
       state.maybeWhen(
         success: () => context.goNamed(RoutePath.home.name),
         error: (errorMessage) => context.showMessageSnackBar(
-          message: errorMessage,
+          message: context.localization.pleaseTryAgain,
         ),
         errorEmailInput: () => context.showMessageSnackBar(
           message: context.localization.messageEmailInvalid,

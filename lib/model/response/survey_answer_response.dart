@@ -8,8 +8,8 @@ part 'survey_answer_response.g.dart';
 @JsonSerializable()
 class SurveyAnswerResponse {
   final String id;
-  final String text;
-  final int displayOrder;
+  final String? text;
+  final int? displayOrder;
 
   SurveyAnswerResponse({
     required this.id,
@@ -20,9 +20,10 @@ class SurveyAnswerResponse {
   factory SurveyAnswerResponse.fromJson(Map<String, dynamic> json) =>
       _$SurveyAnswerResponseFromJson(mapDataJson(json));
 
-  SurveyAnswerModel toSurveyAnswerModel() => SurveyAnswerModel(
+  SurveyAnswerModel toSurveyAnswerModel(String shortText) => SurveyAnswerModel(
         id: id,
-        text: text,
-        displayOrder: displayOrder,
+        text: text ?? '',
+        displayOrder: displayOrder ?? 0,
+        questionShortText: shortText,
       );
 }

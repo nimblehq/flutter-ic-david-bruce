@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:injectable/injectable.dart';
 import 'package:survey_flutter_ic/api/storage/storage.dart';
 import 'package:survey_flutter_ic/api/repository/auth_repository.dart';

@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:injectable/injectable.dart';
 import 'package:survey_flutter_ic/api/repository/auth_repository.dart';
 import 'package:survey_flutter_ic/api/storage/storage.dart';
@@ -21,7 +20,8 @@ class LoginUseCase extends UseCase<LoginModel, LoginParams> {
         email: params.email,
         password: params.password,
       );
-      return await _storeTokens(result);
+      await _storeTokens(result);
+      return Success(result);
     } catch (exception) {
       return Failed(UseCaseException(exception));
     }

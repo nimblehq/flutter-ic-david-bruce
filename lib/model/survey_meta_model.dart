@@ -1,5 +1,9 @@
 import 'package:equatable/equatable.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
+part 'survey_meta_model.g.dart';
+
+@JsonSerializable()
 class SurveyMetaModel extends Equatable {
   final int page;
   final int pages;
@@ -20,6 +24,11 @@ class SurveyMetaModel extends Equatable {
           pageSize: 0,
           records: 0,
         );
+
+  factory SurveyMetaModel.fromJson(Map<String, dynamic> json) =>
+      _$SurveyMetaModelFromJson(json);
+
+  Map<String, dynamic> toJson() => _$SurveyMetaModelToJson(this);
 
   @override
   List<Object?> get props => [
