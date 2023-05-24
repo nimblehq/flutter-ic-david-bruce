@@ -29,7 +29,7 @@ void surveyQuestionsTest() {
         "When launching, it displays the survey questions screen correctly",
         (WidgetTester tester) async {
       await tester.pumpWidget(TestUtil.pumpWidgetWithShellAppGoRouter(
-        location: '/survey-details/111',
+        location: '/survey-details/d5de6a8f8f5f1cfe51bc',
         isLogin: true,
       ));
       await FakeData.initDefault();
@@ -54,7 +54,7 @@ void surveyQuestionsTest() {
         "When user press submit answers successfully, it returns to home screen",
         (WidgetTester tester) async {
       await tester.pumpWidget(TestUtil.pumpWidgetWithShellAppGoRouter(
-        location: '/survey-details/111',
+        location: '/survey-details/d5de6a8f8f5f1cfe51bc',
         isLogin: true,
       ));
       await FakeData.initDefault();

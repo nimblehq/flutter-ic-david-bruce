@@ -18,19 +18,20 @@ void surveyDetailsTest() {
       await TestUtil.setupTestEnvironment();
     });
 
+    setUp(() {
+      startSurveyButton =
+          find.byKey(SurveyDetailsComponentId.startSurveyButton);
+    });
+
     testWidgets(
         "When launching, it displays the survey details screen correctly",
         (WidgetTester tester) async {
       await tester.pumpWidget(TestUtil.pumpWidgetWithShellAppGoRouter(
-        location: '/survey-details/111',
+        location: '/survey-details/d5de6a8f8f5f1cfe51bc',
         isLogin: true,
       ));
       await FakeData.initDefault();
       await tester.pumpAndSettle();
-
-      startSurveyButton = find.byKey(
-        SurveyDetailsComponentId.startSurveyButton,
-      );
 
       expect(startSurveyButton, findsOneWidget);
     });
