@@ -26,7 +26,7 @@ void homeTest() {
     testWidgets("When starting, it displays the Home screen correctly",
         (WidgetTester tester) async {
       await tester.pumpWidget(TestUtil.pumpWidgetWithShellAppGoRouter(
-        location: '/home',
+        location: '/',
         isLogin: true,
       ));
       await FakeData.initDefault();
@@ -41,7 +41,7 @@ void homeTest() {
         "When tapping on take survey button, it shows survey details screen",
         (WidgetTester tester) async {
       await tester.pumpWidget(TestUtil.pumpWidgetWithShellAppGoRouter(
-        location: '/home',
+        location: '/',
         isLogin: true,
       ));
       await FakeData.initDefault();
@@ -56,7 +56,7 @@ void homeTest() {
     testWidgets("When tapping on logout button, it shows login screen",
         (WidgetTester tester) async {
       await tester.pumpWidget(TestUtil.pumpWidgetWithShellAppGoRouter(
-        location: '/home',
+        location: '/',
         isLogin: true,
       ));
       await FakeData.initDefault();

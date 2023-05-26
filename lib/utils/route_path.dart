@@ -1,6 +1,6 @@
 enum RoutePath {
   login('/login'),
-  home('/home'),
+  home('/'),
   forgotPassword('/forgot-password'),
   surveyDetails('/survey-details'),
   surveyQuestion('/survey-question');

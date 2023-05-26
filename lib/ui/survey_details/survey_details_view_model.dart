@@ -17,7 +17,7 @@ class SurveyDetailsViewModel extends StateNotifier<SurveyDetailsState> {
 
   void getSurveyDetails(String id) async {
     Future.delayed(
-      const Duration(milliseconds: 100),
+      const Duration(milliseconds: 50),
       () => state = const SurveyDetailsState.loading(),
     );
     final result = await _getSurveyDetailsUseCase.call(id);
