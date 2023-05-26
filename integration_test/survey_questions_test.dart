@@ -1,6 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
-import 'package:survey_flutter_ic/ui/home/home_screen.dart';
 import 'package:survey_flutter_ic/ui/survey_details/survey_details_component_id.dart';
 import 'package:survey_flutter_ic/ui/survey_question/survey_answer_views/survey_answer_component_id.dart';
 import 'package:survey_flutter_ic/ui/survey_question/survey_question_component_id.dart';
