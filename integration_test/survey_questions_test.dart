@@ -1,10 +1,10 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
+import 'package:survey_flutter_ic/ui/home/home_screen.dart';
 import 'package:survey_flutter_ic/ui/survey_details/survey_details_component_id.dart';
 import 'package:survey_flutter_ic/ui/survey_question/survey_answer_views/survey_answer_component_id.dart';
 import 'package:survey_flutter_ic/ui/survey_question/survey_question_component_id.dart';
 import 'package:survey_flutter_ic/ui/survey_question/survey_questions_screen.dart';
-import 'package:survey_flutter_ic/ui/widgets/lottie_dialog.dart';
 import 'package:survey_flutter_ic/utils/durations.dart';
 
 import 'utils/fake_data.dart';
@@ -76,8 +76,9 @@ void surveyQuestionsTest() {
       await tester.tap(submitButton);
       await tester.pumpAndSettle();
       await tester.pump(Durations.fiveSecond);
+      await tester.pumpAndSettle();
 
-      expect(find.byType(LottieDialog), findsOneWidget);
+      expect(find.byType(HomeScreen), findsOneWidget);
     });
   });
 }
